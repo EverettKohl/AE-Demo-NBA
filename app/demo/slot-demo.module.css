@@ -1,0 +1,312 @@
+.page {
+  background: #0b0d12;
+  color: #e6e9f0;
+  min-height: 100vh;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #aab3c5;
+  font-size: 14px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputLabel {
+  font-size: 12px;
+  color: #c5ccdc;
+}
+
+.textInput,
+.numberInput,
+.selectInput {
+  background: #121622;
+  color: #f5f7fb;
+  border: 1px solid #1f2430;
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 160px;
+}
+
+.numberInput {
+  min-width: 120px;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.button {
+  border: 1px solid #2a3142;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #1a1f2b;
+  color: #f5f7fb;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: linear-gradient(135deg, #6d7da3, #5c6b8e);
+  border-color: #6d7da3;
+}
+
+.ghost {
+  background: transparent;
+}
+
+.danger {
+  background: #2a1a1a;
+  border-color: #4b2424;
+  color: #f3d5d5;
+}
+
+.status {
+  font-size: 13px;
+  color: #aab3c5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.card {
+  background: #111420;
+  border: 1px solid #1f2430;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardTitle {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.metaRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: #c5ccdc;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  border-bottom: 1px solid #1f2430;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(109, 125, 163, 0.2);
+  color: #d9e2ff;
+  border: 1px solid rgba(109, 125, 163, 0.4);
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+.warning {
+  background: rgba(255, 191, 105, 0.16);
+  color: #ffd79f;
+  border-color: rgba(255, 191, 105, 0.4);
+}
+
+.error {
+  color: #ffb3b3;
+}
+
+.editorShell {
+  position: relative;
+  min-height: 70vh;
+  border: 1px solid #1f2430;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.demoOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.demoOverlayShade {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 18, 0.82);
+  backdrop-filter: blur(4px);
+}
+
+.demoOverlayPanel {
+  position: relative;
+  background: #121622;
+  border: 1px solid #1f2430;
+  border-radius: 16px;
+  padding: 18px;
+  width: min(480px, 94vw);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.demoOverlayTitle {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.demoOverlaySubtitle {
+  color: #c5ccdc;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.demoOverlayButton {
+  align-self: flex-start;
+}
+
+.overlayRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.overlayHidden {
+  opacity: 0;
+}
+
+.overlayShade {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 18, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.overlayGuard {
+  position: absolute;
+  inset: 0 0 240px 0;
+  background: linear-gradient(180deg, rgba(10, 12, 18, 0.62) 0%, rgba(10, 12, 18, 0.4) 70%, transparent 100%);
+}
+
+.overlayPanel {
+  position: relative;
+  margin: 28px;
+  background: #121622;
+  border: 1px solid #1f2430;
+  border-radius: 16px;
+  padding: 16px;
+  width: min(520px, 96vw);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.02);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progressBar {
+  height: 6px;
+  background: #1d2230;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(135deg, #6d7da3, #5b7dcb);
+  transition: width 140ms ease;
+}
+
+.overlayTitle {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.overlaySubtitle {
+  color: #c5ccdc;
+  font-size: 13px;
+}
+
+.placementList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid #1f2430;
+  background: #0f1320;
+  font-size: 11px;
+  color: #dbe4ff;
+}
+
+.placementActive {
+  border-color: #6d7da3;
+  background: rgba(109, 125, 163, 0.2);
+}
