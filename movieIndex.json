@@ -1,0 +1,121 @@
+{
+  "movieTitle": "Kill Bill",
+  "generatedAt": "2026-01-27T05:20:57.584Z",
+  "fromCache": false,
+  "chunkCount": 5,
+  "totalDuration": 13521.6,
+  "anchors": [
+    {
+      "label": "Vernita Green kitchen fight",
+      "keywords": [
+        "vernita",
+        "kitchen",
+        "suburb"
+      ],
+      "chunkId": null,
+      "indexId": null,
+      "approx_start": null,
+      "approx_end": null
+    },
+    {
+      "label": "House of Blue Leaves showdown",
+      "keywords": [
+        "crazy 88",
+        "blue leaves",
+        "snow",
+        "o-ren"
+      ],
+      "chunkId": null,
+      "indexId": null,
+      "approx_start": null,
+      "approx_end": null
+    },
+    {
+      "label": "Bride wakes from coma",
+      "keywords": [
+        "hospital",
+        "coma",
+        "wiggle your big toe"
+      ],
+      "chunkId": null,
+      "indexId": null,
+      "approx_start": null,
+      "approx_end": null
+    },
+    {
+      "label": "Hattori Hanzo sword forge",
+      "keywords": [
+        "hanzo",
+        "sword",
+        "forge",
+        "okinawa"
+      ],
+      "chunkId": null,
+      "indexId": null,
+      "approx_start": null,
+      "approx_end": null
+    }
+  ],
+  "chunks": [
+    {
+      "indexId": "6924fd4502a47ca540a2464d",
+      "videoId": "69254488b401380ebb921f0a",
+      "title": "Kill_Bill_Vol1_Part2.mp4",
+      "filename": "Kill_Bill_Vol1_Part2.mp4",
+      "duration": 2677.07,
+      "createdAt": "2025-11-25T05:54:20Z",
+      "chunkLabel": "Kill_Bill_Vol1_Part2.mp4",
+      "start_offset": 0,
+      "end_offset": 2677.07,
+      "order": 1
+    },
+    {
+      "indexId": "6924fd4502a47ca540a2464d",
+      "videoId": "69254495b401380ebb921f0d",
+      "title": "Kill_Bill_Vol1_Part1.mp4",
+      "filename": "Kill_Bill_Vol1_Part1.mp4",
+      "duration": 3461.5933,
+      "createdAt": "2025-11-25T05:54:33Z",
+      "chunkLabel": "Kill_Bill_Vol1_Part1.mp4",
+      "start_offset": 2677.07,
+      "end_offset": 6138.6633,
+      "order": 2
+    },
+    {
+      "indexId": "6924fd4502a47ca540a2464d",
+      "videoId": "69255fc7c631cdc4fe330a73",
+      "title": "Kill_Bill_Vol2_Part1.mp4",
+      "filename": "Kill_Bill_Vol2_Part1.mp4",
+      "duration": 2586.85,
+      "createdAt": "2025-11-25T07:50:34Z",
+      "chunkLabel": "Kill_Bill_Vol2_Part1.mp4",
+      "start_offset": 6138.6633,
+      "end_offset": 8725.5133,
+      "order": 3
+    },
+    {
+      "indexId": "6924fd4502a47ca540a2464d",
+      "videoId": "69255fe49fbc66589d49dbac",
+      "title": "Kill_Bill_Vol2_Part2.mp4",
+      "filename": "Kill_Bill_Vol2_Part2.mp4",
+      "duration": 2624.27,
+      "createdAt": "2025-11-25T07:51:04Z",
+      "chunkLabel": "Kill_Bill_Vol2_Part2.mp4",
+      "start_offset": 8725.5133,
+      "end_offset": 11349.783300000001,
+      "order": 4
+    },
+    {
+      "indexId": "6924fd4502a47ca540a2464d",
+      "videoId": "69255ff6c631cdc4fe330a9c",
+      "title": "Kill_Bill_Vol2_Part3.mp4",
+      "filename": "Kill_Bill_Vol2_Part3.mp4",
+      "duration": 2171.8167,
+      "createdAt": "2025-11-25T07:51:20Z",
+      "chunkLabel": "Kill_Bill_Vol2_Part3.mp4",
+      "start_offset": 11349.783300000001,
+      "end_offset": 13521.6,
+      "order": 5
+    }
+  ]
+}

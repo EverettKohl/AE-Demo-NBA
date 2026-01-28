@@ -1,0 +1,791 @@
+@layer editor2-reset, editor2-base, editor2-overrides;
+
+@layer editor2-reset {
+  .shell {
+    --editor2-ink: #e6e9f0;
+    --editor2-muted: rgba(174, 180, 194, 0.72);
+    --editor2-cta: #6d7da3;
+    --editor2-border: #20232b;
+    /* Light header tone */
+    --editor2-header-bg: #2f343d;
+    --editor2-header-border: #3a404d;
+    /* Dark body tone */
+    --editor2-body-surface: #181b22;
+    --editor2-surface: rgba(16, 17, 22, 0.94);
+    --editor2-panel: #1a1c22;
+    --editor2-surface-strong: rgba(11, 12, 16, 0.98);
+    --section-gap: 8px;
+    --section-gap-color: #0c0d11;
+    min-height: 100vh;
+    isolation: isolate;
+    color: var(--editor2-ink);
+    background: var(--section-gap-color);
+    padding: 0;
+  }
+
+  .shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 78% 16%, rgba(109, 125, 163, 0.16), transparent 40%),
+      linear-gradient(180deg, rgba(6, 7, 12, 0.88) 0%, rgba(4, 5, 9, 0.9) 55%, rgba(3, 4, 7, 0.92) 100%);
+  }
+
+  .shell :where(*) {
+    box-sizing: border-box;
+  }
+
+  .shell :where(button, input, select, textarea) {
+    font: inherit;
+  }
+
+  .shell :where(a) {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer editor2-base {
+  .viewport {
+    min-height: min(100vh, 100svh);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    overflow: hidden;
+  }
+
+  .canvas {
+    width: 100%;
+    min-height: min(100vh, 100svh);
+    border-radius: 0;
+    background: linear-gradient(145deg, rgba(17, 19, 27, 0.9), rgba(10, 11, 16, 0.94));
+    border: none;
+    box-shadow: none;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+  }
+
+  .chrome {
+    background: #0f1116;
+    color: var(--editor2-ink);
+    border-radius: 0;
+    border: 1px solid #1a1c22;
+    --border: var(--editor2-border);
+    --sidebar-border: var(--editor2-border);
+    /* Ensure player grid uses dark background with light grid lines */
+    --player-grid-bg: #303136;
+    --player-grid-line: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+    overflow: hidden;
+    min-height: 100vh;
+    margin-left: calc(var(--sidebar-width-icon) + var(--section-gap));
+    transition: margin-left 180ms ease, width 180ms ease;
+    gap: var(--section-gap);
+    padding: var(--section-gap);
+  }
+
+  /* Remove stray borders on main editor surface */
+  .chrome :global(main.relative.flex.h-svh) {
+    border: 0;
+    background: #0f1116;
+  }
+
+  /* Hide default inline sidebar trigger; replaced with panel header button */
+  .chrome :global([data-sidebar="trigger"]) {
+    display: none !important;
+  }
+
+  /* Expand the content offset only when the panel is open */
+  .sidebarShell[data-state="expanded"] ~ .chrome {
+    margin-left: calc(var(--sidebar-width) + var(--section-gap));
+  }
+
+  /* Keep only the rail gap when collapsed */
+  .sidebarShell[data-state="collapsed"] ~ .chrome {
+    margin-left: calc(var(--sidebar-width-icon) + var(--section-gap));
+  }
+
+  .sidebarShell {
+    --tw-border-opacity: 1;
+    --sidebar-width-icon: 3.6rem;
+    --sidebar-panel-width: 18rem;
+    --sidebar-width: calc(var(--sidebar-width-icon) + var(--sidebar-panel-width));
+    color: var(--editor2-ink);
+    min-height: 100vh;
+    display: flex;
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-width);
+    z-index: 10;
+    padding: var(--section-gap);
+    position: fixed;
+    isolation: isolate;
+    overflow: visible !important;
+  }
+
+.sidebarShell :global(.overflow-y-auto) {
+  overflow-x: visible !important;
+  overflow-y: auto;
+}
+
+  .sidebarShell[data-state="collapsed"] {
+    width: var(--sidebar-width-icon);
+    max-width: var(--sidebar-width-icon);
+  }
+
+  .sidebarShell[data-state="expanded"] {
+    width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+  overflow: visible !important;
+  }
+
+  .sidebarRail {
+    background: var(--editor2-body-surface);
+    border-right: 1px solid var(--editor2-header-border);
+    min-height: inherit;
+    flex: 0 0 var(--sidebar-width-icon);
+    max-width: var(--sidebar-width-icon);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    overflow: visible !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Round rail edges when the slide-out panel is collapsed */
+  .sidebarShell[data-state="collapsed"] .sidebarRail {
+    border-radius: 12px;
+  }
+
+  .sidebarHeader {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--editor2-header-bg);
+    border: 1px solid var(--editor2-header-border);
+    color: var(--editor2-ink);
+    border-radius: 12px 12px 0 0;
+    min-height: 48px;
+  }
+
+  .sidebarMark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, rgba(109, 125, 163, 0.7), rgba(109, 125, 163, 0.5));
+    color: #f4f5f8;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    box-shadow: 0 10px 24px rgba(17, 19, 27, 0.4);
+  }
+
+  .sidebarGroup {
+    gap: 6px;
+  }
+
+  .sidebarGroupLabel {
+    display: none;
+  }
+
+  .sidebarMenu {
+    display: grid;
+    gap: 6px;
+    padding: 6px 6px 8px;
+    overflow: visible;
+  }
+
+  .navPill {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 10px;
+    border-radius: 12px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--editor2-ink);
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    position: relative;
+    overflow: visible;
+    z-index: 2;
+  }
+
+  .navPill svg {
+    width: 18px;
+    height: 18px;
+    opacity: 0.9;
+  }
+
+  .navPill:hover {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(69, 74, 86, 0.24), rgba(32, 34, 44, 0.36));
+    box-shadow: 0 10px 26px rgba(12, 13, 18, 0.3);
+  }
+
+  .navPillActive {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: linear-gradient(135deg, rgba(84, 93, 112, 0.32), rgba(44, 48, 59, 0.42));
+    box-shadow:
+      0 12px 32px rgba(10, 11, 16, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transform: translateY(-1px);
+    color: #f5f6fa;
+  }
+
+  /* Custom tooltip bubble positioned outside the rail */
+  .navPill::after {
+    content: none !important;
+  }
+
+  .navLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .sidebarTooltip {
+    position: fixed;
+    padding: 6px 10px;
+    background: rgba(12, 14, 20, 0.96);
+    color: #f7f8fb;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    white-space: nowrap;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    pointer-events: none;
+    z-index: 2147483647;
+    transform: translate(12px, -50%);
+  }
+
+  .sidebarFooter {
+    border-top: 1px solid var(--editor2-header-border);
+    background: var(--editor2-body-surface);
+    padding: 10px 6px 12px;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 16px;
+    margin-bottom: 8px;
+  }
+
+  /* Let rail content grow so footer sticks to bottom */
+  .sidebarRail :global([data-sidebar="content"]) {
+    flex: 1 1 auto;
+    overflow: visible;
+  }
+
+.sidebarPanelSurface {
+  background: var(--editor2-body-surface);
+  border-left: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow:
+    inset 1px 0 0 rgba(0, 0, 0, 0.48),
+    inset 2px 0 0 rgba(0, 0, 0, 0.24);
+  flex: 0 0 var(--sidebar-panel-width);
+  max-width: var(--sidebar-panel-width);
+  width: var(--sidebar-panel-width);
+  min-height: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(-10px);
+  pointer-events: none;
+  transition: width 200ms ease, opacity 180ms ease, transform 200ms ease;
+}
+
+.sidebarPanelSurface[data-state="collapsed"] {
+  width: 0 !important;
+  max-width: 0 !important;
+  min-width: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-12px);
+    display: none;
+  background: transparent;
+  border: none;
+}
+
+.sidebarPanelSurface[data-state="expanded"] {
+  display: flex;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+
+  /* Radix context menus */
+  .chrome :global([data-radix-menu-content]),
+  .chrome :global([data-radix-dropdown-menu-content]) {
+    background-color: #2f2f2f !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: none !important;
+    --tw-bg-opacity: 1 !important;
+  }
+
+  .chrome :global([data-radix-context-menu-content]),
+  .chrome :global([data-radix-menu-content]),
+  .chrome :global([data-radix-dropdown-menu-content]) {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Kill the Radix/Tailwind animation utility classes */
+  .chrome :global(.data-\[state\=open\]\:animate-in),
+  .chrome :global(.data-\[state\=closed\]\:animate-out),
+  .chrome :global(.data-\[state\=closed\]\:fade-out-0),
+  .chrome :global(.data-\[state\=open\]\:fade-in-0),
+  .chrome :global(.data-\[state\=closed\]\:zoom-out-95),
+  .chrome :global(.data-\[state\=open\]\:zoom-in-95),
+  .chrome :global(.data-\[side\=bottom\]\:slide-in-from-top-2),
+  .chrome :global(.data-\[side\=left\]\:slide-in-from-right-2),
+  .chrome :global(.data-\[side\=right\]\:slide-in-from-left-2),
+  .chrome :global(.data-\[side\=top\]\:slide-in-from-bottom-2) {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .chrome :global([data-radix-menu-content] *),
+  .chrome :global([data-radix-dropdown-menu-content] *) {
+    color: #ffffff !important;
+    stroke: currentColor !important;
+  }
+
+  .chrome :global(.bg-popover) {
+    background-color: #2f2f2f !important;
+    color: #ffffff !important;
+  }
+
+  .chrome :global([role="menuitem"]) {
+    color: #ffffff !important;
+    background-color: transparent !important;
+  }
+
+  .chrome :global([role="menuitem"][data-highlighted]) {
+    background-color: #3a3a3a !important;
+    color: #ffffff !important;
+  }
+
+  .chrome :global([role="menuitem"][data-destructive]),
+  .chrome :global([role="menuitem"].text-destructive) {
+    color: #f25f5c !important;
+  }
+
+  .sidebarPanelHeader {
+    border-bottom: 1px solid var(--editor2-header-border);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--editor2-header-bg);
+    border: 1px solid var(--editor2-header-border);
+    border-left: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow:
+      inset 1px 0 0 rgba(0, 0, 0, 0.48),
+      inset 2px 0 0 rgba(0, 0, 0, 0.24);
+    border-radius: 0 12px 0 0;
+    border-left: 0;
+    min-height: 48px;
+  }
+
+  /* Normalize main editor header to match sidebar headers */
+  .chrome :global(header.sticky.top-0.flex.shrink-0.items-center) {
+    background: var(--editor2-header-bg) !important;
+    border: 1px solid var(--editor2-header-border) !important;
+    min-height: 48px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  /* Rounded top corners behave as one component in both states */
+  .sidebarShell[data-state="collapsed"] .sidebarHeader {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .sidebarShell[data-state="expanded"] .sidebarHeader {
+    border-radius: 12px 0 0 0;
+    border-right: 0;
+  }
+
+  .sidebarShell[data-state="expanded"] .sidebarPanelHeader {
+    border-radius: 0 12px 0 0;
+  }
+
+  .panelTitle {
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .sidebarPanelContent {
+    padding: 10px 12px 16px;
+    background: var(--editor2-body-surface);
+    border-left: 1px solid rgba(0, 0, 0, 0.16);
+    box-shadow:
+      inset 1px 0 0 rgba(0, 0, 0, 0.48),
+      inset 2px 0 0 rgba(0, 0, 0, 0.24);
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* Force search input text to black for the video panel */
+  .sidebarPanelContent :global(input),
+  .sidebarPanelContent :global(input[type="text"]),
+  .sidebarPanelContent :global(input[type="search"]) {
+    color: #000 !important;
+    caret-color: #000;
+    background: #f6f7f9;
+  }
+
+  .sidebarPanelContent :global(input::placeholder),
+  .sidebarPanelContent :global(input[type="text"]::placeholder),
+  .sidebarPanelContent :global(input[type="search"]::placeholder) {
+    color: #3a3c42;
+  }
+}
+
+@layer editor2-overrides {
+  /* Header + player as one block */
+  /* Player block (header + content as one component) */
+  .chrome > :global(div.flex.flex-col.overflow-hidden) {
+    background: #1a1c22;
+    border: 1px solid #1f2229;
+    border-radius: 12px;
+    padding: 0;
+    gap: 0;
+    overflow: visible;
+    margin-bottom: 0;
+  }
+
+  .chrome > :global(div.flex.flex-col.overflow-hidden > header) {
+    background: #262a33;
+    border: 0;
+    border-bottom: 1px solid #1f2229;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-top: 0 !important;
+    border-radius: 12px 12px 0 0;
+    color: var(--editor2-ink);
+    box-shadow:
+      0 10px 20px rgba(0, 0, 0, 0.28),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+    padding: 12px 16px;
+    margin: 0;
+  }
+
+  .chrome > :global(div.flex.flex-col.overflow-hidden > div.grow.flex.flex-col.lg\:flex-row.overflow-hidden) {
+    gap: 0;
+    background: #1a1c22;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .chrome
+    > :global(div.flex.flex-col.overflow-hidden > div.grow.flex.flex-col.lg\:flex-row.overflow-hidden > div.w-full.h-full.overflow-hidden) {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .chrome :global(> header button) {
+    color: var(--editor2-ink);
+  }
+
+  .sidebarShell :global([data-sidebar="sidebar"]) {
+    background: #1a1c22;
+    color: var(--editor2-ink);
+  border: 1px solid #1a1c22;
+    border-radius: 12px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .sidebarShell[data-state="collapsed"] :global([data-sidebar="sidebar"]) {
+    width: var(--sidebar-width-icon) !important;
+    max-width: var(--sidebar-width-icon) !important;
+    flex: 0 0 var(--sidebar-width-icon) !important;
+  }
+
+  .sidebarShell[data-state="expanded"] :global([data-sidebar="sidebar"]) {
+    width: var(--sidebar-width) !important;
+    max-width: var(--sidebar-width) !important;
+    flex: 0 0 var(--sidebar-width) !important;
+  }
+
+  /* Force the outer fixed sidebar container to shrink when collapsed */
+  .sidebarShell[data-state="collapsed"] :global(.duration-200.fixed) {
+    width: var(--sidebar-width-icon) !important;
+    max-width: var(--sidebar-width-icon) !important;
+    left: 0 !important;
+    right: auto !important;
+  }
+
+  /* Rail-only view: strip padding/borders and hide overflow when collapsed */
+  .sidebarShell[data-state="collapsed"] :global([data-sidebar="content"]) {
+    width: var(--sidebar-width-icon);
+    max-width: var(--sidebar-width-icon);
+    padding: 0;
+    border: none;
+    overflow-x: hidden;
+  }
+
+  .sidebarShell[data-state="collapsed"] :global([data-sidebar="group"]) {
+    padding: 6px 4px;
+  border-radius: 8px;
+  }
+
+  .sidebarShell[data-state="collapsed"] :global([data-sidebar="header"]),
+  .sidebarShell[data-state="collapsed"] :global([data-sidebar="footer"]) {
+    padding: 6px 4px;
+    border: none;
+  }
+
+  .sidebarShell[data-state="collapsed"] :global([data-sidebar="menu-button"]) {
+    padding: 12px;
+    justify-content: center;
+  }
+
+  .chrome :global(.video-container) {
+    background-color: var(--player-grid-bg, #303136);
+    background-image:
+      linear-gradient(0deg, var(--player-grid-line, rgba(255, 255, 255, 0.08)) 1px, transparent 1px),
+      linear-gradient(90deg, var(--player-grid-line, rgba(255, 255, 255, 0.08)) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: center;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  overflow: hidden;
+  margin-bottom: 0;
+  }
+
+  /* Player block wrapper */
+  .chrome :global(div.w-full.h-full.overflow-hidden) {
+    background: #1a1c22;
+  border: 1px solid #1a1c22;
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  .chrome :global(.timeline-container) {
+    background: #1a1c22;
+  border: 1px solid #1a1c22;
+    border-radius: 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.02),
+      0 -10px 30px rgba(3, 6, 12, 0.55);
+    padding: 8px;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  }
+
+/* Draggable gap between player and timeline */
+.chrome :global(.timeline-resize-handle),
+.chrome :global(.timeline-resize-handle .absolute.inset-x-0.top-0.h-1) {
+  height: var(--section-gap) !important;
+  background: var(--section-gap-color) !important;
+  cursor: ns-resize;
+  border: 0 !important;
+  width: 100% !important;
+  display: block !important;
+  position: relative !important;
+  z-index: 999 !important;
+  pointer-events: auto !important;
+  flex-shrink: 0 !important;
+  user-select: none !important;
+}
+
+  .chrome {
+    --timeline-track-bg: #242731;
+    --timeline-gap-bg: #1d2027;
+  }
+
+  .chrome :global(.timeline-tracks-wrapper),
+  .chrome :global(.timeline-content) {
+    background: var(--timeline-gap-bg);
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .chrome :global(.timeline-markers-container) {
+    background: var(--timeline-gap-bg);
+    border-bottom: 0;
+    border-radius: 0;
+  }
+
+  /* Hide the redundant top scrollbar while keeping sync scrolling */
+  .chrome :global(.timeline-markers-wrapper) {
+    scrollbar-width: none;
+  }
+  .chrome :global(.timeline-markers-wrapper::-webkit-scrollbar) {
+    display: none;
+  }
+
+  .chrome :global(.timeline-tracks-container) {
+    background: var(--timeline-gap-bg);
+    border-radius: 0;
+  }
+
+  .chrome :global(.timeline-zoomable-content) {
+    background: transparent;
+  }
+
+  .chrome :global(.track) {
+    background: var(--timeline-track-bg);
+    border-color: transparent;
+    border-radius: 6px;
+    box-shadow:
+      inset 0 -4px 0 var(--timeline-gap-bg),
+      0 1px 0 rgba(255, 255, 255, 0.04),
+      0 -1px 0 rgba(0, 0, 0, 0.35);
+  }
+
+  /* High-contrast defaults so text/buttons stay readable on the dark canvas */
+  .chrome {
+    --foreground: #f8fafc;
+    --background: #15171d;
+    --text-primary: #f8fafc;
+    --text-secondary: #e2e8f0;
+    --text-tertiary: #cbd5e1;
+    --muted-foreground: #cbd5e1;
+    --accent-foreground: #f8fafc;
+    --secondary-foreground: #f8fafc;
+    --sidebar-foreground: #f8fafc;
+    --border: #20232b;
+  }
+
+  /* Darken timeline header/handles backgrounds and borders */
+  .chrome :global(.timeline-container .bg-background) {
+    background: var(--timeline-gap-bg) !important;
+  }
+  .chrome :global(.timeline-container .border-border),
+  .chrome :global(.timeline-container .border),
+  .chrome :global(.timeline-container .border-l),
+  .chrome :global(.timeline-container .border-r),
+  .chrome :global(.timeline-container .border-t),
+  .chrome :global(.timeline-container .border-b) {
+    border-color: transparent !important;
+  }
+
+  .chrome :global(button),
+  .chrome :global([role="button"]),
+  .chrome :global(.btn),
+  .chrome :global(.rve-button),
+  .chrome :global(.shadcn-button) {
+    color: #ffffff !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none;
+  }
+
+  /* Allow Cloudinary overlay buttons to keep their own colors */
+  .chrome :global(.cloudinary-btn) {
+    color: #ffffff !important;
+  }
+
+  .chrome :global(.cloudinary-btn.cloudinary-btn--play) {
+    background: #16a34a !important;
+    border: 1px solid #16a34a !important;
+  }
+
+  .chrome :global(.cloudinary-btn.cloudinary-btn--cancel) {
+    background: #475569 !important;
+    border: 1px solid #475569 !important;
+  }
+
+  .chrome :global(.cloudinary-btn.cloudinary-btn--primary) {
+    background: #2563eb !important;
+    border: 1px solid #2563eb !important;
+  }
+
+  .chrome :global(.cloudinary-btn:hover) {
+    filter: brightness(1.05);
+  }
+
+  .chrome :global(.cloudinary-btn:disabled) {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .chrome :global(button:hover),
+  .chrome :global([role="button"]:hover),
+  .chrome :global(.btn:hover),
+  .chrome :global(.rve-button:hover),
+  .chrome :global(.shadcn-button:hover) {
+    background: none !important;
+    border: none !important;
+  }
+
+  .chrome :global(button:disabled),
+  .chrome :global([role="button"]:disabled),
+  .chrome :global(.btn:disabled) {
+    color: #e2e8f0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none;
+  }
+
+  .chrome :global(.text-muted-foreground),
+  .chrome :global(.muted),
+  .chrome :global(.text-secondary) {
+    color: var(--text-secondary) !important;
+  }
+
+  .chrome :global(svg),
+  .chrome :global([data-lucide]) {
+    color: currentColor;
+    stroke: currentColor;
+  }
+
+  /* Forms and chips inside panels stay readable on the dark surface */
+  .chrome :global(input:not([type="checkbox"]):not([type="radio"])),
+  .chrome :global(select),
+  .chrome :global(textarea) {
+    color: #f8fafc;
+    background-color: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .chrome :global(input::placeholder),
+  .chrome :global(textarea::placeholder) {
+    color: #cbd5e1;
+  }
+
+  .chrome :global(.badge),
+  .chrome :global(.tag),
+  .chrome :global(.pill) {
+    color: #0b1224 !important;
+    background: #93c5fd !important;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}

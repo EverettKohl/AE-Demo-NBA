@@ -1,0 +1,2 @@
+@import "./reactvideoeditor/styles.css" layer(editor-base);
+@import "./editor2.css" layer(editor-reset);

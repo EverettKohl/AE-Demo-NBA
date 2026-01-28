@@ -1,0 +1,82 @@
+.editor2-shell {
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  isolation: isolate;
+}
+
+.editor2-shell :where(*) {
+  all: revert;
+  box-sizing: border-box;
+}
+
+.editor2-shell :where(body) {
+  margin: 0;
+}
+
+.editor2-shell :where(button, input, select, textarea) {
+  font: inherit;
+}
+
+/* Radix context menu overrides (global) */
+[data-radix-menu-content],
+[data-radix-dropdown-menu-content] {
+  background-color: #2f2f2f !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: none !important;
+}
+
+[data-radix-context-menu-content],
+[data-radix-menu-content],
+[data-radix-dropdown-menu-content] {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Explicitly nullify Radix/Tailwind animation utility classes that get attached */
+.data-\[state\=open\]\:animate-in,
+.data-\[state\=closed\]\:animate-out,
+.data-\[state\=closed\]\:fade-out-0,
+.data-\[state\=open\]\:fade-in-0,
+.data-\[state\=closed\]\:zoom-out-95,
+.data-\[state\=open\]\:zoom-in-95,
+.data-\[side\=bottom\]\:slide-in-from-top-2,
+.data-\[side\=left\]\:slide-in-from-right-2,
+.data-\[side\=right\]\:slide-in-from-left-2,
+.data-\[side\=top\]\:slide-in-from-bottom-2 {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+[data-radix-menu-content] *,
+[data-radix-dropdown-menu-content] * {
+  color: #ffffff !important;
+  stroke: currentColor !important;
+}
+
+.bg-popover {
+  background-color: #2f2f2f !important;
+  color: #ffffff !important;
+}
+
+[role="menuitem"] {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+[role="menuitem"][data-highlighted] {
+  background-color: #3a3a3a !important;
+  color: #ffffff !important;
+}
+
+[role="menuitem"][data-destructive],
+[role="menuitem"].text-destructive {
+  color: #f25f5c !important;
+}
