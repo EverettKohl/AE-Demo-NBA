@@ -1288,7 +1288,7 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
       }
       const label = `v${idx}`;
 
-      // Measure actual duration/frames (best-effort; do not block on shortfall)
+      // Measure actual duration/frames and enforce no-shortfall
       let actualDuration = clip.duration || 0;
       let actualFrames = Math.max(1, Math.round(actualDuration * fps));
       try {
@@ -1299,6 +1299,13 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
         }
       } catch (err) {
         // fallback to provided duration
+      }
+
+      if (actualFrames < targetFrames) {
+        const missing = targetFrames - actualFrames;
+        throw new Error(
+          `[renderInstantSongEdit] Clip ${idx + 1} too short: need ${targetFrames}f, have ${actualFrames}f (missing ${missing}f)`
+        );
       }
 
       let videoFilter = `[${ffInputIdx}:v]fps=${fps},` +
@@ -1609,30 +1616,21 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
     const durationDiff = Math.abs(outDuration - expectedTimelineSeconds);
     const frameDiff = Math.abs(outFrames - expectedTimelineFrames);
     const allowFrameMismatch = process.env.ALLOW_INSTANT_FRAME_MISMATCH === "1";
-    const zeroDuration = outDuration <= 0.5; // tolerate near-zero outputs to avoid hard failure
-    const relaxedChecks = allowFrameMismatch || zeroDuration;
-    if (zeroDuration) {
-      console.warn(
-        `[renderInstantSongEdit] Output duration near zero (${outDuration.toFixed(
-          3
-        )}s); skipping strict duration/frame validation`
-      );
-    }
     // Only treat duration mismatch as fatal when it also implies a frame mismatch.
     // (Duration can be slightly off due to timebase/rounding even when frames are correct.)
-    if (!relaxedChecks && durationDiff > frameToSeconds(3, fps) && frameDiff > 1) {
+    if (!allowFrameMismatch && durationDiff > frameToSeconds(3, fps) && frameDiff > 1) {
       throw new Error(
         `[renderInstantSongEdit] Output duration mismatch: got ${outDuration.toFixed(
           3
         )}s, expected ${expectedTimelineSeconds.toFixed(3)}s (diff ${durationDiff.toFixed(3)}s)`
       );
     }
-    if (!relaxedChecks && frameDiff > 1) {
+    if (!allowFrameMismatch && frameDiff > 1) {
       throw new Error(
         `[renderInstantSongEdit] Output frames mismatch: got ${outFrames}f, expected ${expectedTimelineFrames}f`
       );
     }
-    if (!relaxedChecks && Math.abs(totalFrames - expectedTimelineFrames) > 1) {
+    if (!allowFrameMismatch && Math.abs(totalFrames - expectedTimelineFrames) > 1) {
       throw new Error(
         `[renderInstantSongEdit] Rendered frame sum mismatch: inputs ${totalFrames}f vs plan ${expectedTimelineFrames}f`
       );

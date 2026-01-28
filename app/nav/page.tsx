@@ -10,6 +10,8 @@ const routes = [
   { href: "/search2", label: "Kill Bill Search v2" },
   { href: "/quick-edit-3", label: "Quick Edit 3" },
   { href: "/quick-edit-6", label: "Quick Edit 6" },
+  { href: "/instant-hub", label: "Instant Hub" },
+  { href: "/instant-edit-3", label: "Instant Edit 3" },
   { href: "/editor3", label: "Editor 3" },
   { href: "/nav", label: "Navigation" },
 ];
