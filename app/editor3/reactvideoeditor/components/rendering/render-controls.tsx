@@ -99,13 +99,16 @@ const RenderControls: React.FC<RenderControlsProps> = ({
 
     const a = document.createElement("a");
     a.href = downloadUrl;
-    a.download = "rendered-video.mp4";
+    a.download = getDisplayFileName(downloadUrl) || "rendered-video.mp4";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
   };
 
   const getDisplayFileName = (url: string) => {
+    if (state?.fileName) {
+      return state.fileName;
+    }
     if (renderType === "ssr") {
       return url.split("/").pop();
     }
@@ -197,7 +200,7 @@ const RenderControls: React.FC<RenderControlsProps> = ({
         title={!isRenderingEnabled ? "Rendering is currently disabled" : undefined}
       >
         {!isRenderingEnabled ? (
-          "Render Video"
+          "Download Video"
         ) : state.status === "rendering" ? (
           <>
             <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
@@ -209,7 +212,7 @@ const RenderControls: React.FC<RenderControlsProps> = ({
             Preparing...
           </>
         ) : (
-          `Render Video`
+          `Download Video`
         )}
       </Button>
     </>

@@ -1,24 +1,9 @@
 import { SoundOverlayAdaptor } from "../types/overlay-adaptors";
 import { StandardAudio } from "../types/media-adaptors";
 
-const PUBLIC_SONG_FILES = [
-  "bingbingbing.mp3",
-  "cinemaedit.mp3",
-  "Double_Take.mp3",
-  "editor-sample-fashionkilla.mp3",
-  "electric.mp3",
-  "electricDemo2.MP3",
-  "Factory.mp3",
-  "FashionKilla.mp3",
-  "LoveMe.mp3",
-  "LoveMeAudio.mp3",
-  "pieceofheaven.mp3",
-  "slowmospanish.mp3",
-  "test.mp3",
-  "TouchTheSky.mp3",
-  "UpToSomething.mp3",
-  "Way_Down_We_Go.mp3",
-] as const;
+// Legacy public songs were removed from the editor; keep the list empty so no
+// old tracks surface in the UI.
+const PUBLIC_SONG_FILES: readonly string[] = [];
 
 const normaliseTitle = (file: string) =>
   file.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");

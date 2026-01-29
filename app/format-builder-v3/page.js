@@ -5619,9 +5619,9 @@ const FormatBuilderPage = ({ initialSongSlug = null, initialJobId = null } = {})
                   setImportJobId(null);
                   setImportError(null);
                   const sampleSong = {
-                    slug: "editor-sample-fashionkilla",
-                    path: "/songs/editor-sample-fashionkilla.mp3",
-                    displayName: "Editor Sample",
+                    slug: "FashionKilla",
+                    path: "/songs/FashionKilla.mp3",
+                    displayName: "Fashion Killa",
                   };
                   setImportPlan(null);
                   handleSongSelect(sampleSong);

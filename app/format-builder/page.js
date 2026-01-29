@@ -2318,6 +2318,17 @@ const FormatBuilderPage = () => {
       setSuccessMessage("Format saved successfully!");
       setTimeout(() => setSuccessMessage(null), 3000);
       setCaptionTimeDrafts({});
+
+      // Kick off a best-effort slots rebuild so downstream demos stay in sync.
+      try {
+        fetch("/api/slot-curator/rebuild", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ songSlug: selectedSong.slug }),
+        }).catch(() => {});
+      } catch {
+        /* ignore background rebuild errors */
+      }
     } catch (err) {
       setError(err.message);
     } finally {

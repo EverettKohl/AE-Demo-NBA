@@ -361,7 +361,7 @@ export const ProgressRequest = z.object({
 export type ProgressResponse =
   | { type: "error"; message: string }
   | { type: "progress"; progress: number }
-  | { type: "done"; url: string; size: number };
+  | { type: "done"; url: string; size: number; fileName?: string };
 
 // Additional types
 export interface PexelsMedia {
@@ -395,7 +395,7 @@ export type LocalClip = {
   videoUrl: string;
 };
 
-export type AspectRatio = "16:9" | "1:1" | "4:5" | "9:16" | "1.85:1";
+export type AspectRatio = "16:9" | "1:1" | "4:5" | "9:16" | "1.85:1" | "2.39:1";
 
 export interface TimelineRow {
   id: number;

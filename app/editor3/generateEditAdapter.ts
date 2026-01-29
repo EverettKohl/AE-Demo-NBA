@@ -1,6 +1,7 @@
 import { OverlayType, type Overlay, type AspectRatio } from "@editor/reactvideoeditor/types";
 import { frameToTime, timeToFrame } from "./reactvideoeditor/utils/time";
 import { TIMELINE_GRACE_SECONDS } from "./constants";
+import { getDimensionsForAspectRatio } from "./reactvideoeditor/utils/aspect-ratio-transform";
 
 type GenerateEditSegment = {
   index?: number;
@@ -23,7 +24,16 @@ type GenerateEditSegment = {
 
 type GenerateEditPlan = {
   songSlug?: string;
-  songFormat?: { source?: string; meta?: { targetFps?: number; durationSeconds?: number; aspectRatio?: AspectRatio } | null } | null;
+  songFormat?: {
+    source?: string;
+    meta?: {
+      targetFps?: number;
+      durationSeconds?: number;
+      aspectRatio?: AspectRatio;
+      sourceWidth?: number;
+      sourceHeight?: number;
+    } | null;
+  } | null;
   fps?: number;
   totalFrames?: number;
   segments?: GenerateEditSegment[];
@@ -92,6 +102,12 @@ export const buildGenerateEditRveProject = ({
   const graceSeconds = TIMELINE_GRACE_SECONDS;
   const aspectRatio: AspectRatio =
     ((plan?.songFormat as any)?.meta?.aspectRatio as AspectRatio | undefined) || ("16:9" as AspectRatio);
+  const metaWidth = toNumber((plan?.songFormat as any)?.meta?.sourceWidth, 0);
+  const metaHeight = toNumber((plan?.songFormat as any)?.meta?.sourceHeight, 0);
+  const { width: canvasWidth, height: canvasHeight } =
+    metaWidth > 0 && metaHeight > 0
+      ? { width: metaWidth, height: metaHeight }
+      : getDimensionsForAspectRatio(aspectRatio);
   const overlays: Overlay[] = [];
 
   const segments: GenerateEditSegment[] = Array.isArray(plan?.segments) ? plan.segments : [];
@@ -202,8 +218,8 @@ export const buildGenerateEditRveProject = ({
         durationInFrames,
         left: 0,
         top: 0,
-        width: 1280,
-        height: 720,
+        width: canvasWidth,
+        height: canvasHeight,
         rotation: 0,
         isDragging: false,
         content: asset?.cloudinaryId || asset?.videoId || `clip-${idSeed}`,
@@ -212,6 +228,7 @@ export const buildGenerateEditRveProject = ({
         mediaSrcDuration,
         styles: {
           objectFit: "cover",
+          objectPosition: "center center",
           volume: typeof extras?.clipVolume === "number" ? extras.clipVolume : 1,
           animation: { enter: "none", exit: "none" },
         },
@@ -309,7 +326,7 @@ export const buildGenerateEditRveProject = ({
         durationInFrames: sliceDurationFrames,
         left: 0,
         top: 0,
-        width: 1920,
+        width: canvasWidth,
         height: 100,
         rotation: 0,
         isDragging: false,

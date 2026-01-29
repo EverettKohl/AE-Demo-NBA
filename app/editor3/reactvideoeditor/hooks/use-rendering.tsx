@@ -25,6 +25,7 @@ export type State =
       url: string;
       size: number;
       status: "done";
+      fileName?: string;
     };
 
 // Utility function to create a delay
@@ -140,6 +141,7 @@ export const useRendering = (
               size: result.size,
               url: result.url,
               status: "done",
+              ...(result as any).fileName && { fileName: (result as any).fileName },
             });
             pending = false;
             break;

@@ -60,33 +60,8 @@ const SoundsOverlayPanel: React.FC = () => {
     }
   }, [selectedOverlayId, overlays]);
 
-  const STATIC_SONGS: AudioWithSource[] = [
-    "bingbingbing.mp3",
-    "cinemaedit.mp3",
-    "Double_Take.mp3",
-    "editor-sample-fashionkilla.mp3",
-    "electric.mp3",
-    "Factory.mp3",
-    "FashionKilla.mp3",
-    "LoveMe.mp3",
-    "LoveMeAudio.mp3",
-    "pieceofheaven.mp3",
-    "slowmospanish.mp3",
-    "test.mp3",
-    "TouchTheSky.mp3",
-    "UpToSomething.mp3",
-    "Way_Down_We_Go.mp3",
-  ].map((file) => ({
-    id: file,
-    type: "audio" as const,
-    title: file.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " "),
-    artist: "Local",
-    duration: 30,
-    file: `/songs/${file}`,
-    thumbnail: undefined,
-    _source: "public-songs",
-    _sourceDisplayName: "Public songs",
-  }));
+  // Legacy static songs removed; keep empty so old tracks don't surface.
+  const STATIC_SONGS: AudioWithSource[] = [];
 
   /**
    * Load audio tracks from public/songs

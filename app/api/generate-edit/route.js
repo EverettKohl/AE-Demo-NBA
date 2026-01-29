@@ -10,6 +10,7 @@ import {
   createClipPoolSummary,
 } from "@/lib/generateEdit";
 import { buildGenerateEditRveProject } from "@/lib/generateEditAdapter";
+import { getVideoMetadata } from "@/utils/videoValidation";
 import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
@@ -31,6 +32,17 @@ function resolveFfmpegBinary() {
 const GE_PREVIEWS_DIR = path.join(process.cwd(), "public", "previews", "generate-edit");
 const EDITOR_IMPORTS_DIR = path.join(process.cwd(), "data", "editor-imports");
 const DEFAULT_IMPORT_TTL_MS = 24 * 60 * 60 * 1000; // 24h
+
+const normalizeAspectRatioFromDimensions = (width, height) => {
+  if (!width || !height) return null;
+  const ratio = width / height;
+  if (ratio >= 2.2) return "2.39:1";
+  if (ratio >= 1.95) return "1.85:1";
+  if (ratio >= 1.6) return "16:9";
+  if (ratio >= 0.9) return "1:1";
+  if (ratio >= 0.7) return "4:5";
+  return "9:16";
+};
 
 // NOTE: The following caption filter code is intentionally kept in sync with
 // `app/api/format-builder/render/route.js`, so Generate Edit's caption overlay
@@ -867,6 +879,29 @@ export async function POST(request) {
         { status: 500 }
       );
     }
+  }
+
+  // Infer aspect ratio (and source dimensions) from the first materialized clip so the player matches the movie files.
+  try {
+    const existingRatio = plan?.songFormat?.meta?.aspectRatio || null;
+    const firstClipPath = localClipUrls?.[0]?.path || null;
+    if (firstClipPath) {
+      const meta = await getVideoMetadata(firstClipPath);
+      const { width, height } = meta || {};
+      const derivedRatio = normalizeAspectRatioFromDimensions(width, height);
+      const aspectRatio = existingRatio || derivedRatio;
+      if (aspectRatio) {
+        plan.songFormat = plan?.songFormat || {};
+        plan.songFormat.meta = {
+          ...(plan.songFormat.meta || {}),
+          aspectRatio,
+          sourceWidth: width || plan?.songFormat?.meta?.sourceWidth,
+          sourceHeight: height || plan?.songFormat?.meta?.sourceHeight,
+        };
+      }
+    }
+  } catch (err) {
+    console.warn("[generate-edit] Failed to derive aspect ratio from source clip", err);
   }
 
   // Build editor import payload with local MP4s.

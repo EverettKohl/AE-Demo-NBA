@@ -24,6 +24,10 @@ export function getDimensionsForAspectRatio(aspectRatio: AspectRatio): CanvasDim
       return { width: 1080, height: 1350 };
     case "1:1":
       return { width: 1080, height: 1080 };
+    case "2.39:1":
+      return { width: 2560, height: 1070 }; // Cinematic scope (2.39:1)
+    case "1.85:1":
+      return { width: 1998, height: 1080 }; // Standard DCI 1.85:1
     case "16:9":
       return { width: 1280, height: 720 };
     default:

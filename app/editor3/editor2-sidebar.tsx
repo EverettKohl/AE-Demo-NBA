@@ -15,6 +15,7 @@ import {
   Sparkles,
   Bot,
   Search,
+  Zap,
 } from "lucide-react";
 
 import { Overlay, OverlayType } from "@editor/reactvideoeditor/types";
@@ -37,8 +38,6 @@ import lowClipAssetMap from "@/data/clip-asset-map.low.json";
 import { useTimelinePositioning } from "@editor/reactvideoeditor/hooks/use-timeline-positioning";
 import { getClipUrl } from "@/utils/cloudinary";
 import { FPS, VIDEO_HEIGHT, VIDEO_WIDTH } from "./constants";
-import SongFormatPicker from "@/components/SongFormatPicker";
-import LoadingSpinner from "@/components/LoadingSpinner";
 
 import {
   Sidebar,
@@ -51,17 +50,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@editor/reactvideoeditor/components/ui/sidebar";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetClose,
-} from "@editor/reactvideoeditor/components/ui/sheet";
 import { Button } from "@editor/reactvideoeditor/components/ui/button";
 import { cn } from "@editor/reactvideoeditor/utils/general/utils";
 import styles from "./editor2-layout.module.css";
+import { InstantDemoOverlay } from "./InstantDemoOverlay";
+import { GenerateEditOverlay } from "./GenerateEditOverlay";
 
 type NavItem = {
   title: string;
@@ -110,6 +103,7 @@ const applyCloudName = (url?: string | null) => {
 const RAIL_TOOLTIP_LABELS = new Set([
   "AI Clip Fill",
   "Generate Edit",
+  "Instant Demo",
   "Search",
   "Clips",
   "Images",
@@ -331,78 +325,17 @@ export const Editor2Sidebar: React.FC = () => {
     region: null,
   });
 
-  const [geSheetOpen, setGeSheetOpen] = React.useState(false);
-  const [geFormats, setGeFormats] = React.useState<any[]>([]);
-  const [geSelectedSong, setGeSelectedSong] = React.useState("");
-  const [geChronological, setGeChronological] = React.useState(false);
-  const [geLoadingFormats, setGeLoadingFormats] = React.useState(false);
-  const [geRunning, setGeRunning] = React.useState(false);
-  const [geStatus, setGeStatus] = React.useState("Select a song format and run Generate Edit.");
-  const [geError, setGeError] = React.useState("");
-  const [geJobId, setGeJobId] = React.useState<string | null>(null);
-  const [geLaunchUrl, setGeLaunchUrl] = React.useState<string | null>(null);
-  const geAbortRef = React.useRef<AbortController | null>(null);
-  const geRunIdRef = React.useRef(0);
-
-  React.useEffect(() => {
-    let cancelled = false;
-    const loadFormats = async () => {
-      setGeLoadingFormats(true);
-      try {
-        const res = await fetch("/api/song-edit");
-        if (!res.ok) throw new Error("Unable to load song formats");
-        const payload = await res.json();
-        const formatsList = Array.isArray(payload.formats) ? payload.formats : [];
-        if (!cancelled) {
-          setGeFormats(formatsList);
-          if (formatsList.length) setGeSelectedSong((prev) => prev || formatsList[0].slug);
-        }
-      } catch (err: any) {
-        if (!cancelled) setGeError(err?.message || "Failed to load formats");
-      } finally {
-        if (!cancelled) setGeLoadingFormats(false);
-      }
-    };
-    loadFormats();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const waitForEditorImport = React.useCallback(
-    async (
-      jobId: string,
-      {
-        signal,
-        timeoutMs = 2 * 60 * 1000,
-        pollMs = 1500,
-      }: { signal?: AbortSignal; timeoutMs?: number; pollMs?: number } = {}
-    ) => {
-      const start = Date.now();
-      while (true) {
-        if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
-        const res = await fetch(`/api/editor-imports/${encodeURIComponent(jobId)}`, { signal });
-        if (res.ok) {
-          const data = await res.json();
-          if (data?.rveProject) return data;
-        } else if (res.status >= 400 && res.status < 500 && res.status !== 404) {
-          const errPayload = await res.json().catch(() => null);
-          throw new Error(errPayload?.error || "Failed to load Generate Edit import");
-        }
-        if (Date.now() - start > timeoutMs) {
-          throw new Error("Generate Edit is still preparing. Please try again in a moment.");
-        }
-        await new Promise((resolve) => setTimeout(resolve, pollMs));
-      }
-    },
-    []
-  );
+  const [geOverlayOpen, setGeOverlayOpen] = React.useState(false);
+  const [instantOpen, setInstantOpen] = React.useState(false);
 
   const selectedOverlay =
     selectedOverlayId !== null ? overlays.find((overlay) => overlay.id === selectedOverlayId) : null;
   const shouldShowBackButton = selectedOverlay && selectedOverlay.type === activePanel;
 
   const handleNavigate = (panel: OverlayType) => {
+    // Close long-running overlays when switching panels
+    setInstantOpen(false);
+    setGeOverlayOpen(false);
     setActivePanel(panel);
     setIsOpen(true);
   };
@@ -638,74 +571,6 @@ export const Editor2Sidebar: React.FC = () => {
     }
   }, [addAtPlayhead, buildProxyUrl, clipPool, currentFrame, overlays, setOverlays, setSelectedOverlayId]);
 
-  const handleGenerateEditRun = React.useCallback(async () => {
-    if (!geSelectedSong) {
-      setGeError("Pick a song format first");
-      return;
-    }
-    geAbortRef.current?.abort();
-    const abortController = new AbortController();
-    geAbortRef.current = abortController;
-    const runId = geRunIdRef.current + 1;
-    geRunIdRef.current = runId;
-    setGeRunning(true);
-    setGeError("");
-    setGeStatus("Running Generate Edit…");
-    setGeJobId(null);
-    setGeLaunchUrl(null);
-    setSelectedOverlayId(null);
-    setOverlays([]);
-    try {
-      const res = await fetch("/api/generate-edit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          songSlug: geSelectedSong,
-          chronologicalOrder: geChronological,
-          includeCaptions: false,
-          materialize: true,
-        }),
-      });
-      const payload = await res.json();
-      if (!res.ok) {
-        throw new Error(payload?.error || "Generate Edit failed");
-      }
-      const nextJobId = payload?.jobId || null;
-      if (runId !== geRunIdRef.current) return;
-      setGeJobId(nextJobId);
-      if (nextJobId) {
-        setGeStatus("Generate Edit complete. Finalizing assets…");
-        const importPayload = await waitForEditorImport(nextJobId, { signal: abortController.signal }).catch((err) => {
-          if (abortController.signal.aborted) return null;
-          throw err;
-        });
-        if (!importPayload) return;
-        if (runId !== geRunIdRef.current || abortController.signal.aborted) return;
-        const nextUrl = `/editor3?geImport=${encodeURIComponent(nextJobId)}`;
-        setGeLaunchUrl(nextUrl);
-        setGeStatus("Generated. Open in editor to load clips.");
-        if (typeof window !== "undefined") {
-          setGeStatus("Generated. Loading into editor…");
-          window.location.href = nextUrl;
-        }
-        return;
-      }
-      setGeStatus("Generated. Open in editor to load clips.");
-    } catch (err: any) {
-      if (!abortController.signal.aborted && runId === geRunIdRef.current) {
-        setGeError(err?.message || "Generate Edit failed");
-        setGeStatus("Generate Edit failed. Resolve errors and retry.");
-      }
-    } finally {
-      if (runId === geRunIdRef.current) {
-        setGeRunning(false);
-        if (geAbortRef.current === abortController) {
-          geAbortRef.current = null;
-        }
-      }
-    }
-  }, [geChronological, geSelectedSong, setOverlays, setSelectedOverlayId, waitForEditorImport]);
-
   return (
     <Sidebar
       collapsible="icon"
@@ -720,6 +585,47 @@ export const Editor2Sidebar: React.FC = () => {
           <SidebarGroup className={styles.sidebarGroup}>
             <div className={styles.sidebarGroupLabel}>AI</div>
             <SidebarMenu className={styles.sidebarMenu}>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  onClick={() => {
+                    setGeOverlayOpen(false);
+                    setInstantOpen(true);
+                  }}
+                  data-label="Instant Demo"
+                  className={cn(styles.navPill)}
+                  title="Instant Demo"
+                  aria-label="Instant Demo"
+                  onMouseEnter={(e) => {
+                    if (!RAIL_TOOLTIP_LABELS.has("Instant Demo")) return;
+                    setTooltip({
+                      label: "Instant Demo",
+                      x: e.clientX,
+                      y: e.clientY,
+                      visible: true,
+                      region: "rail",
+                    });
+                  }}
+                  onMouseMove={(e) => {
+                    if (!RAIL_TOOLTIP_LABELS.has("Instant Demo")) return;
+                    setTooltip((t) => ({
+                      ...t,
+                      x: e.clientX,
+                      y: e.clientY,
+                      region: "rail",
+                    }));
+                  }}
+                  onMouseLeave={() =>
+                    setTooltip((t) => ({
+                      ...t,
+                      visible: false,
+                      region: null,
+                    }))
+                  }
+                >
+                  <Zap />
+                  <span className={styles.navLabel}>Instant</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={handleAutoAiClips}
@@ -760,7 +666,10 @@ export const Editor2Sidebar: React.FC = () => {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
-                  onClick={() => setGeSheetOpen(true)}
+                  onClick={() => {
+                    setInstantOpen(false);
+                    setGeOverlayOpen(true);
+                  }}
                   data-label="Generate Edit"
                   className={cn(styles.navPill)}
                   title="Generate Edit"
@@ -943,92 +852,8 @@ export const Editor2Sidebar: React.FC = () => {
         </div>
       )}
 
-      <Sheet open={geSheetOpen} onOpenChange={setGeSheetOpen}>
-        <SheetContent
-          side="right"
-          className="bg-[#0b0f1a] text-white border-l border-white/10 w-full sm:max-w-xl"
-        >
-          <SheetHeader className="mb-4">
-            <SheetTitle>Generate Edit</SheetTitle>
-            <SheetClose asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-white/70 hover:text-white">
-                <X className="h-4 w-4" />
-              </Button>
-            </SheetClose>
-          </SheetHeader>
-          <SheetDescription className="text-white/70 mb-4">
-            Build a Generate Edit and load it into the editor using locally saved clips (no Cloudinary streaming).
-          </SheetDescription>
-
-          <div className="space-y-4">
-            <SongFormatPicker
-              label="Song"
-              helper="Choose a format to generate."
-              formats={geFormats}
-              loading={geLoadingFormats}
-              selectedSong={geSelectedSong}
-              onSelect={setGeSelectedSong}
-              disabled={geRunning}
-            />
-
-            <div className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3 py-2">
-              <div>
-                <p className="text-xs uppercase tracking-[0.25em] text-white/60">Chronologic order</p>
-                <p className="text-sm text-white/70">
-                  {geChronological ? "Timeline coverage locked." : "Shuffle mode favors visual punch."}
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setGeChronological((prev) => !prev)}
-                disabled={geRunning}
-                className="text-white border-white/20"
-              >
-                {geChronological ? "On" : "Off"}
-              </Button>
-            </div>
-
-            <Button
-              type="button"
-              onClick={handleGenerateEditRun}
-              disabled={geRunning || !geSelectedSong}
-              className="w-full bg-emerald-500 text-black hover:bg-emerald-400"
-            >
-              {geRunning ? (
-                <span className="inline-flex items-center gap-2">
-                  <LoadingSpinner size="sm" /> Running…
-                </span>
-              ) : (
-                "Generate Edit"
-              )}
-            </Button>
-
-            {geError && <p className="text-sm text-rose-300">{geError}</p>}
-            <p className="text-sm text-white/70">{geStatus}</p>
-
-            {geLaunchUrl && (
-              <div className="space-y-2 rounded-lg border border-white/10 bg-white/5 p-3">
-                <div className="flex items-center justify-between text-xs text-white/60">
-                  <span className="uppercase tracking-[0.25em]">Job</span>
-                  <span>{geJobId}</span>
-                </div>
-                <Button
-                  type="button"
-                  className="w-full"
-                  disabled={geRunning}
-                  onClick={() => {
-                    if (geLaunchUrl) window.location.href = geLaunchUrl;
-                  }}
-                >
-                  Open in editor
-                </Button>
-                <p className="text-xs text-white/60 break-all">{geLaunchUrl}</p>
-              </div>
-            )}
-          </div>
-        </SheetContent>
-      </Sheet>
+      <GenerateEditOverlay open={geOverlayOpen} onClose={() => setGeOverlayOpen(false)} />
+      <InstantDemoOverlay open={instantOpen} onClose={() => setInstantOpen(false)} />
     </Sidebar>
   );
 };

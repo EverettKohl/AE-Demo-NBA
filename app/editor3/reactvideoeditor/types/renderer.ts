@@ -33,7 +33,7 @@ export interface ProgressParams {
  */
 export interface RenderTypeInfo {
   /** The type of rendering (ssr or lambda) */
-  type: "ssr" | "lambda";
+  type: "ssr" | "lambda" | "ffmpeg";
   /** Entry point for the renderer */
   entryPoint: string;
 }

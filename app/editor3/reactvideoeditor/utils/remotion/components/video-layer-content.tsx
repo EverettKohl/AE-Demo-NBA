@@ -262,6 +262,7 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
     width: "100%",
     height: "100%",
     objectFit: overlay.styles.objectFit || "cover",
+    objectPosition: (overlay.styles as any)?.objectPosition || "center center",
     opacity: overlay.styles.opacity,
     transform: overlay.styles.transform || "none",
     filter: overlay.styles.filter || "none",

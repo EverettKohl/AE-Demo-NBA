@@ -83,24 +83,8 @@ export const defaultAudioAdaptor = createStaticAudioAdaptor(
  * Local songs stored in /public/songs
  * Using the public path ensures the audio tab can surface bundled assets.
  */
-const localSongFiles = [
-  'bingbingbing.mp3',
-  'cinemaedit.mp3',
-  'Double_Take.mp3',
-  'editor-sample-fashionkilla.mp3',
-  'electric.mp3',
-  'electricDemo2.MP3',
-  'Factory.mp3',
-  'FashionKilla.mp3',
-  'LoveMe.mp3',
-  'LoveMeAudio.mp3',
-  'pieceofheaven.mp3',
-  'slowmospanish.mp3',
-  'test.mp3',
-  'TouchTheSky.mp3',
-  'UpToSomething.mp3',
-  'Way_Down_We_Go.mp3',
-];
+// Legacy local songs were removed from the editor; keep empty to hide them.
+const localSongFiles: string[] = [];
 
 const LOCAL_SONG_DURATION_FALLBACK = 120; // seconds, real duration resolved when added to timeline
 

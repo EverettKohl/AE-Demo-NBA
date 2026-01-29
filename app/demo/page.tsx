@@ -9,72 +9,17 @@ const ReactVideoEditorClient = dynamic(
   { ssr: false }
 );
 
-type SlotCandidate = {
-  videoId?: string | null;
-  indexId?: string | null;
-  cloudinaryId?: string | null;
-  start?: number;
-  end?: number;
-  durationSeconds?: number;
-  tags?: string[] | null;
-  intents?: string[] | null;
-  bucket?: string | null;
+type Placement = {
+  id: string;
+  startSeconds: number;
+  durationSeconds: number;
+  src: string;
 };
 
-type SlotSegment = {
-  slot: number;
-  targetDuration: number;
-  candidates: SlotCandidate[];
-};
-
-type CoverageEntry = {
-  key: string;
-  target: number;
-  candidateCount: number;
-  slotCount: number;
-};
-
-type SlotsState = {
-  header: {
-    generatedAt?: string;
-    runs?: number;
-    seedsUsed?: number[];
-    formatHash?: string | null;
-    fps?: number;
-    songSlug?: string | null;
-  } | null;
-  segments: SlotSegment[];
-  coverage: Record<string, CoverageEntry>;
-};
-
-type Placement = { slot: number; candidate: SlotCandidate; targetDuration: number };
-
-const MIN_SHOW_MS = 4500;
-const SOFT_CAP_MS = 10_000;
-const HARD_CAP_MS = 50_000;
-
-const formatDate = (value?: string | null) => {
-  if (!value) return "—";
-  try {
-    const date = new Date(value);
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-  } catch {
-    return value;
-  }
-};
-
-const formatDuration = (value?: number | null) => {
-  if (value === null || value === undefined) return "—";
-  return `${Number(value).toFixed(3)}s`;
-};
-
-const uniqueVideos = (candidates: SlotCandidate[]) => {
-  const ids = new Set<string>();
-  candidates.forEach((c) => {
-    const id = c.videoId || c.indexId || c.cloudinaryId;
-    if (id) ids.add(String(id));
-  });
-  return ids.size;
+type DemoRveProject = {
+  overlays?: any[];
+  aspectRatio?: any;
+  fps?: number;
 };
 
 const updateGeImportParam = (jobId: string) => {
@@ -86,113 +31,26 @@ const updateGeImportParam = (jobId: string) => {
 
 export default function SlotCuratorDemoPage() {
   const [songSlug, setSongSlug] = React.useState("cinemaedit");
-  const [runs, setRuns] = React.useState(12);
-  const [maxPerSlot, setMaxPerSlot] = React.useState(6);
-  const [minPerDuration, setMinPerDuration] = React.useState(2);
-
-  const [slotsState, setSlotsState] = React.useState<SlotsState | null>(null);
-  const [loadingSlots, setLoadingSlots] = React.useState(false);
-  const [status, setStatus] = React.useState<string | null>(null);
+  const [status, setStatus] = React.useState<string | null>("Ready");
   const [error, setError] = React.useState<string | null>(null);
-
+  const [isLoading, setIsLoading] = React.useState(false);
   const [placements, setPlacements] = React.useState<Placement[]>([]);
-  const [placementProgress, setPlacementProgress] = React.useState(0);
-  const [overlayState, setOverlayState] = React.useState<"idle" | "assembling" | "animating" | "cooldown" | "error">(
-    "idle"
-  );
-  const [overlayError, setOverlayError] = React.useState<string | null>(null);
-  const [overlayStartedAt, setOverlayStartedAt] = React.useState<number | null>(null);
-
-  const loadSlots = React.useCallback(
-    async (slug: string) => {
-      setLoadingSlots(true);
-      setError(null);
-      try {
-        const res = await fetch(`/api/slot-curator/slots?songSlug=${encodeURIComponent(slug)}`);
-        if (!res.ok) {
-          setSlotsState(null);
-          if (res.status !== 404) {
-            const data = await res.json().catch(() => ({}));
-            setError(data?.error || "Failed to load slots");
-          }
-          return;
-        }
-        const data = await res.json();
-        setSlotsState({
-          header: data.header ?? data.slots?.header ?? null,
-          segments: data.slots?.segments ?? [],
-          coverage: data.coverage ?? {},
-        });
-      } catch (err: any) {
-        setError(err?.message || "Failed to load slots");
-      } finally {
-        setLoadingSlots(false);
-      }
-    },
-    [setSlotsState]
-  );
-
-  React.useEffect(() => {
-    loadSlots(songSlug);
-  }, [songSlug, loadSlots]);
-
-  const handleRebuild = async () => {
-    setStatus("Rebuilding slots…");
-    setError(null);
-    try {
-      const res = await fetch("/api/slot-curator/rebuild", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ songSlug, runs, maxPerSlot, minPerDuration }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data?.error || "Rebuild failed");
-        return;
-      }
-      setSlotsState({
-        header: data.slots?.header ?? null,
-        segments: data.slots?.segments ?? [],
-        coverage: data.coverage ?? {},
-      });
-      setStatus("Slots rebuilt");
-    } catch (err: any) {
-      setError(err?.message || "Rebuild failed");
-    } finally {
-      setTimeout(() => setStatus(null), 1500);
-    }
-  };
-
-  const handleReset = async () => {
-    setStatus("Resetting slots…");
-    setError(null);
-    try {
-      const res = await fetch(`/api/slot-curator/reset?songSlug=${encodeURIComponent(songSlug)}`, { method: "POST" });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setError(data?.error || "Reset failed");
-        return;
-      }
-      setSlotsState(null);
-      setStatus("Slots reset");
-    } catch (err: any) {
-      setError(err?.message || "Reset failed");
-    } finally {
-      setTimeout(() => setStatus(null), 1200);
-    }
-  };
+  const [stagedCount, setStagedCount] = React.useState(0);
+  const [pendingJobId, setPendingJobId] = React.useState<string | null>(null);
+  const [isAnimating, setIsAnimating] = React.useState(false);
+  const [rveProject, setRveProject] = React.useState<DemoRveProject | null>(null);
 
   const handleAssemble = async () => {
-    setOverlayState("assembling");
-    setOverlayStartedAt(Date.now());
-    setOverlayError(null);
-    setPlacements([]);
-    setPlacementProgress(0);
+    setIsLoading(true);
     setStatus("Assembling demo import…");
     setError(null);
-
+    setPlacements([]);
+    setStagedCount(0);
+    setPendingJobId(null);
+    setIsAnimating(false);
+    setRveProject(null);
     try {
-      const res = await fetch("/api/slot-curator/assemble", {
+      const res = await fetch("/api/demo/instant-assemble", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ songSlug }),
@@ -200,162 +58,163 @@ export default function SlotCuratorDemoPage() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         const msg = data?.error || "Assembly failed";
-        setOverlayError(msg);
-        setOverlayState("error");
         setError(msg);
+        setStatus(null);
+        return;
+      }
+      const partClips =
+        Array.isArray(data.parts) && data.parts.length
+          ? data.parts
+              .filter((p: any) => p?.renderUrl)
+              .map((p: any, idx: number) => ({
+                id: `part-${idx + 1}`,
+                renderUrl: p.renderUrl,
+                durationSeconds: Number(p.durationSeconds) || 0,
+              }))
+          : [];
+
+      if (!partClips.length) {
+        setError("No parts available. Prepare instant-edit parts first.");
+        setStatus(null);
         return;
       }
 
-      const placementList: Placement[] = Array.isArray(data.placements) ? data.placements : [];
-      setPlacements(placementList);
-      setPlacementProgress(0);
-      setOverlayState("animating");
-      if (data.jobId) {
-        updateGeImportParam(data.jobId);
-      }
-      setStatus("Loaded demo import");
+      const overlays: any[] = [];
+      let cursor = 0;
+      partClips.forEach((p, idx) => {
+        const dur = Math.max(Number(p.durationSeconds) || 0, 0.1);
+        overlays.push({
+          id: `part-${idx + 1}`,
+          type: "video",
+          row: 0,
+          from: Math.round(cursor * (data.fps || 30)),
+          durationInFrames: Math.max(1, Math.round(dur * (data.fps || 30))),
+          src: p.renderUrl,
+          content: p.renderUrl,
+          trimStart: 0,
+          trimEnd: dur,
+          meta: {
+            durationSeconds: dur,
+            startSeconds: cursor,
+            endSeconds: cursor + dur,
+            renderUrl: p.renderUrl,
+          },
+        });
+        cursor += dur;
+      });
+
+      setPlacements(
+        overlays.map((o, idx) => ({
+          id: o.id || `part-${idx + 1}`,
+          startSeconds: o.meta?.startSeconds ?? 0,
+          durationSeconds: partClips[idx]?.durationSeconds || 0.1,
+          src: o.src,
+        }))
+      );
+      setRveProject({
+        overlays,
+        aspectRatio: data.aspectRatio || "16:9",
+        fps: data.fps || 30,
+      });
+      setStagedCount(overlays.length ? 1 : 0);
+      setPendingJobId(data.jobId || null);
+      setIsAnimating(overlays.length > 0);
+      setStatus(overlays.length ? "Placing clips…" : "Demo import loaded");
     } catch (err: any) {
-      const msg = err?.message || "Assembly failed";
-      setOverlayError(msg);
-      setOverlayState("error");
-      setError(msg);
+      setError(err?.message || "Assembly failed");
+      setStatus(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   React.useEffect(() => {
-    if (overlayState !== "animating") return;
-    if (!placements.length) {
-      setOverlayState("cooldown");
-      return;
-    }
+    if (!isAnimating || !rveProject?.overlays?.length) return;
     let cancelled = false;
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    let idx = 0;
-
-    const tick = () => {
-      if (cancelled) return;
-      idx += 1;
-      setPlacementProgress((prev) => {
-        const next = Math.min(placements.length, prev + 1);
-        if (next >= placements.length) {
-          setOverlayState("cooldown");
+    const total = rveProject.overlays.length;
+    const placeNext = () => {
+      setStagedCount((prev) => {
+        const next = Math.min(prev + 1, total);
+        if (next >= total) {
+          setIsAnimating(false);
+          if (pendingJobId) {
+            updateGeImportParam(pendingJobId);
+          }
+          setStatus("Demo import loaded");
+        } else {
+          setStatus(`Placing clip ${next} / ${total}`);
+          setTimeout(() => {
+            if (!cancelled) placeNext();
+          }, 180);
         }
         return next;
       });
-      if (idx < placements.length) {
-        const delay = 150 + Math.floor(Math.random() * 100);
-        timer = setTimeout(tick, delay);
-      }
     };
-
-    timer = setTimeout(tick, 180);
+    setStatus(`Placing clip 1 / ${total}`);
+    const starter = setTimeout(() => {
+      if (!cancelled) placeNext();
+    }, 140);
     return () => {
       cancelled = true;
-      if (timer) clearTimeout(timer);
+      clearTimeout(starter);
     };
-  }, [overlayState, placements]);
-
-  React.useEffect(() => {
-    if (overlayState !== "assembling" && overlayState !== "animating") return;
-    const hardTimer = setTimeout(() => {
-      setOverlayError("Demo overlay timed out after 50s.");
-      setOverlayState("error");
-    }, HARD_CAP_MS);
-    const softTimer = setTimeout(() => {
-      if (overlayState === "animating") {
-        setOverlayState("cooldown");
-      }
-    }, SOFT_CAP_MS);
-    return () => {
-      clearTimeout(hardTimer);
-      clearTimeout(softTimer);
-    };
-  }, [overlayState]);
-
-  React.useEffect(() => {
-    if (overlayState !== "cooldown") return;
-    const started = overlayStartedAt ?? Date.now();
-    const elapsed = Date.now() - started;
-    const wait = Math.max(MIN_SHOW_MS - elapsed, 0);
-    const timer = setTimeout(() => {
-      setOverlayState("idle");
-      setOverlayError(null);
-    }, Math.max(wait, 300));
-    return () => clearTimeout(timer);
-  }, [overlayState, overlayStartedAt]);
-
-  const coverageRows = React.useMemo(() => {
-    if (!slotsState?.coverage) return [];
-    return Object.values(slotsState.coverage || {}).sort((a, b) => Number(a.target) - Number(b.target));
-  }, [slotsState]);
-
-  const currentPlacement = placements[Math.min(placementProgress, placements.length - 1)] || null;
-  const overlayVisible = overlayState !== "idle";
-  const overlayProgress =
-    placements.length > 0 ? Math.min(1, placementProgress / placements.length) * 100 : overlayState === "assembling" ? 12 : 0;
+  }, [isAnimating, pendingJobId, rveProject?.overlays]);
 
   return (
-    <div className={styles.page}>
-      <div className={styles.editorShell}>
-        <ReactVideoEditorClient />
-        <div className={styles.demoOverlay}>
-          <div className={styles.demoOverlayShade} />
-          <div className={styles.demoOverlayPanel}>
-            <div className={styles.demoOverlayTitle}>Slot-curation demo</div>
-            <div className={styles.demoOverlaySubtitle}>
-              Generate a demo edit to load the editor with a prepared import. The editor UI is locked for this demo.
-            </div>
-            <button className={`${styles.button} ${styles.primary} ${styles.demoOverlayButton}`} onClick={handleAssemble}>
-              Generate edit
-            </button>
+    <div className={`${styles.page} ${styles.demoOnly}`}>
+      <div className={styles.controlsSection}>
+        <div className={styles.demoOverlayTitle}>Slot-curation demo</div>
+        <div className={styles.demoOverlaySubtitle}>
+          Generate a demo edit using curated slots. The rest of the editor remains unchanged.
+        </div>
+        <div className={styles.overlayControls}>
+          <div className={styles.inputGroup}>
+            <label className={styles.inputLabel}>Song slug</label>
+            <select
+              className={styles.selectInput}
+              value={songSlug}
+              onChange={(e) => setSongSlug(e.target.value)}
+            >
+              <option value="bingbingbing">bingbingbing</option>
+              <option value="cinemaedit">cinemaedit</option>
+              <option value="electric">electric</option>
+              <option value="factory">factory</option>
+              <option value="touchthesky">touchthesky</option>
+              <option value="loveme">loveme</option>
+            </select>
           </div>
+          <button className={`${styles.button} ${styles.primary}`} onClick={handleAssemble} disabled={isLoading}>
+            {isLoading ? "Generating…" : "Generate edit"}
+          </button>
+        </div>
+        <div className={styles.metaRow}>
+          {status && <span className={styles.status}>{status}</span>}
+          {error && <span className={`${styles.status} ${styles.error}`}>{error}</span>}
         </div>
       </div>
 
-      <div className={`${styles.overlayRoot} ${overlayVisible ? "" : styles.overlayHidden}`}>
-        {overlayVisible && (
-          <>
-            <div className={styles.overlayShade} />
-            <div className={styles.overlayGuard} />
-            <div className={styles.overlayPanel}>
-              <div className={styles.overlayTitle}>
-                {overlayState === "assembling" && "Preparing demo…"}
-                {overlayState === "animating" && "Placing clips…"}
-                {overlayState === "cooldown" && "Finalizing…"}
-                {overlayState === "error" && "Demo failed"}
-              </div>
-              <div className={styles.overlaySubtitle}>
-                {overlayError ||
-                  (overlayState === "assembling"
-                    ? "Loading slots and assembling a plan."
-                    : "Animating clip placements while the real editor import loads.")}
-              </div>
-              <div className={styles.progressBar}>
-                <div className={styles.progressFill} style={{ width: `${overlayProgress}%` }} />
-              </div>
-              {placements.length > 0 && (
-                <div className={styles.placementList}>
-                  {placements.map((p, idx) => {
-                    const id = p.candidate.videoId || p.candidate.indexId || p.candidate.cloudinaryId || `slot-${p.slot}`;
-                    const active = idx === placementProgress - 1;
-                    return (
-                      <span key={`${p.slot}-${idx}`} className={`${styles.pill} ${active ? styles.placementActive : ""}`}>
-                        {p.slot}: {id}
-                      </span>
-                    );
-                  })}
-                </div>
-              )}
-              {overlayState === "error" && (
-                <div className={styles.buttons}>
-                  <button className={styles.button} onClick={() => setOverlayState("idle")}>
-                    Dismiss
-                  </button>
-                </div>
-              )}
+      <div className={styles.timelineContainer}>
+        {placements.length > 0 && (
+          <div className={styles.timelineHud}>
+            <div className={styles.placementList}>
+              {placements.slice(0, stagedCount).map((p, idx) => {
+                const id = p.src || `clip-${idx + 1}`;
+                return (
+                  <span key={`${p.id}-${idx}`} className={`${styles.pill} ${styles.placementActive}`}>
+                    {idx + 1}. {id}
+                  </span>
+                );
+              })}
             </div>
-          </>
+          </div>
         )}
+        <ReactVideoEditorClient
+          defaultOverlays={rveProject?.overlays?.slice(0, stagedCount) || []}
+          defaultAspectRatio={rveProject?.aspectRatio || "16:9"}
+          fpsOverride={rveProject?.fps || 30}
+          loadingOverride={false}
+          projectIdOverride="demo-live-timeline"
+        />
       </div>
     </div>
   );

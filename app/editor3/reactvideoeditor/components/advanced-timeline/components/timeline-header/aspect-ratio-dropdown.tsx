@@ -51,6 +51,13 @@ const ASPECT_RATIO_OPTIONS = [
     color: "text-amber-500"
   },
   {
+    value: "2.39:1" as AspectRatio,
+    label: "2.39:1",
+    description: "Scope",
+    icon: Clapperboard,
+    color: "text-orange-500"
+  },
+  {
     value: "9:16" as AspectRatio,
     label: "9:16", 
     description: "Vertical",

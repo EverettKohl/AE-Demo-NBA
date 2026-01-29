@@ -22,7 +22,23 @@ const PROJECT_ID = "TestComponent";
 const SIDEBAR_ICON_WIDTH = "3.6rem";
 const SIDEBAR_PANEL_WIDTH = 288; // px
 
-export function ReactVideoEditorClient() {
+type DemoOverrides = {
+  defaultOverlays?: any[] | null;
+  defaultAspectRatio?: any;
+  defaultBackgroundColor?: string | null;
+  fpsOverride?: number | null;
+  projectIdOverride?: string | null;
+  loadingOverride?: boolean | null;
+};
+
+export function ReactVideoEditorClient({
+  defaultOverlays: overrideOverlays = null,
+  defaultAspectRatio: overrideAspectRatio = null,
+  defaultBackgroundColor: overrideBackground = null,
+  fpsOverride = null,
+  projectIdOverride = null,
+  loadingOverride = null,
+}: DemoOverrides = {}) {
   const { project: geImport, loading: loadingGe } = useGenerateEditImport();
   const { project: qe6Import, loading: loadingQe6 } = useQuickEdit6Import();
 
@@ -50,22 +66,22 @@ export function ReactVideoEditorClient() {
 
   // If an import is present, prefer it over any fallback/project load.
   const useImport = Boolean(activeImport);
-  const resolvedOverlays = React.useMemo(
-    () => (useImport ? (activeImport?.overlays as any) : overlays),
-    [useImport, activeImport, overlays]
-  );
-  const resolvedAspectRatio = React.useMemo(
-    () => (useImport ? activeImport?.aspectRatio : aspectRatio) || undefined,
-    [useImport, activeImport, aspectRatio]
-  );
-  const resolvedBackgroundColor = React.useMemo(
-    () => (useImport ? (activeImport?.backgroundColor as string | undefined) : backgroundColor) || undefined,
-    [useImport, activeImport, backgroundColor]
-  );
-  const resolvedLoading = useImport ? (geImport ? loadingGe : loadingQe6) : isLoading;
+  const resolvedOverlays = React.useMemo(() => {
+    if (overrideOverlays) return overrideOverlays as any;
+    return useImport ? (activeImport?.overlays as any) : overlays;
+  }, [overrideOverlays, useImport, activeImport, overlays]);
+  const resolvedAspectRatio = React.useMemo(() => {
+    if (overrideAspectRatio) return overrideAspectRatio;
+    return (useImport ? activeImport?.aspectRatio : aspectRatio) || undefined;
+  }, [overrideAspectRatio, useImport, activeImport, aspectRatio]);
+  const resolvedBackgroundColor = React.useMemo(() => {
+    if (overrideBackground !== null && overrideBackground !== undefined) return overrideBackground || undefined;
+    return (useImport ? (activeImport?.backgroundColor as string | undefined) : backgroundColor) || undefined;
+  }, [overrideBackground, useImport, activeImport, backgroundColor]);
+  const resolvedLoading = loadingOverride !== null && loadingOverride !== undefined ? loadingOverride : useImport ? (geImport ? loadingGe : loadingQe6) : isLoading;
   const resolvedShowModal = useImport ? false : showModal;
 
-  const resolvedProjectId = React.useMemo(() => projectIdForAutosave || PROJECT_ID, [projectIdForAutosave]);
+  const resolvedProjectId = React.useMemo(() => projectIdOverride || projectIdForAutosave || PROJECT_ID, [projectIdOverride, projectIdForAutosave]);
   const editorKey = React.useMemo(
     () =>
       activeImport?.meta?.projectId ||
@@ -106,11 +122,11 @@ export function ReactVideoEditorClient() {
     },
   ];
 
-  const ssrRenderer = React.useMemo(
+  const ffmpegRenderer = React.useMemo(
     () =>
-      new HttpRenderer("/api/latest/ssr", {
-        type: "ssr",
-        entryPoint: "/api/latest/ssr",
+      new HttpRenderer("/api/render", {
+        type: "ffmpeg",
+        entryPoint: "/api/render",
       }),
     []
   );
@@ -131,15 +147,15 @@ export function ReactVideoEditorClient() {
             onCancel={onCancelLoad}
           />
           <ReactVideoEditor
-            key={editorKey}
-            projectId={resolvedProjectId}
-            defaultOverlays={resolvedOverlays}
-            defaultAspectRatio={resolvedAspectRatio}
-            defaultBackgroundColor={resolvedBackgroundColor}
-            isLoadingProject={resolvedLoading}
-            fps={activeImport?.fps || 30}
+      key={editorKey}
+      projectId={resolvedProjectId}
+      defaultOverlays={resolvedOverlays}
+      defaultAspectRatio={resolvedAspectRatio}
+      defaultBackgroundColor={resolvedBackgroundColor}
+      isLoadingProject={resolvedLoading}
+      fps={fpsOverride || activeImport?.fps || 30}
             showAutosaveStatus={!activeImport}
-            renderer={ssrRenderer}
+            renderer={ffmpegRenderer}
             disabledPanels={[]}
             availableThemes={availableThemes}
             defaultTheme="dark"

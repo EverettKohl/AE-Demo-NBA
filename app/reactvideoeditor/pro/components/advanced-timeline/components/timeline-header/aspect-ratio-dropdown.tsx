@@ -15,6 +15,7 @@ import {
   Square, 
   Smartphone, 
   Instagram,
+  Clapperboard,
   Settings2,
   Check,
   ChevronDown
@@ -41,6 +42,20 @@ const ASPECT_RATIO_OPTIONS = [
     description: "Widescreen",
     icon: Monitor,
     color: "text-blue-500"
+  },
+  {
+    value: "1.85:1" as AspectRatio,
+    label: "1.85:1",
+    description: "Cinematic",
+    icon: Clapperboard,
+    color: "text-amber-500"
+  },
+  {
+    value: "2.39:1" as AspectRatio,
+    label: "2.39:1",
+    description: "Scope",
+    icon: Clapperboard,
+    color: "text-orange-500"
   },
   {
     value: "9:16" as AspectRatio,

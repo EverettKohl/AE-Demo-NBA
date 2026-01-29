@@ -49,10 +49,10 @@ export default function SimplePage() {
   
 
    // Default renderer uses NextJS API routes
-   const ssrRenderer = React.useMemo(() => 
-    new HttpRenderer('/api/latest/ssr', {
-      type: 'ssr',
-      entryPoint: '/api/latest/ssr'
+   const ffmpegRenderer = React.useMemo(() => 
+    new HttpRenderer('/api/render', {
+      type: 'ffmpeg',
+      entryPoint: '/api/render'
     }), []
   );
 
@@ -92,7 +92,7 @@ export default function SimplePage() {
         defaultBackgroundColor={backgroundColor || undefined}
         isLoadingProject={isLoading}
         fps={30}
-        renderer={ssrRenderer}
+        renderer={ffmpegRenderer}
         disabledPanels={[]}
         availableThemes={availableThemes}
         defaultTheme="dark"

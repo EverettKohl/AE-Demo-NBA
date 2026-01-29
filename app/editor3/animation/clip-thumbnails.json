@@ -1,0 +1,62 @@
+[
+  {
+    "id": "clip-001",
+    "src": "/animation/thumbnails/clip-001.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 0
+  },
+  {
+    "id": "clip-002",
+    "src": "/animation/thumbnails/clip-002.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 17.8
+  },
+  {
+    "id": "clip-003",
+    "src": "/animation/thumbnails/clip-003.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 51.067
+  },
+  {
+    "id": "clip-004",
+    "src": "/animation/thumbnails/clip-004.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 278.1
+  },
+  {
+    "id": "clip-005",
+    "src": "/animation/thumbnails/clip-005.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 283.067
+  },
+  {
+    "id": "clip-006",
+    "src": "/animation/thumbnails/clip-006.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 286
+  },
+  {
+    "id": "clip-007",
+    "src": "/animation/thumbnails/clip-007.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 301.067
+  },
+  {
+    "id": "clip-008",
+    "src": "/animation/thumbnails/clip-008.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 303.167
+  },
+  {
+    "id": "clip-009",
+    "src": "/animation/thumbnails/clip-009.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 308.867
+  },
+  {
+    "id": "clip-010",
+    "src": "/animation/thumbnails/clip-010.webp",
+    "cloudinaryId": "Kill_Bill_Vol1_Part1_30FPS",
+    "start": 311.567
+  }
+]

@@ -697,11 +697,7 @@
     border-color: transparent !important;
   }
 
-  .chrome :global(button),
-  .chrome :global([role="button"]),
-  .chrome :global(.btn),
-  .chrome :global(.rve-button),
-  .chrome :global(.shadcn-button) {
+  .chrome :global(:is(button, [role="button"], .btn, .rve-button, .shadcn-button):not(#player-shell *)) {
     color: #ffffff !important;
     background: none !important;
     border: none !important;
@@ -737,18 +733,12 @@
     pointer-events: none;
   }
 
-  .chrome :global(button:hover),
-  .chrome :global([role="button"]:hover),
-  .chrome :global(.btn:hover),
-  .chrome :global(.rve-button:hover),
-  .chrome :global(.shadcn-button:hover) {
+  .chrome :global(:is(button, [role="button"], .btn, .rve-button, .shadcn-button):not(#player-shell *):hover) {
     background: none !important;
     border: none !important;
   }
 
-  .chrome :global(button:disabled),
-  .chrome :global([role="button"]:disabled),
-  .chrome :global(.btn:disabled) {
+  .chrome :global(:is(button, [role="button"], .btn, .rve-button, .shadcn-button):not(#player-shell *):disabled) {
     color: #e2e8f0 !important;
     background: none !important;
     border: none !important;

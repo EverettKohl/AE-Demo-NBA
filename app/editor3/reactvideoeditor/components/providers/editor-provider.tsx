@@ -232,6 +232,28 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
   // Get dynamic dimensions based on current aspect ratio
   const { width: dynamicWidth, height: dynamicHeight } = getAspectRatioDimensions();
 
+  // Normalize overlay sources to absolute URLs for rendering
+  const normalizedOverlaysForRender = useMemo(() => {
+    return overlays.map((overlay) => {
+      if (!overlay) return overlay;
+      const src = (overlay as any).src;
+      if (src && typeof src === "string") {
+        return {
+          ...overlay,
+          src: toAbsoluteUrl(src, resolvedBaseUrl),
+        };
+      }
+      const content = (overlay as any).content;
+      if (content && typeof content === "string" && overlay.type === OverlayType.IMAGE) {
+        return {
+          ...overlay,
+          content: toAbsoluteUrl(content, resolvedBaseUrl),
+        };
+      }
+      return overlay;
+    });
+  }, [overlays, resolvedBaseUrl]);
+
   // Prefetch all media (video + sound) before allowing playback
   const mediaUrls = useMemo(() => {
     const urls = new Set<string>();
@@ -381,18 +403,31 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
   }, [basePause]);
 
   // Set up rendering functionality
-  const { renderMedia: triggerRender, state: renderState } = useRendering(
-    projectId, // Use projectId as composition ID
-    {
-      overlays,
+  const renderInputProps = useMemo(
+    () => ({
+      overlays: normalizedOverlaysForRender,
       durationInFrames,
       fps,
       width: dynamicWidth,
       height: dynamicHeight,
-      src: "", // Base video src if any
-      // Note: selectedOverlayId and baseUrl are not part of CompositionProps
-      // They are editor state, not render parameters
-    }
+      src: "",
+      backgroundColor,
+      baseUrl: resolvedBaseUrl,
+    }),
+    [
+      normalizedOverlaysForRender,
+      durationInFrames,
+      fps,
+      dynamicWidth,
+      dynamicHeight,
+      backgroundColor,
+      resolvedBaseUrl,
+    ]
+  );
+
+  const { renderMedia: triggerRender, state: renderState } = useRendering(
+    projectId, // Use projectId as composition ID
+    renderInputProps
   );
 
   // State for general editor state - separate from render state to prevent unnecessary re-renders

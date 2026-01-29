@@ -30,11 +30,33 @@ const clampVolume = (value, fallback = 1) => {
   return Math.min(1, Math.max(0, n));
 };
 
+const getCanvasDimensionsForAspectRatio = (aspectRatio) => {
+  switch (aspectRatio) {
+    case "9:16":
+      return { width: 1080, height: 1920 };
+    case "4:5":
+      return { width: 1080, height: 1350 };
+    case "1:1":
+      return { width: 1080, height: 1080 };
+    case "1.85:1":
+      return { width: 1998, height: 1080 };
+    case "2.39:1":
+      return { width: 2560, height: 1070 };
+    case "16:9":
+    default:
+      return { width: 1920, height: 1080 };
+  }
+};
+
 export const buildGenerateEditRveProject = ({ plan, jobId = null, songUrl = null }) => {
   const fps = toNumber(plan?.fps, toNumber(plan?.songFormat?.meta?.targetFps, 30)) || 30;
   const graceSeconds = TIMELINE_GRACE_SECONDS;
   const graceFrames = toFrames(graceSeconds, fps);
   const aspectRatio = (plan?.songFormat?.meta?.aspectRatio) || "16:9";
+  const metaWidth = toNumber(plan?.songFormat?.meta?.sourceWidth, 0);
+  const metaHeight = toNumber(plan?.songFormat?.meta?.sourceHeight, 0);
+  const { width: canvasWidth, height: canvasHeight } =
+    metaWidth > 0 && metaHeight > 0 ? { width: metaWidth, height: metaHeight } : getCanvasDimensionsForAspectRatio(aspectRatio);
   const overlays = [];
 
   const segments = Array.isArray(plan?.segments) ? plan.segments : [];
@@ -76,8 +98,8 @@ export const buildGenerateEditRveProject = ({ plan, jobId = null, songUrl = null
       durationInFrames,
       left: 0,
       top: 0,
-      width: 1280,
-      height: 720,
+      width: canvasWidth,
+      height: canvasHeight,
       rotation: 0,
       isDragging: false,
       content: asset?.cloudinaryId || asset?.videoId || `clip-${idx + 1}`,
@@ -89,6 +111,7 @@ export const buildGenerateEditRveProject = ({ plan, jobId = null, songUrl = null
       ),
       styles: {
         objectFit: "cover",
+        objectPosition: "center center",
         volume: isRapid ? 0 : clipVolume,
         animation: { enter: "none", exit: "none" },
       },
@@ -142,7 +165,7 @@ export const buildGenerateEditRveProject = ({ plan, jobId = null, songUrl = null
       durationInFrames: soundDuration,
       left: 0,
       top: 0,
-      width: 1920,
+      width: canvasWidth,
       height: 100,
       rotation: 0,
       isDragging: false,

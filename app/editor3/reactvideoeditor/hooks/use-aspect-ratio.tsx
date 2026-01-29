@@ -51,6 +51,8 @@ export const useAspectRatio = (
           ? 16 / 9
           : aspectRatio === "1.85:1"
           ? 1.85
+        : aspectRatio === "2.39:1"
+          ? 2.39
           : aspectRatio === "9:16"
           ? 9 / 16
           : aspectRatio === "1:1"
