@@ -19,7 +19,8 @@ export const STATIC_SONG_FORMATS = [
   "way-down-we-go",
 ].map((slug) => ({
   slug,
-  source: "static-fallback",
+  // Use an existing bundled audio file so serverless can find it.
+  source: "/LoveMeAudio.mp3",
   meta: {
     durationSeconds: 120,
     targetFps: 30,
