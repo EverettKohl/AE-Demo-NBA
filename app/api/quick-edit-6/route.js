@@ -17,6 +17,7 @@ import os from "node:os";
 import { execFile, spawn } from "node:child_process";
 import { promisify } from "node:util";
 import ffmpegPath from "ffmpeg-static";
+import getEditorImportsDir from "@/lib/editorImportsDir";
 
 export const runtime = "nodejs";
 
@@ -31,7 +32,7 @@ function resolveFfmpegBinary() {
 
 // Write previews into the parent app's public folder so Next can serve them.
 const QE6_PREVIEWS_DIR = path.join(process.cwd(), "..", "public", "previews", "quick-edit-6");
-const EDITOR_IMPORTS_DIR = path.join(process.cwd(), "data", "editor-imports");
+const EDITOR_IMPORTS_DIR = getEditorImportsDir();
 
 // NOTE: The following caption filter code is intentionally kept in sync with
 // `app/api/format-builder/render/route.js`, so Quick Edit 6's caption overlay

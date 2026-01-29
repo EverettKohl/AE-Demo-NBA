@@ -13,8 +13,9 @@ import {
   readSlotsFile,
 } from "@/lib/slotCurator";
 import { findMatchingLocalClip, loadClipIndex, loadSharedClipIndex } from "@/lib/localClipStore";
+import getEditorImportsDir from "@/lib/editorImportsDir";
 
-const EDITOR_IMPORTS_DIR = path.join(process.cwd(), "data", "editor-imports");
+const EDITOR_IMPORTS_DIR = getEditorImportsDir();
 
 const mulberry32 = (seed: number) => {
   return function () {

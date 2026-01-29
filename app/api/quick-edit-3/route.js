@@ -15,6 +15,7 @@ import os from "node:os";
 import { execFile, spawn } from "node:child_process";
 import { promisify } from "node:util";
 import ffmpegPath from "ffmpeg-static";
+import getEditorImportsDir from "@/lib/editorImportsDir";
 
 export const runtime = "nodejs";
 
@@ -28,6 +29,7 @@ function resolveFfmpegBinary() {
 }
 
 const QE3_PREVIEWS_DIR = path.join(process.cwd(), "public", "previews", "quick-edit-3");
+const EDITOR_IMPORTS_DIR = getEditorImportsDir();
 
 // NOTE: The following caption filter code is intentionally kept in sync with
 // `app/api/format-builder/render/route.js`, so Quick Edit 3's caption overlay

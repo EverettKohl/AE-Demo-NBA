@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import getEditorImportsDir from "@/lib/editorImportsDir";
 
-const EDITOR_IMPORTS_DIR = path.join(process.cwd(), "data", "editor-imports");
+const EDITOR_IMPORTS_DIR = getEditorImportsDir();
 
 export async function GET(request: Request, { params }: { params: { jobId?: string; filename?: string } }) {
   const { jobId, filename } = params || {};

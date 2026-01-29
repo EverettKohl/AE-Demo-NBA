@@ -30,7 +30,8 @@ function resolveFfmpegBinary() {
 }
 
 const GE_PREVIEWS_DIR = path.join(process.cwd(), "public", "previews", "generate-edit");
-const EDITOR_IMPORTS_DIR = path.join(process.cwd(), "data", "editor-imports");
+import getEditorImportsDir from "@/lib/editorImportsDir";
+const EDITOR_IMPORTS_DIR = getEditorImportsDir();
 const DEFAULT_IMPORT_TTL_MS = 24 * 60 * 60 * 1000; // 24h
 
 const normalizeAspectRatioFromDimensions = (width, height) => {
