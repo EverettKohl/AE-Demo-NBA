@@ -45,6 +45,7 @@
 /data/*
 !/data/preCachedClips.js
 !/data/preCachedClips2.js
+!/data/alpha-test.json
 
 # debug
 npm-debug.log*
