@@ -97,30 +97,34 @@ export const SearchOverlayPanel: React.FC = () => {
   const fetchRequestedRef = useRef<Set<string>>(new Set());
 
   const getSearchBase = () => {
-    const envBases = [
-      process.env.NEXT_PUBLIC_KB_SEARCH_API_BASE_URL,
-      process.env.NEXT_PUBLIC_MAIN_APP_BASE_URL,
-    ].filter(Boolean) as string[];
-
     const windowOrigin =
       typeof window !== "undefined" && window.location?.origin
         ? window.location.origin
         : null;
 
-    // Prefer the current window origin when developing locally so the API
-    // calls stay same-origin (avoids CORS when running on a different port).
+    // In production, prefer the current window origin so requests stay same-origin.
     if (windowOrigin) {
       try {
         const host = new URL(windowOrigin).hostname;
-        if (host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0") {
+        if (!(host === "localhost" || host === "127.0.0.1" || host === "0.0.0.0")) {
           return windowOrigin;
         }
       } catch {
-        // fall through to env/other fallbacks
+        // fall through
       }
     }
 
-    return envBases[0] || windowOrigin || "";
+    const envBases = [
+      process.env.NEXT_PUBLIC_KB_SEARCH_API_BASE_URL,
+      process.env.NEXT_PUBLIC_MAIN_APP_BASE_URL,
+    ].filter(Boolean) as string[];
+
+    // During local development, use window origin; otherwise fall back to env or blank.
+    if (windowOrigin) {
+      return windowOrigin;
+    }
+
+    return envBases[0] || "";
   };
 
   const normalizeHits = (payload: any, source: string): SearchHit[] => {
@@ -175,6 +179,7 @@ export const SearchOverlayPanel: React.FC = () => {
     fetchRequestedRef.current = new Set();
     const base = getSearchBase().replace(/\/$/, "");
     const textSearchBase = (
+      getSearchBase() ||
       process.env.NEXT_PUBLIC_MAIN_APP_BASE_URL ||
       process.env.NEXT_PUBLIC_KB_SEARCH_API_BASE_URL ||
       "http://localhost:3000"
