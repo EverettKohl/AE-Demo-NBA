@@ -1,0 +1,487 @@
+{
+  "slug": "way-down-we-go",
+  "source": "instant-clips",
+  "meta": {
+    "durationSeconds": 120,
+    "targetFps": 30,
+    "totalClips": 0
+  },
+  "beatGrid": [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116],
+  "rapidClipRanges": [],
+  "beatMetadata": [],
+  "layers": []
+}
+{
+  "source": "/songs/Way_Down_We_Go.mp3",
+  "meta": {
+    "durationSeconds": 11.680688,
+    "bpm": null,
+    "targetFps": 30,
+    "totalFrames": 350,
+    "totalClips": 13,
+    "minClipFrames": 25,
+    "maxClipFrames": 29,
+    "avgClipFrames": 27
+  },
+  "cutoutEnabled": false,
+  "beatGrid": [
+    0.9666666666666667,
+    1.8666666666666667,
+    2.7666666666666666,
+    3.6666666666666665,
+    4.566666666666666,
+    5.4,
+    6.333333333333333,
+    7.233333333333333,
+    8.133333333333333,
+    9,
+    9.933333333333334,
+    10.8
+  ],
+  "beatGridFrames": [
+    29,
+    56,
+    83,
+    110,
+    137,
+    162,
+    190,
+    217,
+    244,
+    270,
+    298,
+    324
+  ],
+  "beatGridFramePairs": [
+    {
+      "frame": 29,
+      "time": 0.9666666666666667
+    },
+    {
+      "frame": 56,
+      "time": 1.8666666666666667
+    },
+    {
+      "frame": 83,
+      "time": 2.7666666666666666
+    },
+    {
+      "frame": 110,
+      "time": 3.6666666666666665
+    },
+    {
+      "frame": 137,
+      "time": 4.566666666666666
+    },
+    {
+      "frame": 162,
+      "time": 5.4
+    },
+    {
+      "frame": 190,
+      "time": 6.333333333333333
+    },
+    {
+      "frame": 217,
+      "time": 7.233333333333333
+    },
+    {
+      "frame": 244,
+      "time": 8.133333333333333
+    },
+    {
+      "frame": 270,
+      "time": 9
+    },
+    {
+      "frame": 298,
+      "time": 9.933333333333334
+    },
+    {
+      "frame": 324,
+      "time": 10.8
+    }
+  ],
+  "sections": [],
+  "rapidClipRanges": [],
+  "rapidClipFrames": [],
+  "mixSegments": [],
+  "beatMetadata": [
+    {
+      "segmentTime": 0.967,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 1.867,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 2.767,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 3.667,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 4.567,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 5.4,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 6.333,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 7.233,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 8.133,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 9,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 9.933,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 10.8,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    }
+  ],
+  "introBeat": {
+    "segmentTime": 0,
+    "intent": "visual",
+    "guidelineTags": [],
+    "customGuideline": "",
+    "narrativeNote": "",
+    "layerEnabled": true,
+    "clipSlot": {
+      "pauseMusic": false,
+      "clipVolume": 1,
+      "musicVolume": 1,
+      "resumeMode": "segment",
+      "allowOverlap": false,
+      "maxHoldSeconds": null,
+      "maxClipSeconds": null
+    },
+    "label": "Opening Segment"
+  },
+  "captions": null,
+  "clipSegments": [
+    {
+      "index": 0,
+      "type": "intro",
+      "startFrame": 0,
+      "endFrame": 29,
+      "frameCount": 29,
+      "startSeconds": 0,
+      "durationSeconds": 0.9666666666666667,
+      "minSourceDuration": 1.0333333333333334
+    },
+    {
+      "index": 1,
+      "type": "segment",
+      "startFrame": 29,
+      "endFrame": 56,
+      "frameCount": 27,
+      "startSeconds": 0.9666666666666667,
+      "durationSeconds": 0.9,
+      "minSourceDuration": 0.9666666666666667
+    },
+    {
+      "index": 2,
+      "type": "segment",
+      "startFrame": 56,
+      "endFrame": 83,
+      "frameCount": 27,
+      "startSeconds": 1.8666666666666667,
+      "durationSeconds": 0.9,
+      "minSourceDuration": 0.9666666666666667
+    },
+    {
+      "index": 3,
+      "type": "segment",
+      "startFrame": 83,
+      "endFrame": 110,
+      "frameCount": 27,
+      "startSeconds": 2.7666666666666666,
+      "durationSeconds": 0.9,
+      "minSourceDuration": 0.9666666666666667
+    },
+    {
+      "index": 4,
+      "type": "segment",
+      "startFrame": 110,
+      "endFrame": 137,
+      "frameCount": 27,
+      "startSeconds": 3.6666666666666665,
+      "durationSeconds": 0.9,
+      "minSourceDuration": 0.9666666666666667
+    },
+    {
+      "index": 5,
+      "type": "segment",
+      "startFrame": 137,
+      "endFrame": 162,
+      "frameCount": 25,
+      "startSeconds": 4.566666666666666,
+      "durationSeconds": 0.8333333333333334,
+      "minSourceDuration": 0.9
+    },
+    {
+      "index": 6,
+      "type": "segment",
+      "startFrame": 162,
+      "endFrame": 190,
+      "frameCount": 28,
+      "startSeconds": 5.4,
+      "durationSeconds": 0.9333333333333333,
+      "minSourceDuration": 1
+    },
+    {
+      "index": 7,
+      "type": "segment",
+      "startFrame": 190,
+      "endFrame": 217,
+      "frameCount": 27,
+      "startSeconds": 6.333333333333333,
+      "durationSeconds": 0.9,
+      "minSourceDuration": 0.9666666666666667
+    },
+    {
+      "index": 8,
+      "type": "segment",
+      "startFrame": 217,
+      "endFrame": 244,
+      "frameCount": 27,
+      "startSeconds": 7.233333333333333,
+      "durationSeconds": 0.9,
+      "minSourceDuration": 0.9666666666666667
+    },
+    {
+      "index": 9,
+      "type": "segment",
+      "startFrame": 244,
+      "endFrame": 270,
+      "frameCount": 26,
+      "startSeconds": 8.133333333333333,
+      "durationSeconds": 0.8666666666666667,
+      "minSourceDuration": 0.9333333333333333
+    },
+    {
+      "index": 10,
+      "type": "segment",
+      "startFrame": 270,
+      "endFrame": 298,
+      "frameCount": 28,
+      "startSeconds": 9,
+      "durationSeconds": 0.9333333333333333,
+      "minSourceDuration": 1
+    },
+    {
+      "index": 11,
+      "type": "segment",
+      "startFrame": 298,
+      "endFrame": 324,
+      "frameCount": 26,
+      "startSeconds": 9.933333333333334,
+      "durationSeconds": 0.8666666666666667,
+      "minSourceDuration": 0.9333333333333333
+    },
+    {
+      "index": 12,
+      "type": "segment",
+      "startFrame": 324,
+      "endFrame": 350,
+      "frameCount": 26,
+      "startSeconds": 10.8,
+      "durationSeconds": 0.8666666666666667,
+      "minSourceDuration": 0.9333333333333333
+    }
+  ],
+  "foreground": {
+    "beatGrid": [],
+    "beatGridFrames": [],
+    "beatGridFramePairs": [],
+    "rapidClipRanges": [],
+    "rapidClipFrames": [],
+    "beatMetadata": [],
+    "clipSegments": [
+      {
+        "index": 0,
+        "type": "full",
+        "startFrame": 0,
+        "endFrame": 350,
+        "frameCount": 350,
+        "startSeconds": 0,
+        "durationSeconds": 11.680688
+      }
+    ]
+  },
+  "createdAt": "2026-01-29T06:38:17.098Z",
+  "updatedAt": "2026-01-29T06:38:17.098Z"
+}

@@ -1,0 +1,1231 @@
+{
+  "slug": "touchthesky",
+  "source": "instant-clips",
+  "meta": {
+    "durationSeconds": 120,
+    "targetFps": 30,
+    "totalClips": 0
+  },
+  "beatGrid": [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116],
+  "rapidClipRanges": [],
+  "beatMetadata": [],
+  "layers": []
+}
+{
+  "source": "/songs/TouchTheSky.mp3",
+  "meta": {
+    "durationSeconds": 15.196,
+    "bpm": null,
+    "targetFps": 30,
+    "totalFrames": 456,
+    "totalClips": 24,
+    "minClipFrames": 7,
+    "maxClipFrames": 98,
+    "avgClipFrames": 19
+  },
+  "cutoutEnabled": false,
+  "beatGrid": [
+    3.2666666666666666,
+    4.333333333333333,
+    4.766666666666667,
+    5.233333333333333,
+    5.766666666666667,
+    6.2,
+    6.8,
+    7.133333333333334,
+    7.666666666666667,
+    8.233333333333333,
+    8.766666666666667,
+    9.066666666666666,
+    9.7,
+    10.233333333333333,
+    10.766666666666667,
+    11.366666666666667,
+    11.6,
+    12,
+    12.533333333333333,
+    13.066666666666666,
+    13.6,
+    14.233333333333333,
+    14.8
+  ],
+  "beatGridFrames": [
+    98,
+    130,
+    143,
+    157,
+    173,
+    186,
+    204,
+    214,
+    230,
+    247,
+    263,
+    272,
+    291,
+    307,
+    323,
+    341,
+    348,
+    360,
+    376,
+    392,
+    408,
+    427,
+    444
+  ],
+  "beatGridFramePairs": [
+    {
+      "frame": 98,
+      "time": 3.2666666666666666
+    },
+    {
+      "frame": 130,
+      "time": 4.333333333333333
+    },
+    {
+      "frame": 143,
+      "time": 4.766666666666667
+    },
+    {
+      "frame": 157,
+      "time": 5.233333333333333
+    },
+    {
+      "frame": 173,
+      "time": 5.766666666666667
+    },
+    {
+      "frame": 186,
+      "time": 6.2
+    },
+    {
+      "frame": 204,
+      "time": 6.8
+    },
+    {
+      "frame": 214,
+      "time": 7.133333333333334
+    },
+    {
+      "frame": 230,
+      "time": 7.666666666666667
+    },
+    {
+      "frame": 247,
+      "time": 8.233333333333333
+    },
+    {
+      "frame": 263,
+      "time": 8.766666666666667
+    },
+    {
+      "frame": 272,
+      "time": 9.066666666666666
+    },
+    {
+      "frame": 291,
+      "time": 9.7
+    },
+    {
+      "frame": 307,
+      "time": 10.233333333333333
+    },
+    {
+      "frame": 323,
+      "time": 10.766666666666667
+    },
+    {
+      "frame": 341,
+      "time": 11.366666666666667
+    },
+    {
+      "frame": 348,
+      "time": 11.6
+    },
+    {
+      "frame": 360,
+      "time": 12
+    },
+    {
+      "frame": 376,
+      "time": 12.533333333333333
+    },
+    {
+      "frame": 392,
+      "time": 13.066666666666666
+    },
+    {
+      "frame": 408,
+      "time": 13.6
+    },
+    {
+      "frame": 427,
+      "time": 14.233333333333333
+    },
+    {
+      "frame": 444,
+      "time": 14.8
+    }
+  ],
+  "sections": [],
+  "rapidClipRanges": [],
+  "rapidClipFrames": [],
+  "mixSegments": [],
+  "beatMetadata": [
+    {
+      "segmentTime": 3.267,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 4.333,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 4.767,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 5.233,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 5.767,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 6.2,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 6.8,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 7.133,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 7.667,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 8.233,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 8.767,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 9.067,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 9.7,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 10.233,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 10.767,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 11.367,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 11.6,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 12,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 12.533,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 13.067,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 13.6,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 14.233,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    },
+    {
+      "segmentTime": 14.8,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "layerEnabled": true,
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 1,
+        "musicVolume": 1,
+        "resumeMode": "segment",
+        "allowOverlap": false,
+        "maxHoldSeconds": null,
+        "maxClipSeconds": null
+      }
+    }
+  ],
+  "introBeat": {
+    "segmentTime": 0,
+    "intent": "visual",
+    "guidelineTags": [],
+    "customGuideline": "",
+    "narrativeNote": "",
+    "layerEnabled": true,
+    "clipSlot": {
+      "pauseMusic": false,
+      "clipVolume": 0,
+      "musicVolume": 1,
+      "resumeMode": "segment",
+      "allowOverlap": false,
+      "maxHoldSeconds": null,
+      "maxClipSeconds": null
+    },
+    "label": "Opening Beat",
+    "beatTime": 0
+  },
+  "captions": {
+    "provider": "assemblyai",
+    "status": "ready",
+    "requestedAt": "2026-01-15T23:14:35.577Z",
+    "updatedAt": "2026-01-17T04:24:40.520Z",
+    "language": "en_us",
+    "words": [
+      {
+        "text": "I",
+        "startMs": 0,
+        "endMs": 240,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "THINK",
+        "startMs": 240,
+        "endMs": 360,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "I",
+        "startMs": 360,
+        "endMs": 520,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "DIED",
+        "startMs": 520,
+        "endMs": 800,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "IN",
+        "startMs": 800,
+        "endMs": 960,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "AN",
+        "startMs": 960,
+        "endMs": 1120,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "ACCIDENT",
+        "startMs": 1120,
+        "endMs": 1600,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "'CUZ",
+        "startMs": 1600,
+        "endMs": 1920,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "THIS",
+        "startMs": 1920,
+        "endMs": 2119.2000000000003,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "MUST",
+        "startMs": 2121,
+        "endMs": 2400,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "BE",
+        "startMs": 2400,
+        "endMs": 2720,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "HEAVEN",
+        "startMs": 2720,
+        "endMs": 3280,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "I",
+        "startMs": 6720,
+        "endMs": 7000,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "GOTTA",
+        "startMs": 7000,
+        "endMs": 7400,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "TESTIFY",
+        "startMs": 7400,
+        "endMs": 7920,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "COME",
+        "startMs": 8400,
+        "endMs": 8680,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "UP",
+        "startMs": 8680,
+        "endMs": 8840,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "IN",
+        "startMs": 8840,
+        "endMs": 9000,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "THE",
+        "startMs": 9000,
+        "endMs": 9120,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "SPOT",
+        "startMs": 9120,
+        "endMs": 9400,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "LOOKING",
+        "startMs": 9400,
+        "endMs": 9640,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "EXTRA",
+        "startMs": 9640,
+        "endMs": 10080,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "FLY",
+        "startMs": 10080,
+        "endMs": 10560,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "FOR",
+        "startMs": 11520,
+        "endMs": 11800,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "THE",
+        "startMs": 11800,
+        "endMs": 11960,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "DAY",
+        "startMs": 11960,
+        "endMs": 12160,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "I",
+        "startMs": 12160,
+        "endMs": 12400,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "DIE",
+        "startMs": 12400,
+        "endMs": 12800,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "I'",
+        "startMs": 13120,
+        "endMs": 13480,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "MA",
+        "startMs": 13480,
+        "endMs": 13600,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "TOUCH",
+        "startMs": 13600,
+        "endMs": 13880,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "THE",
+        "startMs": 13880,
+        "endMs": 14040,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "SKY.",
+        "startMs": 14040,
+        "endMs": 14480,
+        "useGlobalStyle": true,
+        "style": null
+      }
+    ],
+    "lines": [],
+    "style": {
+      "mode": "negative",
+      "color": "#ffffff",
+      "fontFamily": "Montserrat",
+      "fontWeight": "800",
+      "fontSizeRatio": 2.4,
+      "letterSpacing": 0,
+      "animation": "word",
+      "chunkRule": "line",
+      "uppercase": true
+    },
+    "transcriptId": "7659326c-a1ba-45d3-8b50-a133a153afb8",
+    "displayRanges": [
+      {
+        "startMs": 0,
+        "endMs": 15196,
+        "mode": "word"
+      }
+    ],
+    "enabled": true
+  },
+  "clipSegments": [
+    {
+      "index": 0,
+      "type": "intro",
+      "startFrame": 0,
+      "endFrame": 98,
+      "frameCount": 98,
+      "startSeconds": 0,
+      "durationSeconds": 3.2666666666666666,
+      "minSourceDuration": 3.3333333333333335
+    },
+    {
+      "index": 1,
+      "type": "segment",
+      "startFrame": 98,
+      "endFrame": 130,
+      "frameCount": 32,
+      "startSeconds": 3.2666666666666666,
+      "durationSeconds": 1.0666666666666667,
+      "minSourceDuration": 1.1333333333333333
+    },
+    {
+      "index": 2,
+      "type": "segment",
+      "startFrame": 130,
+      "endFrame": 143,
+      "frameCount": 13,
+      "startSeconds": 4.333333333333333,
+      "durationSeconds": 0.43333333333333335,
+      "minSourceDuration": 0.5
+    },
+    {
+      "index": 3,
+      "type": "segment",
+      "startFrame": 143,
+      "endFrame": 157,
+      "frameCount": 14,
+      "startSeconds": 4.766666666666667,
+      "durationSeconds": 0.4666666666666667,
+      "minSourceDuration": 0.5333333333333333
+    },
+    {
+      "index": 4,
+      "type": "segment",
+      "startFrame": 157,
+      "endFrame": 173,
+      "frameCount": 16,
+      "startSeconds": 5.233333333333333,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 5,
+      "type": "segment",
+      "startFrame": 173,
+      "endFrame": 186,
+      "frameCount": 13,
+      "startSeconds": 5.766666666666667,
+      "durationSeconds": 0.43333333333333335,
+      "minSourceDuration": 0.5
+    },
+    {
+      "index": 6,
+      "type": "segment",
+      "startFrame": 186,
+      "endFrame": 204,
+      "frameCount": 18,
+      "startSeconds": 6.2,
+      "durationSeconds": 0.6,
+      "minSourceDuration": 0.6666666666666666
+    },
+    {
+      "index": 7,
+      "type": "segment",
+      "startFrame": 204,
+      "endFrame": 214,
+      "frameCount": 10,
+      "startSeconds": 6.8,
+      "durationSeconds": 0.3333333333333333,
+      "minSourceDuration": 0.4
+    },
+    {
+      "index": 8,
+      "type": "segment",
+      "startFrame": 214,
+      "endFrame": 230,
+      "frameCount": 16,
+      "startSeconds": 7.133333333333334,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 9,
+      "type": "segment",
+      "startFrame": 230,
+      "endFrame": 247,
+      "frameCount": 17,
+      "startSeconds": 7.666666666666667,
+      "durationSeconds": 0.5666666666666667,
+      "minSourceDuration": 0.6333333333333333
+    },
+    {
+      "index": 10,
+      "type": "segment",
+      "startFrame": 247,
+      "endFrame": 263,
+      "frameCount": 16,
+      "startSeconds": 8.233333333333333,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 11,
+      "type": "segment",
+      "startFrame": 263,
+      "endFrame": 272,
+      "frameCount": 9,
+      "startSeconds": 8.766666666666667,
+      "durationSeconds": 0.3,
+      "minSourceDuration": 0.36666666666666664
+    },
+    {
+      "index": 12,
+      "type": "segment",
+      "startFrame": 272,
+      "endFrame": 291,
+      "frameCount": 19,
+      "startSeconds": 9.066666666666666,
+      "durationSeconds": 0.6333333333333333,
+      "minSourceDuration": 0.7
+    },
+    {
+      "index": 13,
+      "type": "segment",
+      "startFrame": 291,
+      "endFrame": 307,
+      "frameCount": 16,
+      "startSeconds": 9.7,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 14,
+      "type": "segment",
+      "startFrame": 307,
+      "endFrame": 323,
+      "frameCount": 16,
+      "startSeconds": 10.233333333333333,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 15,
+      "type": "segment",
+      "startFrame": 323,
+      "endFrame": 341,
+      "frameCount": 18,
+      "startSeconds": 10.766666666666667,
+      "durationSeconds": 0.6,
+      "minSourceDuration": 0.6666666666666666
+    },
+    {
+      "index": 16,
+      "type": "segment",
+      "startFrame": 341,
+      "endFrame": 348,
+      "frameCount": 7,
+      "startSeconds": 11.366666666666667,
+      "durationSeconds": 0.23333333333333334,
+      "minSourceDuration": 0.3
+    },
+    {
+      "index": 17,
+      "type": "segment",
+      "startFrame": 348,
+      "endFrame": 360,
+      "frameCount": 12,
+      "startSeconds": 11.6,
+      "durationSeconds": 0.4,
+      "minSourceDuration": 0.4666666666666667
+    },
+    {
+      "index": 18,
+      "type": "segment",
+      "startFrame": 360,
+      "endFrame": 376,
+      "frameCount": 16,
+      "startSeconds": 12,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 19,
+      "type": "segment",
+      "startFrame": 376,
+      "endFrame": 392,
+      "frameCount": 16,
+      "startSeconds": 12.533333333333333,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 20,
+      "type": "segment",
+      "startFrame": 392,
+      "endFrame": 408,
+      "frameCount": 16,
+      "startSeconds": 13.066666666666666,
+      "durationSeconds": 0.5333333333333333,
+      "minSourceDuration": 0.6
+    },
+    {
+      "index": 21,
+      "type": "segment",
+      "startFrame": 408,
+      "endFrame": 427,
+      "frameCount": 19,
+      "startSeconds": 13.6,
+      "durationSeconds": 0.6333333333333333,
+      "minSourceDuration": 0.7
+    },
+    {
+      "index": 22,
+      "type": "segment",
+      "startFrame": 427,
+      "endFrame": 444,
+      "frameCount": 17,
+      "startSeconds": 14.233333333333333,
+      "durationSeconds": 0.5666666666666667,
+      "minSourceDuration": 0.6333333333333333
+    },
+    {
+      "index": 23,
+      "type": "segment",
+      "startFrame": 444,
+      "endFrame": 456,
+      "frameCount": 12,
+      "startSeconds": 14.8,
+      "durationSeconds": 0.4,
+      "minSourceDuration": 0.4666666666666667
+    }
+  ],
+  "foreground": {
+    "beatGrid": [],
+    "beatGridFrames": [],
+    "beatGridFramePairs": [],
+    "rapidClipRanges": [],
+    "rapidClipFrames": [],
+    "beatMetadata": [],
+    "clipSegments": [
+      {
+        "index": 0,
+        "type": "full",
+        "startFrame": 0,
+        "endFrame": 456,
+        "frameCount": 456,
+        "startSeconds": 0,
+        "durationSeconds": 15.196
+      }
+    ]
+  },
+  "createdAt": "2026-01-15T23:14:35.577Z",
+  "updatedAt": "2026-01-29T06:36:45.656Z"
+}

@@ -45,6 +45,8 @@
 /data/*
 !/data/preCachedClips.js
 !/data/preCachedClips2.js
+!/data/song-formats/
+!/data/song-formats/*.json
 !/data/alpha-test.json
 
 # debug

@@ -1,0 +1,435 @@
+{
+  "source": "/songs/pieceofheaven.mp3",
+  "meta": {
+    "durationSeconds": 16.48325,
+    "bpm": 125.41,
+    "bpmConfidence": "detected",
+    "targetFps": 30,
+    "totalFrames": 494,
+    "totalClips": 15,
+    "minClipFrames": 5,
+    "maxClipFrames": 86,
+    "avgClipFrames": 33
+  },
+  "beatGrid": [
+    4.533333333333333,
+    5.5,
+    8.366666666666667,
+    9.366666666666667,
+    10.166666666666666,
+    11.333333333333334,
+    12.3,
+    13.4,
+    14.4,
+    15.4
+  ],
+  "beatGridFrames": [
+    136,
+    165,
+    251,
+    281,
+    305,
+    340,
+    369,
+    402,
+    432,
+    462
+  ],
+  "beatGridFramePairs": [
+    {
+      "time": 4.533333333333333,
+      "frame": 136
+    },
+    {
+      "time": 5.5,
+      "frame": 165
+    },
+    {
+      "time": 8.366666666666667,
+      "frame": 251
+    },
+    {
+      "time": 9.366666666666667,
+      "frame": 281
+    },
+    {
+      "time": 10.166666666666666,
+      "frame": 305
+    },
+    {
+      "time": 11.333333333333334,
+      "frame": 340
+    },
+    {
+      "time": 12.3,
+      "frame": 369
+    },
+    {
+      "time": 13.4,
+      "frame": 402
+    },
+    {
+      "time": 14.4,
+      "frame": 432
+    },
+    {
+      "time": 15.4,
+      "frame": 462
+    }
+  ],
+  "sections": [],
+  "rapidClipRanges": [
+    {
+      "start": 2.608,
+      "end": 3.235,
+      "interval": 0.15
+    }
+  ],
+  "mixSegments": [],
+  "beatMetadata": [
+    {
+      "beatTime": 4.533,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 5.5,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 8.367,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 9.367,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 10.167,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 11.333,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 12.3,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 13.4,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 14.4,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    },
+    {
+      "beatTime": 15.4,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    }
+  ],
+  "introBeat": {
+    "beatTime": 0,
+    "intent": "visual",
+    "guidelineTags": [],
+    "customGuideline": "",
+    "narrativeNote": "",
+    "clipSlot": {
+      "pauseMusic": false,
+      "clipVolume": 0,
+      "musicVolume": 1,
+      "resumeMode": "beat",
+      "allowOverlap": false,
+      "maxHoldSeconds": null
+    },
+    "label": "Opening Beat"
+  },
+  "rapidClipFrames": [
+    {
+      "frame": 78,
+      "time": 2.6
+    },
+    {
+      "frame": 83,
+      "time": 2.7666666666666666
+    },
+    {
+      "frame": 88,
+      "time": 2.933333333333333
+    },
+    {
+      "frame": 93,
+      "time": 3.1
+    }
+  ],
+  "clipSegments": [
+    {
+      "index": 0,
+      "type": "intro",
+      "startFrame": 0,
+      "endFrame": 78,
+      "frameCount": 78,
+      "startSeconds": 0,
+      "durationSeconds": 2.6,
+      "minSourceDuration": 2.6666666666666665
+    },
+    {
+      "index": 1,
+      "type": "rapid",
+      "startFrame": 78,
+      "endFrame": 83,
+      "frameCount": 5,
+      "startSeconds": 2.6,
+      "durationSeconds": 0.16666666666666666,
+      "minSourceDuration": 0.23333333333333334
+    },
+    {
+      "index": 2,
+      "type": "rapid",
+      "startFrame": 83,
+      "endFrame": 88,
+      "frameCount": 5,
+      "startSeconds": 2.7666666666666666,
+      "durationSeconds": 0.16666666666666666,
+      "minSourceDuration": 0.23333333333333334
+    },
+    {
+      "index": 3,
+      "type": "rapid",
+      "startFrame": 88,
+      "endFrame": 93,
+      "frameCount": 5,
+      "startSeconds": 2.933333333333333,
+      "durationSeconds": 0.16666666666666666,
+      "minSourceDuration": 0.23333333333333334
+    },
+    {
+      "index": 4,
+      "type": "rapid",
+      "startFrame": 93,
+      "endFrame": 136,
+      "frameCount": 43,
+      "startSeconds": 3.1,
+      "durationSeconds": 1.4333333333333333,
+      "minSourceDuration": 1.5
+    },
+    {
+      "index": 5,
+      "type": "beat",
+      "startFrame": 136,
+      "endFrame": 165,
+      "frameCount": 29,
+      "startSeconds": 4.533333333333333,
+      "durationSeconds": 0.9666666666666667,
+      "minSourceDuration": 1.0333333333333334
+    },
+    {
+      "index": 6,
+      "type": "beat",
+      "startFrame": 165,
+      "endFrame": 251,
+      "frameCount": 86,
+      "startSeconds": 5.5,
+      "durationSeconds": 2.8666666666666667,
+      "minSourceDuration": 2.933333333333333
+    },
+    {
+      "index": 7,
+      "type": "beat",
+      "startFrame": 251,
+      "endFrame": 281,
+      "frameCount": 30,
+      "startSeconds": 8.366666666666667,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 8,
+      "type": "beat",
+      "startFrame": 281,
+      "endFrame": 305,
+      "frameCount": 24,
+      "startSeconds": 9.366666666666667,
+      "durationSeconds": 0.8,
+      "minSourceDuration": 0.8666666666666667
+    },
+    {
+      "index": 9,
+      "type": "beat",
+      "startFrame": 305,
+      "endFrame": 340,
+      "frameCount": 35,
+      "startSeconds": 10.166666666666666,
+      "durationSeconds": 1.1666666666666667,
+      "minSourceDuration": 1.2333333333333334
+    },
+    {
+      "index": 10,
+      "type": "beat",
+      "startFrame": 340,
+      "endFrame": 369,
+      "frameCount": 29,
+      "startSeconds": 11.333333333333334,
+      "durationSeconds": 0.9666666666666667,
+      "minSourceDuration": 1.0333333333333334
+    },
+    {
+      "index": 11,
+      "type": "beat",
+      "startFrame": 369,
+      "endFrame": 402,
+      "frameCount": 33,
+      "startSeconds": 12.3,
+      "durationSeconds": 1.1,
+      "minSourceDuration": 1.1666666666666667
+    },
+    {
+      "index": 12,
+      "type": "beat",
+      "startFrame": 402,
+      "endFrame": 432,
+      "frameCount": 30,
+      "startSeconds": 13.4,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 13,
+      "type": "beat",
+      "startFrame": 432,
+      "endFrame": 462,
+      "frameCount": 30,
+      "startSeconds": 14.4,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 14,
+      "type": "beat",
+      "startFrame": 462,
+      "endFrame": 494,
+      "frameCount": 32,
+      "startSeconds": 15.4,
+      "durationSeconds": 1.0666666666666667,
+      "minSourceDuration": 1.1333333333333333
+    }
+  ],
+  "createdAt": "2026-01-07T21:14:50.672Z",
+  "updatedAt": "2026-01-13T08:33:24.342Z",
+  "__frameMigration": {
+    "migratedAt": "2026-01-19T17:38:59.870Z",
+    "fps": 30,
+    "backup": "/Users/everett/Documents/Code/killbillEdit/data/song-formats/pieceofheaven.json.backup-2026-01-19T17-38-59-869Z",
+    "captionFramesAdded": false
+  }
+}

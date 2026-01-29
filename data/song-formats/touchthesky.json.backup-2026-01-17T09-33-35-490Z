@@ -1,0 +1,703 @@
+{
+  "source": "/songs/TouchTheSky.mp3",
+  "meta": {
+    "durationSeconds": 15.196,
+    "bpm": null,
+    "targetFps": 30,
+    "totalFrames": 456,
+    "totalClips": 18,
+    "minClipFrames": 1,
+    "maxClipFrames": 30,
+    "avgClipFrames": 25
+  },
+  "beatGrid": [
+    0.06666666666666667
+  ],
+  "beatGridFrames": [
+    2
+  ],
+  "beatGridFramePairs": [
+    {
+      "time": 0.06666666666666667,
+      "frame": 2
+    }
+  ],
+  "sections": [],
+  "rapidClipRanges": [
+    {
+      "start": 0.114,
+      "end": 15.196,
+      "interval": 1
+    }
+  ],
+  "mixSegments": [],
+  "beatMetadata": [
+    {
+      "beatTime": 0.067,
+      "intent": "visual",
+      "guidelineTags": [],
+      "customGuideline": "",
+      "narrativeNote": "",
+      "clipSlot": {
+        "pauseMusic": false,
+        "clipVolume": 0,
+        "musicVolume": 1,
+        "resumeMode": "beat",
+        "allowOverlap": false,
+        "maxHoldSeconds": null
+      }
+    }
+  ],
+  "introBeat": {
+    "beatTime": 0,
+    "intent": "visual",
+    "guidelineTags": [],
+    "customGuideline": "",
+    "narrativeNote": "",
+    "clipSlot": {
+      "pauseMusic": false,
+      "clipVolume": 0,
+      "musicVolume": 1,
+      "resumeMode": "beat",
+      "allowOverlap": false,
+      "maxHoldSeconds": null
+    },
+    "label": "Opening Beat"
+  },
+  "captions": {
+    "provider": "assemblyai",
+    "status": "ready",
+    "requestedAt": "2026-01-15T23:14:35.577Z",
+    "updatedAt": "2026-01-17T04:24:40.520Z",
+    "language": "en_us",
+    "words": [
+      {
+        "text": "I",
+        "startMs": 0,
+        "endMs": 240,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "THINK",
+        "startMs": 240,
+        "endMs": 360,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "I",
+        "startMs": 360,
+        "endMs": 520,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "DIED",
+        "startMs": 520,
+        "endMs": 800,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "IN",
+        "startMs": 800,
+        "endMs": 960,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "AN",
+        "startMs": 960,
+        "endMs": 1120,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "ACCIDENT",
+        "startMs": 1120,
+        "endMs": 1600,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "'CUZ",
+        "startMs": 1600,
+        "endMs": 1920,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "THIS",
+        "startMs": 1920,
+        "endMs": 2119.2000000000003,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "MUST",
+        "startMs": 2121,
+        "endMs": 2400,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "BE",
+        "startMs": 2400,
+        "endMs": 2720,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "HEAVEN",
+        "startMs": 2720,
+        "endMs": 3280,
+        "useGlobalStyle": false,
+        "style": {
+          "mode": "cutout",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat",
+          "fontWeight": "800",
+          "fontSizeRatio": 2.4,
+          "letterSpacing": 0,
+          "animation": "word",
+          "chunkRule": "line",
+          "uppercase": true
+        }
+      },
+      {
+        "text": "I",
+        "startMs": 6720,
+        "endMs": 7000,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "GOTTA",
+        "startMs": 7000,
+        "endMs": 7400,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "TESTIFY",
+        "startMs": 7400,
+        "endMs": 7920,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "COME",
+        "startMs": 8400,
+        "endMs": 8680,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "UP",
+        "startMs": 8680,
+        "endMs": 8840,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "IN",
+        "startMs": 8840,
+        "endMs": 9000,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "THE",
+        "startMs": 9000,
+        "endMs": 9120,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "SPOT",
+        "startMs": 9120,
+        "endMs": 9400,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "LOOKING",
+        "startMs": 9400,
+        "endMs": 9640,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "EXTRA",
+        "startMs": 9640,
+        "endMs": 10080,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "FLY",
+        "startMs": 10080,
+        "endMs": 10560,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "FOR",
+        "startMs": 11520,
+        "endMs": 11800,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "THE",
+        "startMs": 11800,
+        "endMs": 11960,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "DAY",
+        "startMs": 11960,
+        "endMs": 12160,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "I",
+        "startMs": 12160,
+        "endMs": 12400,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "DIE",
+        "startMs": 12400,
+        "endMs": 12800,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "I'",
+        "startMs": 13120,
+        "endMs": 13480,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "MA",
+        "startMs": 13480,
+        "endMs": 13600,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "TOUCH",
+        "startMs": 13600,
+        "endMs": 13880,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "THE",
+        "startMs": 13880,
+        "endMs": 14040,
+        "useGlobalStyle": true,
+        "style": null
+      },
+      {
+        "text": "SKY.",
+        "startMs": 14040,
+        "endMs": 14480,
+        "useGlobalStyle": true,
+        "style": null
+      }
+    ],
+    "lines": [],
+    "style": {
+      "mode": "negative",
+      "color": "#ffffff",
+      "fontFamily": "Montserrat",
+      "fontWeight": "800",
+      "fontSizeRatio": 2.4,
+      "letterSpacing": 0,
+      "animation": "word",
+      "chunkRule": "line",
+      "uppercase": true
+    },
+    "transcriptId": "7659326c-a1ba-45d3-8b50-a133a153afb8",
+    "displayRanges": [
+      {
+        "startMs": 0,
+        "endMs": 15196,
+        "mode": "word"
+      }
+    ]
+  },
+  "rapidClipFrames": [
+    {
+      "frame": 3,
+      "time": 0.1
+    },
+    {
+      "frame": 33,
+      "time": 1.1
+    },
+    {
+      "frame": 63,
+      "time": 2.1
+    },
+    {
+      "frame": 93,
+      "time": 3.1
+    },
+    {
+      "frame": 123,
+      "time": 4.1
+    },
+    {
+      "frame": 153,
+      "time": 5.1
+    },
+    {
+      "frame": 183,
+      "time": 6.1
+    },
+    {
+      "frame": 213,
+      "time": 7.1
+    },
+    {
+      "frame": 243,
+      "time": 8.1
+    },
+    {
+      "frame": 273,
+      "time": 9.1
+    },
+    {
+      "frame": 303,
+      "time": 10.1
+    },
+    {
+      "frame": 333,
+      "time": 11.1
+    },
+    {
+      "frame": 363,
+      "time": 12.1
+    },
+    {
+      "frame": 393,
+      "time": 13.1
+    },
+    {
+      "frame": 423,
+      "time": 14.1
+    },
+    {
+      "frame": 453,
+      "time": 15.1
+    }
+  ],
+  "clipSegments": [
+    {
+      "index": 0,
+      "type": "intro",
+      "startFrame": 0,
+      "endFrame": 2,
+      "frameCount": 2,
+      "startSeconds": 0,
+      "durationSeconds": 0.06666666666666667,
+      "minSourceDuration": 0.13333333333333333
+    },
+    {
+      "index": 1,
+      "type": "beat",
+      "startFrame": 2,
+      "endFrame": 3,
+      "frameCount": 1,
+      "startSeconds": 0.06666666666666667,
+      "durationSeconds": 0.03333333333333333,
+      "minSourceDuration": 0.1
+    },
+    {
+      "index": 2,
+      "type": "rapid",
+      "startFrame": 3,
+      "endFrame": 33,
+      "frameCount": 30,
+      "startSeconds": 0.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 3,
+      "type": "rapid",
+      "startFrame": 33,
+      "endFrame": 63,
+      "frameCount": 30,
+      "startSeconds": 1.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 4,
+      "type": "rapid",
+      "startFrame": 63,
+      "endFrame": 93,
+      "frameCount": 30,
+      "startSeconds": 2.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 5,
+      "type": "rapid",
+      "startFrame": 93,
+      "endFrame": 123,
+      "frameCount": 30,
+      "startSeconds": 3.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 6,
+      "type": "rapid",
+      "startFrame": 123,
+      "endFrame": 153,
+      "frameCount": 30,
+      "startSeconds": 4.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 7,
+      "type": "rapid",
+      "startFrame": 153,
+      "endFrame": 183,
+      "frameCount": 30,
+      "startSeconds": 5.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 8,
+      "type": "rapid",
+      "startFrame": 183,
+      "endFrame": 213,
+      "frameCount": 30,
+      "startSeconds": 6.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 9,
+      "type": "rapid",
+      "startFrame": 213,
+      "endFrame": 243,
+      "frameCount": 30,
+      "startSeconds": 7.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 10,
+      "type": "rapid",
+      "startFrame": 243,
+      "endFrame": 273,
+      "frameCount": 30,
+      "startSeconds": 8.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 11,
+      "type": "rapid",
+      "startFrame": 273,
+      "endFrame": 303,
+      "frameCount": 30,
+      "startSeconds": 9.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 12,
+      "type": "rapid",
+      "startFrame": 303,
+      "endFrame": 333,
+      "frameCount": 30,
+      "startSeconds": 10.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 13,
+      "type": "rapid",
+      "startFrame": 333,
+      "endFrame": 363,
+      "frameCount": 30,
+      "startSeconds": 11.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 14,
+      "type": "rapid",
+      "startFrame": 363,
+      "endFrame": 393,
+      "frameCount": 30,
+      "startSeconds": 12.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 15,
+      "type": "rapid",
+      "startFrame": 393,
+      "endFrame": 423,
+      "frameCount": 30,
+      "startSeconds": 13.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 16,
+      "type": "rapid",
+      "startFrame": 423,
+      "endFrame": 453,
+      "frameCount": 30,
+      "startSeconds": 14.1,
+      "durationSeconds": 1,
+      "minSourceDuration": 1.0666666666666667
+    },
+    {
+      "index": 17,
+      "type": "rapid",
+      "startFrame": 453,
+      "endFrame": 456,
+      "frameCount": 3,
+      "startSeconds": 15.1,
+      "durationSeconds": 0.1,
+      "minSourceDuration": 0.16666666666666666
+    }
+  ],
+  "createdAt": "2026-01-15T23:14:35.577Z",
+  "updatedAt": "2026-01-17T04:24:47.556Z",
+  "__frameMigration": {
+    "migratedAt": "2026-01-17T09:33:13.409Z",
+    "fps": 30,
+    "backup": "/Users/everett/Documents/Code/killbillEdit/data/song-formats/touchthesky.json.backup-2026-01-17T09-33-13-409Z",
+    "captionFramesAdded": false
+  }
+}
