@@ -870,6 +870,9 @@ export async function POST(request) {
       if (!localClipUrls.length) {
         throw new Error("No clips were materialized; check Cloudinary config and source clip availability.");
       }
+      // Signal to the client that local clips are available for playback.
+      plan.useLocalClips = true;
+      plan.meta = { ...(plan.meta || {}), useLocalClips: true };
     } catch (err) {
       console.warn("[generate-edit] Failed to materialize local clips", err);
       return NextResponse.json(
