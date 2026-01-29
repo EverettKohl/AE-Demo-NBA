@@ -1157,10 +1157,15 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
       } else {
         const cloudinaryId = segment.asset?.cloudinaryId;
         const clipStart = segment.asset?.start || 0;
-        const clipEnd = segment.asset?.end || clipStart + segment.duration + 0.1;
+        const targetFrames = cover.frameCount || segment.frameCount || 0;
+        const desiredDurationSeconds = Math.max(
+          segment.durationSeconds || segment.duration || frameToSeconds(targetFrames || 0, fps),
+          frameToSeconds(targetFrames || 0, fps)
+        );
+        const clipEnd = clipStart + desiredDurationSeconds + 0.1;
         
         if (cloudinaryId) {
-          const url = getClipUrl(cloudinaryId, clipStart, clipEnd, { download: false, maxDuration: 600 });
+          const url = getClipUrl(cloudinaryId, clipStart, clipEnd, { download: true, maxDuration: 600, fps });
           const tmpPath = path.join(tmpDir, `clip-${segment.index}.mp4`);
           
           const res = await fetch(url);
@@ -1170,8 +1175,8 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
             inputClips.push({
               path: tmpPath,
               source: "downloaded",
-              duration: segment.duration,
-              targetFrames: cover.frameCount || segment.frameCount || 0,
+              duration: desiredDurationSeconds,
+              targetFrames,
               label: `segment-${segment.index}`,
               segment,
               cover,
