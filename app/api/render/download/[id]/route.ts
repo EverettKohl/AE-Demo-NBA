@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-import { getRenderState } from "../../latest/ssr/lib/render-state";
+import { getRenderState } from "../../../latest/ssr/lib/render-state";
 
 export async function GET(
   request: NextRequest,

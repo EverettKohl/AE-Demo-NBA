@@ -42,7 +42,9 @@
 /public/songs/
 /public/sounds/
 /public/uploaded/
-/data/
+/data/*
+!/data/preCachedClips.js
+!/data/preCachedClips2.js
 
 # debug
 npm-debug.log*
