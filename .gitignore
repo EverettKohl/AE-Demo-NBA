@@ -48,6 +48,7 @@
 !/data/song-formats/
 !/data/song-formats/*.json
 !/data/songFormatsStatic.js
+!/data/instantClipPool.json
 !/data/alpha-test.json
 
 # debug
