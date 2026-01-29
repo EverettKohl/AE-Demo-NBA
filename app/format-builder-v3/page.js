@@ -5618,16 +5618,11 @@ const FormatBuilderPage = ({ initialSongSlug = null, initialJobId = null } = {})
                 onClick={() => {
                   setImportJobId(null);
                   setImportError(null);
-                  const sampleSong = {
-                    slug: "FashionKilla",
-                    path: "/songs/FashionKilla.mp3",
-                    displayName: "Fashion Killa",
-                  };
                   setImportPlan(null);
-                  handleSongSelect(sampleSong);
+                  // No legacy sample fallback; user must pick a valid song source.
                 }}
               >
-                Switch to sample mode
+                Retry import
               </button>
             </div>
           </div>
