@@ -59,6 +59,9 @@ const nextConfig = {
       "@remotion/renderer",
       "esbuild",
     ],
+    outputFileTracingIncludes: {
+      "*": ["./data/**"],
+    },
   },
 };
 
