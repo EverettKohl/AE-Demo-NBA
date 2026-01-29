@@ -1,14 +1,13 @@
 /**
  * VideoDetails Component
  *
- * A component that provides a user interface for configuring video overlay settings, styles, and AI features.
- * It displays a video preview along with three tabbed panels for comprehensive video management.
+ * A component that provides a user interface for configuring video overlay settings and styles.
+ * It displays a video preview along with two tabbed panels for comprehensive video management.
  *
  * Features:
  * - Video preview display
  * - Settings panel for basic video configuration
  * - Style panel for visual customization
- * - AI panel for AI-powered video features
  *
  * @component
  */
@@ -17,12 +16,11 @@ import React from "react";
 import { ClipOverlay } from "../../../types";
 import { VideoStylePanel } from "./video-style-panel";
 import { VideoSettingsPanel } from "./video-settings-panel";
-import { VideoAIPanel } from "./video-ai-panel";
 import { VideoPreview } from "./video-preview";
 import { useOverlayOverlapCheck } from "../../../hooks/use-overlay-overlap-check";
 import { useEditorContext } from "../../../contexts/editor-context";
 import { UnifiedTabs } from "../shared/unified-tabs";
-import { Settings, PaintBucket, Sparkles } from "lucide-react";
+import { Settings, PaintBucket } from "lucide-react";
 
 interface VideoDetailsProps {
   /** The current state of the video overlay */
@@ -149,16 +147,6 @@ export const VideoDetails: React.FC<VideoDetailsProps> = ({
               <VideoStylePanel
                 localOverlay={localOverlay}
                 handleStyleChange={handleStyleChange}
-              />
-            ),
-          },
-          {
-            value: "ai",
-            label: "AI",
-            icon: <Sparkles className="w-4 h-4" />,
-            content: (
-              <VideoAIPanel
-                localOverlay={localOverlay}
               />
             ),
           },

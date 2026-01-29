@@ -165,12 +165,12 @@ export const buildGenerateEditRveProject = ({
   const hasPauseClips = normalized.some((seg) => seg.pauseMusic && seg.clipVolume > 0);
   const hasAudibleNonPause = normalized.some((seg) => !seg.pauseMusic && seg.clipVolume > 0);
   const hasMutedClips = normalized.some((seg) => seg.clipVolume <= 0);
+  const needsMutedRow = hasMutedClips || hasRapidRanges;
 
   let nextRow = 0;
-  const rapidRow = hasRapidRanges ? nextRow++ : null;
   const pauseRow = hasPauseClips ? nextRow++ : null;
   const audibleRow = hasAudibleNonPause || (!hasPauseClips && normalized.some((seg) => seg.clipVolume > 0)) ? nextRow++ : null;
-  const mutedRow = hasMutedClips ? nextRow++ : null;
+  const mutedRow = needsMutedRow ? nextRow++ : null;
 
   normalized.forEach(
     ({
@@ -260,15 +260,13 @@ export const buildGenerateEditRveProject = ({
     const isSilentClip = clipVolume <= 0;
     const isRapid = Boolean(isRapidRange);
     const targetRow =
-      isRapid && rapidRow !== null
-        ? rapidRow
-        : isSilentClip && mutedRow !== null
+      (isRapid || isSilentClip) && mutedRow !== null
         ? mutedRow
         : pauseMusic && pauseRow !== null
         ? pauseRow
         : audibleRow !== null
         ? audibleRow
-        : pauseRow ?? 0;
+        : mutedRow ?? pauseRow ?? 0;
     const effectiveVolume = isRapid ? 0 : clipVolume;
 
     const overlay = makeOverlay(targetRow, 0, overlays.length + 1, false, {

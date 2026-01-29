@@ -3,9 +3,8 @@ import { ImageOverlay } from "../../../types";
 import { ImageStylePanel } from "./image-style-panel";
 import { ImageSettingsPanel } from "./image-settings-panel";
 import { ImagePreview } from "./image-preview";
-import { ImageAIPanel } from "./image-ai-panel";
 import { UnifiedTabs } from "../shared/unified-tabs";
-import { Settings, PaintBucket, Sparkles } from "lucide-react";
+import { Settings, PaintBucket } from "lucide-react";
 
 /**
  * Props for the ImageDetails component
@@ -103,16 +102,6 @@ export const ImageDetails: React.FC<ImageDetailsProps> = ({
               <ImageStylePanel
                 localOverlay={localOverlay}
                 handleStyleChange={handleStyleChange}
-              />
-            ),
-          },
-          {
-            value: "ai",
-            label: "AI",
-            icon: <Sparkles className="w-4 h-4" />,
-            content: (
-              <ImageAIPanel
-                localOverlay={localOverlay}
               />
             ),
           },

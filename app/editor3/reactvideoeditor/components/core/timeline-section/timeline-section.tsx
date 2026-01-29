@@ -46,8 +46,9 @@ export const TimelineSection: React.FC<TimelineSectionProps> = () => {
     currentFrame,
     isPlaying,
     playerRef,
+    play,
+    pause,
     seekTo,
-    togglePlayPause,
     durationInFrames,
     setSelectedOverlayId,
     selectedOverlayIds,
@@ -234,16 +235,12 @@ export const TimelineSection: React.FC<TimelineSectionProps> = () => {
 
   // Playback control handlers
   const handlePlay = React.useCallback(() => {
-    if (!isPlaying) {
-      togglePlayPause();
-    }
-  }, [isPlaying, togglePlayPause]);
+    play();
+  }, [play]);
 
   const handlePause = React.useCallback(() => {
-    if (isPlaying) {
-      togglePlayPause();
-    }
-  }, [isPlaying, togglePlayPause]);
+    pause();
+  }, [pause]);
 
   const handleSeekToStart = React.useCallback(() => {
     if (playerRef?.current) {

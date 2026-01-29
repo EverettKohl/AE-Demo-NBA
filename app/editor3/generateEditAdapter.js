@@ -66,10 +66,10 @@ export const buildGenerateEditRveProject = ({ plan, jobId = null, songUrl = null
   const hasRapid = rapidRanges.some(Boolean);
   const hasMutedClips = clipVolumes.some((v) => v <= 0);
   const hasAudibleClips = clipVolumes.some((v) => v > 0);
+  const needsMutedRow = hasMutedClips || hasRapid;
   let nextRow = 0;
-  const rapidRow = hasRapid ? nextRow++ : null;
   const audibleRow = hasAudibleClips ? nextRow++ : null;
-  const mutedRow = hasMutedClips ? nextRow++ : null;
+  const mutedRow = needsMutedRow ? nextRow++ : null;
 
   segments.forEach((segment, idx) => {
     const startSeconds = graceSeconds + toNumber(segment?.startSeconds, 0);
@@ -84,11 +84,11 @@ export const buildGenerateEditRveProject = ({ plan, jobId = null, songUrl = null
     const isRapid = rapidRanges[idx];
     const isSilentClip = clipVolume <= 0;
     const targetRow =
-      isRapid && rapidRow !== null
-        ? rapidRow
-        : isSilentClip && mutedRow !== null
+      (isRapid || isSilentClip) && mutedRow !== null
         ? mutedRow
-        : audibleRow ?? 0;
+        : audibleRow !== null
+        ? audibleRow
+        : mutedRow ?? 0;
 
     const overlay = {
       id: idx + 1,
