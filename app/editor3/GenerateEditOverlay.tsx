@@ -7,6 +7,7 @@ import { useEditorContext } from "@editor/reactvideoeditor/contexts/editor-conte
 import { cn } from "@editor/reactvideoeditor/utils/general/utils";
 import { Button } from "@editor/reactvideoeditor/components/ui/button";
 import { useSeekDragAnimation } from "./hooks/useSeekDragAnimation";
+import { prefetchImportAssets } from "./useQuickEdit6Import";
 
 type Props = {
   open: boolean;
@@ -184,6 +185,20 @@ export function GenerateEditOverlay({ open, onClose }: Props) {
       if (!rveProject?.overlays || !Array.isArray(rveProject.overlays)) {
         throw new Error("Generate Edit returned no overlays");
       }
+      setProgressText("Downloading clips locally…");
+      const localizedProject = await prefetchImportAssets(rveProject as any, controller.signal);
+      if (controller.signal.aborted || runId !== runRef.current) return;
+      if (typeof window !== "undefined" && (payload?.jobId || payload?.jobID)) {
+        try {
+          const key = payload.jobId || payload.jobID;
+          const payloadStr = JSON.stringify(localizedProject);
+          window.sessionStorage.setItem(`ge-import-${key}`, payloadStr);
+          window.localStorage.setItem(`ge-import-${key}`, payloadStr);
+        } catch {
+          /* ignore storage errors */
+        }
+      }
+      const rveWithBlobs = localizedProject as any;
       const canvas = getAspectRatioDimensions();
       const fillOverlay = (overlay: Overlay): Overlay => {
         if (normalizeType(overlay.type) === OverlayType.SOUND) return overlay;
@@ -201,7 +216,7 @@ export function GenerateEditOverlay({ open, onClose }: Props) {
         };
       };
 
-      const normalized = (rveProject.overlays as any[]).map(normalizeOverlay).map(fillOverlay);
+      const normalized = (rveWithBlobs.overlays as any[]).map(normalizeOverlay).map(fillOverlay);
       const soundOverlays = normalized.filter((o) => normalizeType(o.type) === OverlayType.SOUND).sort((a, b) => a.from - b.from);
       const videoOverlays = normalized
         .filter((o) => normalizeType(o.type) !== OverlayType.SOUND)

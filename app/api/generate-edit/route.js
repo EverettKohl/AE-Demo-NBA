@@ -11,6 +11,7 @@ import {
 } from "@/lib/generateEdit";
 import { buildGenerateEditRveProject } from "@/lib/generateEditAdapter";
 import { getVideoMetadata } from "@/utils/videoValidation";
+import isMaterializeAllowed from "./materializeGuard";
 import path from "node:path";
 import fs from "node:fs";
 import os from "node:os";
@@ -600,6 +601,8 @@ export async function POST(request) {
     });
   };
 
+  const allowMaterialize = isMaterializeAllowed(process.env);
+  const shouldMaterialize = Boolean(materialize && allowMaterialize);
   const stageResults = [];
   let format;
   let segmentsPayload;
@@ -819,7 +822,7 @@ export async function POST(request) {
   }
 
   // Materialize local MP4s for each segment so the editor consumes local assets (no Cloudinary streaming).
-  if (materialize && plan?.segments?.length) {
+  if (shouldMaterialize && plan?.segments?.length) {
     try {
       const clipDir = path.join(EDITOR_IMPORTS_DIR, jobId, "clips");
       ensureDir(clipDir);
@@ -883,6 +886,10 @@ export async function POST(request) {
         { status: 500 }
       );
     }
+  } else if (materialize && !allowMaterialize) {
+    console.warn(
+      "[generate-edit] Materialization disabled in this environment; returning network clip URLs instead."
+    );
   }
 
   // Infer aspect ratio (and source dimensions) from the first materialized clip so the player matches the movie files.

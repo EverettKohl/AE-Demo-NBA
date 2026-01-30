@@ -11,7 +11,7 @@ import { useVideoReplacement } from "../../../hooks/use-video-replacement";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { useDownloadProgress } from "@/app/search/components/DownloadProgressProvider";
-import { AlertCircle, Clock, Download, Film, Play, Search, Sparkles } from "lucide-react";
+import { AlertCircle, Clock, Search, Sparkles } from "lucide-react";
 import { VideoDetails } from "./video-details";
 import { getClipDownloadManager } from "../../../../clipDownloadManager";
 
@@ -251,7 +251,7 @@ const VideoOverlayPanelInner: React.FC = () => {
         );
         if (publicId) {
           try {
-            clipUrlCandidate = getClipUrl(publicId, clip.start, clip.end, { download: false });
+            clipUrlCandidate = getClipUrl(publicId, clip.start, clip.end, { download: false, maxDuration: 180 });
           } catch {
             // ignore
           }
@@ -337,7 +337,7 @@ const VideoOverlayPanelInner: React.FC = () => {
     return () => {
       cancelled = true;
     };
-  }, [results]);
+  }, [results, deriveSources]);
 
   // Eagerly hydrate clips that still have no playable source after initial normalization
   useEffect(() => {
@@ -381,6 +381,22 @@ const VideoOverlayPanelInner: React.FC = () => {
         ""
     ) || null;
 
+  const hydrateDetailIfNeeded = async (clip: SearchClip) => {
+    if (clip.videoDetail?.system_metadata?.filename || clip.videoDetail?.cloudinaryVideoId || clip.cloudinaryVideoId) {
+      return clip;
+    }
+    const vid = clip.videoId || clip.cloudinaryVideoId;
+    if (!vid) return clip;
+    try {
+      const res = await fetch(`/api/getVideo?videoId=${encodeURIComponent(vid)}`);
+      if (!res.ok) return clip;
+      const detail = await res.json();
+      return { ...clip, videoDetail: detail };
+    } catch {
+      return clip;
+    }
+  };
+
   const handleAddClip = async (clip: SearchClip) => {
     const itemKey = clip.id;
     setIsDurationLoading(true);
@@ -399,19 +415,17 @@ const VideoOverlayPanelInner: React.FC = () => {
     let blobUrl: string | null = null;
     let usedDownloadKey: string | null = null;
     try {
-      const { hlsUrl, mp4Url } = getClipSources(clip);
-      const publicId = resolvePublicId(clip);
+      const hydrated = await hydrateDetailIfNeeded(clip);
+      const publicId = resolvePublicId(hydrated);
+      if (!publicId) {
+        throw new Error("Cloudinary id not available for this clip.");
+      }
 
       const candidates: Array<string | null> = [];
-      if (publicId) {
-        try {
-          candidates.push(getClipDownloadUrl(publicId, startVal, endVal, { maxDuration: 180 }));
-        } catch {
-          /* ignore */
-        }
-      }
-      if (mp4Url && !mp4Url.includes(".m3u8")) {
-        candidates.push(mp4Url);
+      try {
+        candidates.push(getClipDownloadUrl(publicId, startVal, endVal, { maxDuration: 180 }));
+      } catch {
+        /* ignore */
       }
 
       const uniqueCandidates = candidates.filter(Boolean) as string[];
@@ -427,7 +441,14 @@ const VideoOverlayPanelInner: React.FC = () => {
           if (!res.ok) {
             throw new Error(`Failed to read downloaded clip (${res.status})`);
           }
-          blob = await res.blob();
+          const contentType = res.headers.get("content-type") || "";
+          const blobCandidate = await res.blob();
+          const effectiveType = (blobCandidate.type || contentType || "").toLowerCase();
+          if (!effectiveType.startsWith("video/")) {
+            // Not a video; try next candidate
+            continue;
+          }
+          blob = blobCandidate;
           chosenUrl = result.originalUrl;
           usedDownloadKey = candidateKey;
           break;
@@ -543,12 +564,6 @@ const VideoOverlayPanelInner: React.FC = () => {
     const key = clip.id || `${clip.videoId || "clip"}-${idx}`;
     const { hlsUrl: previewHls, mp4Url: previewMp4 } = getPreviewSources(clip);
     const { hlsUrl: actionHls, mp4Url: actionMp4 } = getClipSources(clip);
-    const title =
-      clip.title ||
-      clip.videoDetail?.system_metadata?.video_title ||
-      clip.videoDetail?.system_metadata?.filename ||
-      clip.videoId ||
-      "Video Clip";
     const thumbnail = getClipThumbnail(clip);
     const startVal = Math.max(0, clip.start || 0);
     const endVal = Math.max(clip.end || 0, startVal + 0.1);
@@ -724,17 +739,9 @@ const VideoOverlayPanelInner: React.FC = () => {
             if (!selectedClipForEdit) return;
             await addDownloadedClip({
               ...payload,
+              cloudinaryPublicId: payload.cloudinaryPublicId || undefined,
+              mainCloudinaryPublicId: payload.mainCloudinaryPublicId || undefined,
               thumbnail: payload.thumbnail || getClipThumbnail(selectedClipForEdit.clip) || undefined,
-              mainCloudinaryPublicId:
-                payload.mainCloudinaryPublicId ||
-                normalizeCloudinaryPublicId(
-                  selectedClipForEdit.clip.videoDetail?.system_metadata?.filename ||
-                    selectedClipForEdit.clip.videoDetail?.system_metadata?.public_id ||
-                    selectedClipForEdit.clip.videoDetail?.cloudinaryVideoId ||
-                    selectedClipForEdit.clip.videoId ||
-                    ""
-                ) ||
-                undefined,
             });
             setSelectedClipForEdit(null);
           }}
