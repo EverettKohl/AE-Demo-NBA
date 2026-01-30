@@ -11,7 +11,6 @@ import {
   X,
   Sparkles,
   Search,
-  Zap,
   Home,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -171,7 +170,7 @@ export const Editor2Sidebar: React.FC = () => {
     region: null,
   });
 
-  const [geOverlayOpen, setGeOverlayOpen] = React.useState(false);
+  const [geOverlayOpen, setGeOverlayOpen] = React.useState(true);
   const [instantOpen, setInstantOpen] = React.useState(false);
 
   const selectedOverlay =
@@ -241,52 +240,12 @@ export const Editor2Sidebar: React.FC = () => {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => {
-                    setGeOverlayOpen(false);
-                    setInstantOpen(true);
-                  }}
-                  data-label="Instant Demo"
-                  className={cn(styles.navPill)}
-                  title="Instant Demo"
-                  aria-label="Instant Demo"
-                  onMouseEnter={(e) => {
-                    if (!RAIL_TOOLTIP_LABELS.has("Instant Demo")) return;
-                    setTooltip({
-                      label: "Instant Demo",
-                      x: e.clientX,
-                      y: e.clientY,
-                      visible: true,
-                      region: "rail",
-                    });
-                  }}
-                  onMouseMove={(e) => {
-                    if (!RAIL_TOOLTIP_LABELS.has("Instant Demo")) return;
-                    setTooltip((t) => ({
-                      ...t,
-                      x: e.clientX,
-                      y: e.clientY,
-                      region: "rail",
-                    }));
-                  }}
-                  onMouseLeave={() =>
-                    setTooltip((t) => ({
-                      ...t,
-                      visible: false,
-                      region: null,
-                    }))
-                  }
-                >
-                  <Zap />
-                  <span className={styles.navLabel}>Instant</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  onClick={() => {
                     setInstantOpen(false);
                     setGeOverlayOpen(true);
                   }}
                   data-label="Generate Edit"
-                  className={cn(styles.navPill)}
+                  className={cn(styles.navPill, geOverlayOpen && styles.navPillActive)}
+                  data-active={geOverlayOpen}
                   title="Generate Edit"
                   aria-label="Generate Edit"
                   onMouseEnter={(e) => {

@@ -43,6 +43,13 @@ export function ReactVideoEditorClient({
   const { project: geImport, loading: loadingGe, error: geError } = useGenerateEditImport();
   const { project: qe6Import, loading: loadingQe6, error: qe6Error } = useQuickEdit6Import();
   const downloadUsage = useDownloadStorage();
+  const storageStatus = React.useMemo(() => {
+    if (!downloadUsage.capacityBytes) return null;
+    const pct = ((downloadUsage.usedBytes / downloadUsage.capacityBytes) * 100).toFixed(1);
+    const usedMb = (downloadUsage.usedBytes / (1024 * 1024)).toFixed(1);
+    const capMb = (downloadUsage.capacityBytes / (1024 * 1024)).toFixed(0);
+    return `${pct}% (${usedMb} MB / ${capMb} MB)`;
+  }, [downloadUsage]);
 
   // Derive the project id before passing into hooks to avoid TDZ issues.
   const projectIdForAutosave = React.useMemo(() => {
@@ -147,13 +154,6 @@ export function ReactVideoEditorClient({
               {geError || qe6Error}
             </div>
           )}
-          <div className="fixed top-2 right-2 z-40 rounded bg-slate-900/80 text-slate-100 px-3 py-2 text-xs shadow">
-            <div className="font-semibold">Clip storage</div>
-            <div>
-              {((downloadUsage.usedBytes / downloadUsage.capacityBytes) * 100).toFixed(1)}% (
-              {(downloadUsage.usedBytes / (1024 * 1024)).toFixed(1)} MB / 2048 MB)
-            </div>
-          </div>
           <MobileWarningModal show={SHOW_MOBILE_WARNING} />
           <ProjectLoadConfirmModal
             isVisible={resolvedShowModal}
@@ -185,6 +185,7 @@ export function ReactVideoEditorClient({
             showIconTitles={false}
             className={styles.chrome}
             customSidebar={<Editor2Sidebar />}
+            storageStatus={storageStatus || undefined}
           />
           <Toaster />
         </div>

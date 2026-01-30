@@ -8,11 +8,12 @@ export const metadata = {
 };
 
 export default function HomeDemoPage() {
-  const featuredHrefs = [
-    "/search",
-    "/quick-edit-3",
-    "/instant-edit-3",
-    "/editor3",
+  const featuredHrefs = ["/search", "/editor3"];
+  const accentClasses = [
+    "from-amber-500/15 via-orange-500/10 to-transparent",
+    "from-pink-500/15 via-rose-500/10 to-transparent",
+    "from-blue-500/15 via-cyan-500/10 to-transparent",
+    "from-emerald-500/15 via-teal-500/10 to-transparent",
   ];
 
   const featuredLinks = featuredHrefs
@@ -38,81 +39,69 @@ export default function HomeDemoPage() {
 
           <div className="relative z-10 h-full flex items-end">
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 md:pb-12 lg:pb-16">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
-                <div className="shrink-0">
-                  <div className="relative w-24 h-36 sm:w-32 sm:h-48 md:w-40 md:h-60 lg:w-48 lg:h-72 rounded-lg overflow-hidden shadow-2xl bg-black">
+              <div className="flex flex-col md:flex-row gap-5 md:gap-7 items-start md:items-stretch md:min-h-[300px]">
+                <div className="shrink-0 md:h-full">
+                  <div className="relative w-24 sm:w-32 md:w-40 lg:w-48 aspect-2/3 min-h-[240px] md:min-h-[300px] md:h-full rounded-lg overflow-hidden shadow-2xl bg-transparent">
                     <Image
                       src="/Poster.png"
                       alt="Kill Bill: The Whole Bloody Affair poster"
                       fill
                       className="object-contain"
                       priority
-                      sizes="(max-width: 640px) 96px, (max-width: 768px) 128px, (max-width: 1024px) 160px, 192px"
+                      sizes="(max-width: 640px) 120px, (max-width: 768px) 144px, (max-width: 1024px) 176px, 208px"
                     />
                   </div>
                 </div>
 
                 <div className="flex-1 max-w-3xl">
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 text-white drop-shadow-lg">
-                    Kill Bill: The Whole Bloody Affair
-                  </h1>
-                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 text-xs sm:text-sm md:text-base">
-                    <span className="text-white/90 font-medium">2025</span>
-                    <span className="text-white/70">•</span>
-                    <span className="text-white/90">Only in Theatres Dec 5</span>
-                    <span className="text-white/70">•</span>
-                    <span className="text-white/90">Lionsgate</span>
+                  <div className="relative h-full min-h-[240px] md:min-h-[300px] overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
+                    <div className="absolute inset-0 bg-linear-to-br from-white/6 via-white/2 to-transparent" aria-hidden="true" />
+                    <div className="absolute -top-16 -right-10 h-48 w-48 rounded-full bg-amber-400/10 blur-3xl" aria-hidden="true" />
+                    <div className="absolute -bottom-20 -left-10 h-52 w-52 rounded-full bg-rose-400/10 blur-3xl" aria-hidden="true" />
+                    <div className="relative h-full flex flex-col justify-center p-4 sm:p-5 lg:p-6 space-y-3.5">
+                      <div className="space-y-3">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl 2xl:text-5xl font-bold text-white drop-shadow-lg leading-tight whitespace-normal wrap-break-word">
+                          Kill Bill: The Whole Bloody Affair
+                        </h1>
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm md:text-base">
+                          <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/90">
+                            2025
+                          </span>
+                          <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/90">
+                            Only in Theatres Dec 5
+                          </span>
+                          <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-white/90">
+                            Lionsgate
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {featuredLinks.map(({ href, label }, index) => (
+                          <Link
+                            key={href}
+                            href={href}
+                            className="group relative overflow-hidden rounded-xl border border-white/15 bg-white/5 p-4 flex items-center justify-between gap-2 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-white/60 hover:shadow-[0_12px_32px_-18px_rgba(255,255,255,0.6)]"
+                          >
+                            <div
+                              className={`absolute inset-0 bg-linear-to-br ${accentClasses[index % accentClasses.length]} opacity-60 group-hover:opacity-100 transition duration-200`}
+                              aria-hidden="true"
+                            />
+                            <div className="relative flex items-center justify-between w-full">
+                              <span className="text-base sm:text-lg font-semibold text-white leading-tight">
+                                {label}
+                              </span>
+                              <span className="inline-flex items-center justify-center h-9 w-9 rounded-full border border-white/30 bg-white/10 text-white transition duration-200 group-hover:bg-white/20 group-hover:border-white group-hover:translate-x-0.5">
+                                →
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-sm sm:text-base md:text-lg text-white/85 mb-4 max-w-2xl leading-relaxed">
-                    Experience Quentin Tarantino&apos;s uncut revenge saga exactly as intended. The Bride&apos;s relentless path through the Deadly Viper Assassination Squad unfolds in one sweeping, blood-soaked epic that fuses grindhouse flair with balletic action. Jump to any experience below to explore, build, or search the film.
-                  </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
-          <div className="bg-gray-950/70 border border-gray-800/80 rounded-2xl p-5 sm:p-7 shadow-2xl backdrop-blur-md space-y-5">
-            <div className="space-y-1">
-              <p className="text-xs sm:text-sm font-semibold text-white uppercase tracking-[0.2em]">
-                Navigation
-              </p>
-              <h2 className="text-xl sm:text-2xl font-bold text-white">
-                Explore the hub
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {featuredLinks.map(({ href, label }, index) => {
-                const accents = [
-                  "from-amber-500/15 via-orange-500/10 to-transparent",
-                  "from-pink-500/15 via-rose-500/10 to-transparent",
-                  "from-blue-500/15 via-cyan-500/10 to-transparent",
-                  "from-emerald-500/15 via-teal-500/10 to-transparent",
-                ];
-
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    className="group relative overflow-hidden rounded-lg border border-gray-800/70 bg-gray-900/70 p-4 flex items-center justify-between gap-2 transition duration-200 ease-out hover:-translate-y-0.5 hover:border-white/70 hover:shadow-[0_10px_28px_-16px_rgba(255,255,255,0.55)]"
-                  >
-                    <div
-                      className={`absolute inset-0 bg-linear-to-br ${accents[index % accents.length]} opacity-50 group-hover:opacity-100 transition duration-200`}
-                      aria-hidden="true"
-                    />
-                    <div className="relative flex items-center justify-between w-full">
-                      <span className="text-base sm:text-lg font-semibold text-white leading-tight">
-                        {label}
-                      </span>
-                      <span className="inline-flex items-center justify-center h-8 w-8 rounded-full border border-white/30 bg-white/10 text-white transition duration-200 group-hover:bg-white/20 group-hover:border-white group-hover:translate-x-0.5">
-                        →
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
             </div>
           </div>
         </div>

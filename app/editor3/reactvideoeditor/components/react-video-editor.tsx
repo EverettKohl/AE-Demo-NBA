@@ -35,6 +35,8 @@ export interface ReactVideoEditorProps extends Omit<ReactVideoEditorProviderProp
   hideThemeToggle?: boolean | undefined;
   /** Default theme to use when theme toggle is hidden */
   defaultTheme?: string | undefined;
+  /** Optional status text to show in the header (e.g., clip storage) */
+  storageStatus?: string | undefined;
   /** Whether to render in player-only mode (no editor UI) */
   isPlayerOnly?: boolean;
   /** Whether the project from URL is still loading */
@@ -56,6 +58,7 @@ export const ReactVideoEditor: React.FC<ReactVideoEditorProps> = ({
   showDefaultThemes = true,
   hideThemeToggle = false,
   defaultTheme = 'dark',
+  storageStatus,
   onSaving,
   onSaved,
   isPlayerOnly = false,
@@ -130,6 +133,7 @@ export const ReactVideoEditor: React.FC<ReactVideoEditorProps> = ({
               showDefaultThemes={showDefaultThemes}
               hideThemeToggle={hideThemeToggle}
               defaultTheme={defaultTheme}
+              storageStatus={storageStatus}
             />
           </SidebarInset>
 

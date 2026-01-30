@@ -344,7 +344,7 @@ const SearchPageClient = () => {
             <p className="text-sm font-semibold uppercase tracking-wide text-indigo-400">Search</p>
             <h1 className="text-3xl font-bold">Find Kill Bill moments</h1>
             <p className="max-w-2xl text-slate-400">
-              Search Twelve Labs indexed clips, then trim and download with the new editor.
+              Type the moment in the movie you want to find and our AI will find it.
             </p>
           </header>
 

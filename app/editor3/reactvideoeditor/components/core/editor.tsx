@@ -49,6 +49,7 @@ export const Editor: React.FC<EditorProps> = ({
   showDefaultThemes,
   hideThemeToggle,
   defaultTheme,
+  storageStatus,
 }) => {
   /** State to track if the current viewport is mobile-sized */
   const [isMobile, setIsMobile] = React.useState(false);
@@ -178,6 +179,7 @@ export const Editor: React.FC<EditorProps> = ({
           showDefaultThemes={showDefaultThemes}
           hideThemeToggle={hideThemeToggle}
           defaultTheme={defaultTheme}
+          storageStatus={storageStatus}
         />
         <div className="grow flex flex-col lg:flex-row overflow-hidden">
           <VideoPlayer playerRef={playerRef} />

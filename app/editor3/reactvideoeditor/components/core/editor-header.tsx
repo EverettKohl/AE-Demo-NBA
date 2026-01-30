@@ -5,7 +5,6 @@ import { CustomTheme } from "../../hooks/use-extended-theme-switcher";
 import { useExtendedThemeSwitcher } from "../../hooks/use-extended-theme-switcher";
 import { useThemeConfig } from "../../contexts/theme-context";
 
-import RenderControls from "../rendering/render-controls";
 import { SaveControls } from "./save-controls";
 import { useEditorContext } from "../../contexts/editor-context";
 import { useEffect } from "react";
@@ -127,17 +126,11 @@ export function EditorHeader({
         />
       )}
 
-      {/* Spacer to push rendering controls to the right */}
+      {/* Spacer to push controls to the right */}
       <div className="grow" />
 
       {/* Save controls */}
       <SaveControls onSave={saveProject || (() => Promise.resolve())} />
-
-      {/* Render controls */}
-      <RenderControls
-        handleRender={renderMedia}
-        state={renderState}
-      />
     </header>
   );
 }

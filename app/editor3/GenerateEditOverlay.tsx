@@ -290,7 +290,7 @@ export function GenerateEditOverlay({ open, onClose }: Props) {
         <div className="flex flex-1 min-h-0 items-center justify-center bg-black px-3 py-2" data-seek-scan-container>
           <div className={cn("w-full max-w-xl space-y-4 transition-opacity duration-75", isSeekAnimating && "opacity-0 pointer-events-none")}>
             <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-2">
-              <label className="text-xs uppercase tracking-[0.2em] text-white/60">Format</label>
+              <label className="text-xs uppercase tracking-[0.2em] text-white/60">Pick A Song</label>
               <select
                 value={selected}
                 onChange={(e) => setSelected(e.target.value)}
@@ -329,14 +329,6 @@ export function GenerateEditOverlay({ open, onClose }: Props) {
               {status === "loading" ? "Loading" : status === "complete" ? "Complete" : "Create Edit"}
             </Button>
 
-            <div className="rounded-lg border border-white/10 bg-white/5 p-3 space-y-2 text-sm text-white/80">
-              <div className="flex items-center justify-between text-xs text-white/60">
-                <span>Progress</span>
-                <span className="uppercase tracking-[0.2em]">{status.toUpperCase()}</span>
-              </div>
-              <p>{progressText}</p>
-              {error && <p className="text-rose-300">{error}</p>}
-            </div>
           </div>
         </div>
       </div>
