@@ -9,6 +9,7 @@ import { SoundDetails } from "./sound-details";
 import { UnifiedTabs } from "../shared/unified-tabs";
 import SoundCard, { AudioWithSource } from "./sound-card";
 import { getSrcDuration } from "../../../hooks/use-src-duration";
+import { ingestFromUrl } from "../../../../lib/media-ingest";
 
 
 
@@ -163,11 +164,18 @@ const SoundsOverlayPanel: React.FC = () => {
       mediaSrcDuration = sound.duration;
     }
 
+    const ingested = await ingestFromUrl(sound.file, {
+      kind: "audio",
+      durationSeconds: mediaSrcDuration,
+      name: sound.title,
+    });
+
     // Create the sound overlay configuration without an ID (will be generated)
     const newSoundOverlay = {
       type: OverlayType.SOUND,
       content: sound.title,
-      src: sound.file, // This is now guaranteed to exist
+      src: ingested.blobUrl, // Persisted blob URL
+      localMediaId: ingested.localMediaId as any,
       from,
       row,
       // Layout properties
@@ -178,7 +186,7 @@ const SoundsOverlayPanel: React.FC = () => {
       rotation: 0,
       isDragging: false,
       durationInFrames,
-      mediaSrcDuration,
+      mediaSrcDuration: mediaSrcDuration ?? ingested.durationSeconds,
       styles: {
         opacity: 1,
       },

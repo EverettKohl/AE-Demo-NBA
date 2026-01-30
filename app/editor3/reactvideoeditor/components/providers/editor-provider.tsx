@@ -15,6 +15,7 @@ import { TIMELINE_CONSTANTS } from "../advanced-timeline/constants";
 import { transformOverlaysForAspectRatio, shouldTransformOverlays, getDimensionsForAspectRatio } from "../../utils/aspect-ratio-transform";
 import { toAbsoluteUrl } from "../../utils/general/url-helper";
 import { frameToTime } from "../../utils/time";
+import { rehydrateMediaById } from "../../../lib/media-ingest";
 
 interface EditorProviderProps {
   children: React.ReactNode;
@@ -479,6 +480,44 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
       backgroundColor,
     });
   }, [overlays, selectedOverlayId, selectedOverlayIds, aspectRatio, playbackRate, durationInFrames, currentFrame, backgroundColor]);
+
+  // Rehydrate overlay sources from IndexedDB if blob URLs were lost between sessions.
+  useEffect(() => {
+    let cancelled = false;
+    const needsRehydrate = overlays.some(
+      (ov) => (ov as any)?.localMediaId && !(ov as any)?.src?.toString().startsWith("blob:")
+    );
+    if (!needsRehydrate) return;
+
+    const run = async () => {
+      const updated = await Promise.all(
+        overlays.map(async (ov) => {
+          const localId = (ov as any)?.localMediaId;
+          if (!localId) return ov;
+          const hasBlob = (ov as any)?.src?.toString().startsWith("blob:");
+          if (hasBlob) return ov;
+          try {
+            const regenerated = await rehydrateMediaById(localId);
+            if (regenerated) {
+              return { ...ov, src: regenerated };
+            }
+          } catch {
+            // ignore rehydrate errors; fallback to existing overlay
+          }
+          return ov;
+        })
+      );
+      const changed = updated.some((ov, idx) => ov !== overlays[idx]);
+      if (!cancelled && changed) {
+        setOverlays(updated);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [overlays, setOverlays]);
 
   // Autosave functionality
   const { saveState, isInitialLoadComplete } = useAutosave(projectId, state, {

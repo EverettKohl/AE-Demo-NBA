@@ -74,12 +74,16 @@ const toAbsoluteUrl = (src?: string | null, jobToken?: string | null) => {
     (typeof process !== "undefined" &&
       (process.env.NEXT_PUBLIC_APP_ORIGIN || process.env.NEXT_PUBLIC_SITE_URL || null)) ||
     (typeof window !== "undefined" ? window.location.origin : null);
+  const isRemote = /^https?:\/\//i.test(src);
   const abs = (() => {
-    if (/^https?:\/\//i.test(src)) return src;
+    if (isRemote) return src;
     if (base) return `${base}${src.startsWith("/") ? src : `/${src}`}`;
     return src.startsWith("/") ? src : `/${src}`;
   })();
-  if (!jobToken) return abs;
+  // Only tag remote URLs with the job token; local static assets (e.g. /songs/*.mp3,
+  // /instant-clips/*.mp4) should stay cacheable and avoid unexpected 404s from
+  // deploy previews.
+  if (!jobToken || !isRemote) return abs;
   const separator = abs.includes("?") ? "&" : "?";
   return `${abs}${separator}job=${encodeURIComponent(jobToken)}&ts=${Date.now()}`;
 };
@@ -186,6 +190,8 @@ export const buildGenerateEditRveProject = ({
       isRapidRange,
     }) => {
     const localSrc = asset?.localPath || null;
+    const publicSrc = (asset as any)?.publicPath || null;
+    const chosenSrc = publicSrc || localSrc || "";
     const durationInFrames = Math.max(1, timeToFrame(durationSeconds, fps));
     const frameDurationSec = ONE_FRAME(fps);
     const lastFrameStartSec = Math.max(durationSeconds - frameDurationSec, 0);
@@ -223,7 +229,7 @@ export const buildGenerateEditRveProject = ({
         rotation: 0,
         isDragging: false,
         content: asset?.cloudinaryId || asset?.videoId || `clip-${idSeed}`,
-        src: localSrc || "",
+        src: chosenSrc,
         videoStartTime,
         mediaSrcDuration,
         styles: {

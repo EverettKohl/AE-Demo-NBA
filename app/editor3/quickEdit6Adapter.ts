@@ -216,7 +216,8 @@ export const buildQuickEdit6RveProject = ({
       fps,
     });
 
-    const src = preferProxy(cloudinaryTrimUrl) || asset?.localPath || renderUrl;
+    // Prefer locally materialized MP4s first to avoid Cloudinary streaming in production.
+    const src = asset?.localPath || preferProxy(cloudinaryTrimUrl) || renderUrl;
 
     if (!src) {
       warnings.push(`Segment ${idx + 1}: missing media source; left placeholder`);

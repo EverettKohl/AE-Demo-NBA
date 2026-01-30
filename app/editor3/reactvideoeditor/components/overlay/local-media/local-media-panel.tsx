@@ -72,6 +72,7 @@ export const LocalMediaPanel: React.FC = () => {
         type: OverlayType.VIDEO,
         content: file.thumbnail || "",
         src: mediaSrc, // Use the API route instead of direct path
+        localMediaId: file.id as any,
         videoStartTime: 0,
         mediaSrcDuration: file.duration, // Set the source media duration in seconds
         styles: {
@@ -101,6 +102,7 @@ export const LocalMediaPanel: React.FC = () => {
         isDragging: false,
         type: OverlayType.IMAGE,
         src: mediaSrc, // Use the API route instead of direct path
+        localMediaId: file.id as any,
         content: mediaSrc,
         styles: {
           objectFit: "fill",
@@ -125,6 +127,7 @@ export const LocalMediaPanel: React.FC = () => {
         type: OverlayType.SOUND,
         content: file.name,
         src: mediaSrc, // Use the API route instead of direct path
+        localMediaId: file.id as any,
         mediaSrcDuration: file.duration, // Set the source media duration in seconds
         styles: {
           volume: 1,

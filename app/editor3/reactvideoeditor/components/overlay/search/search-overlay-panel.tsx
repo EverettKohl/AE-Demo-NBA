@@ -963,8 +963,8 @@ export const SearchOverlayPanel: React.FC = () => {
               playbackUrlOverride={playbackOverride}
               previewStartOverride={previewStartOverride}
               previewEndOverride={previewEndOverride}
-              onAddToTimeline={(payload) => {
-                addDownloadedClip({
+              onAddToTimeline={async (payload) => {
+                await addDownloadedClip({
                   ...payload,
                   thumbnail: payload.thumbnail || thumbnail || undefined,
                   cloudinaryPublicId: payload.cloudinaryPublicId || normalized || undefined,

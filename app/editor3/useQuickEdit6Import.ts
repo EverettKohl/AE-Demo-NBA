@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { QuickEdit6ImportPayload, QuickEdit6ImportPayload as QE6Payload } from "./quickEdit6Adapter";
 import { buildQuickEdit6RveProject } from "./quickEdit6Adapter";
 import { getClipDownloadManager } from "./clipDownloadManager";
+import { ingestFromBlobUrl } from "./lib/media-ingest";
 import { getClipUrl } from "@/utils/cloudinary";
 
 export const QE6_IMPORT_PARAM = "qe6Import";
@@ -22,9 +23,6 @@ const readStoredImport = (key: string): QuickEdit6ImportPayload | null => {
   }
   return null;
 };
-
-const hasSoundOverlay = (payload: QuickEdit6ImportPayload | null) =>
-  Boolean(payload?.overlays?.some((o: any) => o?.type === "sound" || o?.type === "SOUND" || o?.type === 6));
 
 export const collectMediaUrls = (payload: QE6Payload | null): string[] => {
   if (!payload) return [];
@@ -47,7 +45,7 @@ const isMobileUA = () => {
   return /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent || "");
 };
 
-const maybeBuildCloudinaryUrl = (o: any, fps?: number) => {
+const maybeBuildCloudinaryUrl = (o: any) => {
   const meta = o?.meta || {};
   const cloudinaryId =
     meta.cloudinaryId ||
@@ -60,7 +58,7 @@ const maybeBuildCloudinaryUrl = (o: any, fps?: number) => {
   const end = typeof meta.end === "number" ? meta.end : o?.trimEnd || start;
   if (!cloudinaryId || end <= start) return null;
   try {
-    return getClipUrl(cloudinaryId, start, end, { download: false, fps: fps || 30, maxDuration: 600 });
+    return getClipUrl(cloudinaryId, start, end, { download: false, maxDuration: 600 });
   } catch {
     return null;
   }
@@ -72,15 +70,21 @@ const downloadAndLocalizeAssets = async (payload: QE6Payload | null, signal?: Ab
     throw new Error("This flow is desktop-only (2GB local clip cap).");
   }
   const mgr = getClipDownloadManager();
-  const fps = payload?.fps || payload?.meta?.fps || 30;
+  const fps = ((payload as any)?.fps as number | undefined) || ((payload?.meta as any)?.fps as number | undefined) || 30;
 
   // Download overlays (video/audio) and swap to object URLs.
   const overlays = await Promise.all(
     (payload.overlays || []).map(async (o: any, idx: number) => {
       let src = o?.src;
       const overlayType = (o as any)?.type || "overlay";
+      const overlayKind =
+        overlayType === "sound" || overlayType === "SOUND" || overlayType === 6
+          ? "audio"
+          : overlayType === "image"
+          ? "image"
+          : "video";
       if (!src || typeof src !== "string") {
-        const fallback = maybeBuildCloudinaryUrl(o, fps);
+        const fallback = maybeBuildCloudinaryUrl(o);
         if (!fallback) return o;
         src = fallback;
       }
@@ -88,27 +92,51 @@ const downloadAndLocalizeAssets = async (payload: QE6Payload | null, signal?: Ab
       const id = `${overlayType}-${idx}-${src}`;
       try {
         const { objectUrl, bytes, originalUrl } = await mgr.download(id, src, signal);
+        const durationSeconds =
+          (o as any)?.mediaSrcDuration ??
+          ((o as any)?.durationInFrames && fps ? (o as any).durationInFrames / fps : undefined);
+        const ingested = await ingestFromBlobUrl(objectUrl, {
+          kind: overlayKind as any,
+          durationSeconds,
+          name: (o as any)?.name || (o as any)?.content || `${overlayType}-${idx}`,
+          thumbnail: (o as any)?.thumbnail,
+        });
+        URL.revokeObjectURL(objectUrl);
         return {
           ...o,
-          src: objectUrl,
+          src: ingested.blobUrl,
+          localMediaId: ingested.localMediaId as any,
           meta: {
             ...(o as any)?.meta,
             originalSrc: originalUrl,
             downloadBytes: bytes,
+            localMediaId: ingested.localMediaId,
           },
         };
       } catch (err) {
         // Retry with Cloudinary URL if initial src failed and was not cloudinary-derived.
-        const alt = maybeBuildCloudinaryUrl(o, fps);
+        const alt = maybeBuildCloudinaryUrl(o);
         if (alt && alt !== src) {
           const { objectUrl, bytes, originalUrl } = await mgr.download(`${overlayType}-${idx}-${alt}`, alt, signal);
+          const durationSeconds =
+            (o as any)?.mediaSrcDuration ??
+            ((o as any)?.durationInFrames && fps ? (o as any).durationInFrames / fps : undefined);
+          const ingested = await ingestFromBlobUrl(objectUrl, {
+            kind: overlayKind as any,
+            durationSeconds,
+            name: (o as any)?.name || (o as any)?.content || `${overlayType}-${idx}`,
+            thumbnail: (o as any)?.thumbnail,
+          });
+          URL.revokeObjectURL(objectUrl);
           return {
             ...o,
-            src: objectUrl,
+            src: ingested.blobUrl,
+            localMediaId: ingested.localMediaId as any,
             meta: {
               ...(o as any)?.meta,
               originalSrc: originalUrl,
               downloadBytes: bytes,
+              localMediaId: ingested.localMediaId,
             },
           };
         }
@@ -122,10 +150,16 @@ const downloadAndLocalizeAssets = async (payload: QE6Payload | null, signal?: Ab
   if (songUrl && typeof songUrl === "string") {
     const songId = `song-${songUrl}`;
     const { objectUrl, bytes, originalUrl } = await mgr.download(songId, songUrl, signal);
-    songUrl = objectUrl;
+    const ingestedSong = await ingestFromBlobUrl(objectUrl, {
+      kind: "audio",
+      name: (payload.meta as any)?.songLabel || "Song",
+    });
+    URL.revokeObjectURL(objectUrl);
+    songUrl = ingestedSong.blobUrl;
     const meta = payload.meta ? { ...payload.meta } : {};
     (meta as any).songDownloadBytes = bytes;
     (meta as any).songOriginalUrl = originalUrl;
+    (meta as any).songLocalMediaId = ingestedSong.localMediaId;
     payload = { ...payload, meta };
   }
 

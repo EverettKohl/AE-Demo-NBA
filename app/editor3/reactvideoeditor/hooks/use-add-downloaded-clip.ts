@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { ingestFromBlobUrl } from "../../lib/media-ingest";
 import { Overlay, OverlayType } from "../types";
 import { useEditorContext } from "../contexts/editor-context";
 import { useTimelinePositioning } from "./use-timeline-positioning";
@@ -22,7 +23,7 @@ export const useAddDownloadedClip = () => {
   const { addAtPlayhead } = useTimelinePositioning();
 
   return useCallback(
-    ({
+    async ({
       blobUrl,
       durationSeconds,
       startSeconds,
@@ -30,6 +31,7 @@ export const useAddDownloadedClip = () => {
       cloudinaryPublicId,
       mainCloudinaryPublicId,
       thumbnail,
+      filename,
     }: {
       blobUrl: string; // object URL for the downloaded MP4
       durationSeconds: number;
@@ -38,6 +40,7 @@ export const useAddDownloadedClip = () => {
       cloudinaryPublicId?: string; // specific clipped public ID if available
       mainCloudinaryPublicId?: string; // base/original asset ID (preferred)
       thumbnail?: string;
+      filename?: string;
     }) => {
       const effectiveFps = fps ?? 30;
       const durationInFrames = Math.max(1, Math.round(durationSeconds * effectiveFps));
@@ -54,6 +57,13 @@ export const useAddDownloadedClip = () => {
           ? Math.max(...updatedOverlays.map((o) => o.id)) + 1
           : 0;
 
+      const ingest = await ingestFromBlobUrl(blobUrl, {
+        kind: "video",
+        durationSeconds,
+        thumbnail,
+        name: filename || "clip.mp4",
+      });
+
       const overlay: Overlay = {
         id: newId,
         left: 0,
@@ -66,8 +76,8 @@ export const useAddDownloadedClip = () => {
         row,
         isDragging: false,
         type: OverlayType.VIDEO,
-        content: thumbnail || blobUrl,
-        src: blobUrl,
+        content: thumbnail || ingest.blobUrl,
+        src: ingest.blobUrl,
         videoStartTime: startSeconds,
         mediaSrcDuration: durationSeconds,
         styles: {
@@ -84,6 +94,8 @@ export const useAddDownloadedClip = () => {
           start: startSeconds,
           end: endSeconds,
         },
+        // Persist local media linkage for rehydration
+        localMediaId: ingest.localMediaId as any,
       };
 
       const final = [...updatedOverlays, overlay];

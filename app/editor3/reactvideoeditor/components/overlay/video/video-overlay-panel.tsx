@@ -5,15 +5,12 @@ import { CloudinaryClipEditor } from "@/app/search/components/CloudinaryClipEdit
 import { getClipDownloadUrl, getClipUrl, normalizeCloudinaryPublicId } from "@/utils/cloudinary";
 import { formatSeconds } from "@/app/search/utils/time";
 import { useEditorContext } from "../../../contexts/editor-context";
-import { useTimelinePositioning } from "../../../hooks/use-timeline-positioning";
 import { useAddDownloadedClip } from "../../../hooks/use-add-downloaded-clip";
-import { useAspectRatio } from "../../../hooks/use-aspect-ratio";
 import { ClipOverlay, Overlay, OverlayType } from "../../../types";
-import { getSrcDuration } from "../../../hooks/use-src-duration";
-import { calculateIntelligentAssetSize } from "../../../utils/asset-sizing";
 import { useVideoReplacement } from "../../../hooks/use-video-replacement";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
+import { useDownloadProgress } from "@/app/search/components/DownloadProgressProvider";
 import { AlertCircle, Clock, Download, Film, Play, Search, Sparkles } from "lucide-react";
 import { VideoDetails } from "./video-details";
 
@@ -699,9 +696,9 @@ export const VideoOverlayPanel: React.FC = () => {
             Math.max(0, (selectedClipForEdit.clip.end ?? 0) - (selectedClipForEdit.clip.start ?? 0))
           }
           portalSelector="#player-shell"
-          onAddToTimeline={(payload) => {
+          onAddToTimeline={async (payload) => {
             if (!selectedClipForEdit) return;
-            addDownloadedClip({
+            await addDownloadedClip({
               ...payload,
               thumbnail: payload.thumbnail || getClipThumbnail(selectedClipForEdit.clip) || undefined,
               mainCloudinaryPublicId:
