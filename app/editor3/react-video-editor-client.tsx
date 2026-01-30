@@ -14,6 +14,7 @@ import { useProjectStateFromUrl } from "@editor/reactvideoeditor/hooks/use-proje
 import { HttpRenderer } from "@editor/reactvideoeditor/utils/http-renderer";
 import { useGenerateEditImport } from "./useGenerateEditImport";
 import { useQuickEdit6Import } from "./useQuickEdit6Import";
+import { useDownloadStorage } from "./useDownloadStorage";
 import { Editor2Sidebar } from "./editor2-sidebar";
 import { twelveLabsVideoAdaptor } from "./twelve-labs-video-adaptor";
 import styles from "./editor2-layout.module.css";
@@ -39,8 +40,9 @@ export function ReactVideoEditorClient({
   projectIdOverride = null,
   loadingOverride = null,
 }: DemoOverrides = {}) {
-  const { project: geImport, loading: loadingGe } = useGenerateEditImport();
-  const { project: qe6Import, loading: loadingQe6 } = useQuickEdit6Import();
+  const { project: geImport, loading: loadingGe, error: geError } = useGenerateEditImport();
+  const { project: qe6Import, loading: loadingQe6, error: qe6Error } = useQuickEdit6Import();
+  const downloadUsage = useDownloadStorage();
 
   // Derive the project id before passing into hooks to avoid TDZ issues.
   const projectIdForAutosave = React.useMemo(() => {
@@ -140,6 +142,18 @@ export function ReactVideoEditorClient({
     <PostHogProvider>
       <div className={styles.viewport}>
         <div className={styles.canvas}>
+          {(geError || qe6Error) && (
+            <div className="fixed top-2 left-1/2 -translate-x-1/2 z-50 rounded bg-red-900/80 text-red-50 px-4 py-2 text-sm shadow">
+              {geError || qe6Error}
+            </div>
+          )}
+          <div className="fixed top-2 right-2 z-40 rounded bg-slate-900/80 text-slate-100 px-3 py-2 text-xs shadow">
+            <div className="font-semibold">Clip storage</div>
+            <div>
+              {((downloadUsage.usedBytes / downloadUsage.capacityBytes) * 100).toFixed(1)}% (
+              {(downloadUsage.usedBytes / (1024 * 1024)).toFixed(1)} MB / 2048 MB)
+            </div>
+          </div>
           <MobileWarningModal show={SHOW_MOBILE_WARNING} />
           <ProjectLoadConfirmModal
             isVisible={resolvedShowModal}

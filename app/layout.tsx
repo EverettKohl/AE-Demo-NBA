@@ -5,8 +5,13 @@ import { Toaster } from "./reactvideoeditor/pro/components/ui/toaster";
 import { PostHogProvider } from "./reactvideoeditor/pro/components/providers/posthog-provider";
 
 export const metadata: Metadata = {
-  title: "React Video Editor | Pro",
-  description: "Purchased version of the React Video Editor.",
+  title: "Attention Engine Demo",
+  description: "Demo experience for the Attention Engine platform.",
+  icons: {
+    icon: "/AELogoicon.png",
+    shortcut: "/AELogoicon.png",
+    apple: "/AELogoicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <link rel="icon" href="/AELogoicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/AELogoicon.png" />
+      </head>
       <body suppressHydrationWarning>
         <PostHogProvider>
             <main>

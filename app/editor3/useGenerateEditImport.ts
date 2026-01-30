@@ -25,9 +25,11 @@ const readStoredImport = (key: string): GenerateEditImportPayload | null => {
 export function useGenerateEditImport(paramName: string = GE_IMPORT_PARAM): {
   project: GenerateEditImportPayload | null;
   loading: boolean;
+  error: string | null;
 } {
   const [project, setProject] = useState<GenerateEditImportPayload | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -46,31 +48,42 @@ export function useGenerateEditImport(paramName: string = GE_IMPORT_PARAM): {
         if (res.ok) {
           const data = await res.json();
           if (data?.rveProject) {
-            await prefetchImportAssets(data.rveProject as any, controller.signal);
-            if (controller.signal.aborted || cancelled) return;
-            if (typeof window !== "undefined") {
-              try {
-                const payloadStr = JSON.stringify(data.rveProject);
-                window.sessionStorage.setItem(`ge-import-${key}`, payloadStr);
-                window.localStorage.setItem(`ge-import-${key}`, payloadStr);
-              } catch {
-                /* ignore storage errors */
+            try {
+              const localized = await prefetchImportAssets(data.rveProject as any, controller.signal);
+              if (controller.signal.aborted || cancelled) return;
+              if (typeof window !== "undefined") {
+                try {
+                  const payloadStr = JSON.stringify(localized);
+                  window.sessionStorage.setItem(`ge-import-${key}`, payloadStr);
+                  window.localStorage.setItem(`ge-import-${key}`, payloadStr);
+                } catch {
+                  /* ignore storage errors */
+                }
               }
+              setProject(localized as any);
+              setLoading(false);
+              return;
+            } catch (err: any) {
+              setError(err?.message || "Failed to download clips (2GB limit?)");
+              throw err;
             }
-            setProject(data.rveProject);
-            setLoading(false);
-            return;
           }
         }
 
         const parsed = readStoredImport(key);
         if (parsed) {
-          await prefetchImportAssets(parsed as any, controller.signal);
-          if (controller.signal.aborted || cancelled) return;
-          setProject(parsed);
+          try {
+            const localized = await prefetchImportAssets(parsed as any, controller.signal);
+            if (controller.signal.aborted || cancelled) return;
+            setProject(localized as any);
+          } catch (err: any) {
+            setError(err?.message || "Failed to download cached clips");
+            throw err;
+          }
         }
       } catch (err) {
         console.warn("[useGenerateEditImport] Failed to load import", err);
+        setError(err?.message || "Failed to load generate edit import");
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -87,8 +100,9 @@ export function useGenerateEditImport(paramName: string = GE_IMPORT_PARAM): {
     () => ({
       project,
       loading,
+      error,
     }),
-    [project, loading]
+    [project, loading, error]
   );
 }
 

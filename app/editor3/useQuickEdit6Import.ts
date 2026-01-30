@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { QuickEdit6ImportPayload, QuickEdit6ImportPayload as QE6Payload } from "./quickEdit6Adapter";
 import { buildQuickEdit6RveProject } from "./quickEdit6Adapter";
+import { getClipDownloadManager } from "./clipDownloadManager";
+import { getClipUrl } from "@/utils/cloudinary";
 
 export const QE6_IMPORT_PARAM = "qe6Import";
 
@@ -38,55 +40,100 @@ export const collectMediaUrls = (payload: QE6Payload | null): string[] => {
   return Array.from(urls);
 };
 
-const fetchWithTimeout = async (
-  url: string,
-  { timeoutMs = 15000, signal }: { timeoutMs?: number; signal?: AbortSignal }
-) => {
-  const controller = new AbortController();
-  const abort = () => controller.abort();
-  const timer = setTimeout(abort, timeoutMs);
-  if (signal) {
-    if (signal.aborted) {
-      clearTimeout(timer);
-      return;
-    }
-    signal.addEventListener("abort", abort, { once: true });
-  }
+type LocalizedPayload = QE6Payload | null;
+
+const isMobileUA = () => {
+  if (typeof navigator === "undefined") return false;
+  return /Mobi|Android|iP(hone|od|ad)/i.test(navigator.userAgent || "");
+};
+
+const maybeBuildCloudinaryUrl = (o: any, fps?: number) => {
+  const meta = o?.meta || {};
+  const cloudinaryId =
+    meta.cloudinaryId ||
+    meta.videoId ||
+    meta.cloudinary_id ||
+    meta.cloudinary_video_id ||
+    meta.cloudinaryPublicId ||
+    null;
+  const start = typeof meta.start === "number" ? meta.start : o?.trimStart || 0;
+  const end = typeof meta.end === "number" ? meta.end : o?.trimEnd || start;
+  if (!cloudinaryId || end <= start) return null;
   try {
-    const res = await fetch(url, { cache: "force-cache", signal: controller.signal });
-    if (res.ok) {
-      // Fully read the body so the response is cached before playback.
-      await res.arrayBuffer();
-    }
+    return getClipUrl(cloudinaryId, start, end, { download: false, fps: fps || 30, maxDuration: 600 });
   } catch {
-    // Swallow errors; prefetch best-effort.
-  } finally {
-    clearTimeout(timer);
-    if (signal) signal.removeEventListener("abort", abort);
+    return null;
   }
 };
 
-const prefetchUrls = async (
-  urls: string[],
-  { concurrency = 8, signal }: { concurrency?: number; signal?: AbortSignal }
-) => {
-  if (!urls.length) return;
-  let index = 0;
-  const worker = async () => {
-    while (index < urls.length) {
-      const current = urls[index];
-      index += 1;
-      if (signal?.aborted) return;
-      await fetchWithTimeout(current, { timeoutMs: 20000, signal });
-    }
-  };
-  const workers = Array.from({ length: Math.min(concurrency, urls.length) }, () => worker());
-  await Promise.all(workers);
+const downloadAndLocalizeAssets = async (payload: QE6Payload | null, signal?: AbortSignal): Promise<LocalizedPayload> => {
+  if (!payload) return payload;
+  if (isMobileUA()) {
+    throw new Error("This flow is desktop-only (2GB local clip cap).");
+  }
+  const mgr = getClipDownloadManager();
+  const fps = payload?.fps || payload?.meta?.fps || 30;
+
+  // Download overlays (video/audio) and swap to object URLs.
+  const overlays = await Promise.all(
+    (payload.overlays || []).map(async (o: any, idx: number) => {
+      let src = o?.src;
+      const overlayType = (o as any)?.type || "overlay";
+      if (!src || typeof src !== "string") {
+        const fallback = maybeBuildCloudinaryUrl(o, fps);
+        if (!fallback) return o;
+        src = fallback;
+      }
+
+      const id = `${overlayType}-${idx}-${src}`;
+      try {
+        const { objectUrl, bytes, originalUrl } = await mgr.download(id, src, signal);
+        return {
+          ...o,
+          src: objectUrl,
+          meta: {
+            ...(o as any)?.meta,
+            originalSrc: originalUrl,
+            downloadBytes: bytes,
+          },
+        };
+      } catch (err) {
+        // Retry with Cloudinary URL if initial src failed and was not cloudinary-derived.
+        const alt = maybeBuildCloudinaryUrl(o, fps);
+        if (alt && alt !== src) {
+          const { objectUrl, bytes, originalUrl } = await mgr.download(`${overlayType}-${idx}-${alt}`, alt, signal);
+          return {
+            ...o,
+            src: objectUrl,
+            meta: {
+              ...(o as any)?.meta,
+              originalSrc: originalUrl,
+              downloadBytes: bytes,
+            },
+          };
+        }
+        throw err;
+      }
+    })
+  );
+
+  // Download song (if present) so playback never streams.
+  let songUrl = payload.meta?.songUrl || null;
+  if (songUrl && typeof songUrl === "string") {
+    const songId = `song-${songUrl}`;
+    const { objectUrl, bytes, originalUrl } = await mgr.download(songId, songUrl, signal);
+    songUrl = objectUrl;
+    const meta = payload.meta ? { ...payload.meta } : {};
+    (meta as any).songDownloadBytes = bytes;
+    (meta as any).songOriginalUrl = originalUrl;
+    payload = { ...payload, meta };
+  }
+
+  return { ...payload, overlays, meta: { ...(payload.meta || {}), songUrl } };
 };
 
 export const prefetchImportAssets = async (payload: QE6Payload | null, signal?: AbortSignal) => {
-  const urls = collectMediaUrls(payload);
-  await prefetchUrls(urls, { concurrency: 6, signal });
+  return downloadAndLocalizeAssets(payload, signal);
 };
 
 const normalizeSoundSrcs = (payload: QE6Payload | null): QE6Payload | null => {
@@ -126,9 +173,11 @@ const normalizeSoundSrcs = (payload: QE6Payload | null): QE6Payload | null => {
 export function useQuickEdit6Import(paramName: string = QE6_IMPORT_PARAM): {
   project: QuickEdit6ImportPayload | null;
   loading: boolean;
+  error: string | null;
 } {
   const [project, setProject] = useState<QuickEdit6ImportPayload | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -165,20 +214,25 @@ export function useQuickEdit6Import(paramName: string = QE6_IMPORT_PARAM): {
 
           if (data?.rveProject) {
             const normalized = appendJobToken(normalizeSoundSrcs(data.rveProject as QE6Payload) as QE6Payload);
-            await prefetchImportAssets(normalized, controller.signal);
-            if (controller.signal.aborted || cancelled) return;
-            if (typeof window !== "undefined") {
-              try {
-                const payloadStr = JSON.stringify(normalized);
-                window.sessionStorage.setItem(`qe6-import-${key}`, payloadStr);
-                window.localStorage.setItem(`qe6-import-${key}`, payloadStr);
-              } catch {
-                /* ignore storage errors */
+            try {
+              const localized = await prefetchImportAssets(normalized, controller.signal);
+              if (controller.signal.aborted || cancelled) return;
+              if (typeof window !== "undefined") {
+                try {
+                  const payloadStr = JSON.stringify(localized);
+                  window.sessionStorage.setItem(`qe6-import-${key}`, payloadStr);
+                  window.localStorage.setItem(`qe6-import-${key}`, payloadStr);
+                } catch {
+                  /* ignore storage errors */
+                }
               }
+              setProject(localized as any);
+              setLoading(false);
+              return;
+            } catch (err: any) {
+              setError(err?.message || "Failed to download clips (2GB limit?)");
+              throw err;
             }
-            setProject(normalized);
-            setLoading(false);
-            return;
           }
           if (data?.plan) {
             const rebuilt = buildQuickEdit6RveProject({
@@ -188,32 +242,43 @@ export function useQuickEdit6Import(paramName: string = QE6_IMPORT_PARAM): {
               songUrl: data.plan?.songFormat?.source || `/songs/${data.plan?.songSlug || key}.mp3`,
             });
             const normalized = appendJobToken(normalizeSoundSrcs(rebuilt) as QE6Payload);
-            await prefetchImportAssets(normalized, controller.signal);
-            if (controller.signal.aborted || cancelled) return;
-            if (typeof window !== "undefined") {
-              try {
-                const payloadStr = JSON.stringify(normalized);
-                window.sessionStorage.setItem(`qe6-import-${key}`, payloadStr);
-                window.localStorage.setItem(`qe6-import-${key}`, payloadStr);
-              } catch {
-                /* ignore storage errors */
+            try {
+              const localized = await prefetchImportAssets(normalized, controller.signal);
+              if (controller.signal.aborted || cancelled) return;
+              if (typeof window !== "undefined") {
+                try {
+                  const payloadStr = JSON.stringify(localized);
+                  window.sessionStorage.setItem(`qe6-import-${key}`, payloadStr);
+                  window.localStorage.setItem(`qe6-import-${key}`, payloadStr);
+                } catch {
+                  /* ignore storage errors */
+                }
               }
+              setProject(localized as any);
+              setLoading(false);
+              return;
+            } catch (err: any) {
+              setError(err?.message || "Failed to download clips (2GB limit?)");
+              throw err;
             }
-            setProject(normalized);
-            setLoading(false);
-            return;
           }
         }
         // fallback to stored payload if server unavailable
         const parsed = readStoredImport(key);
         if (parsed) {
           const normalized = normalizeSoundSrcs(parsed);
-          await prefetchImportAssets(normalized, controller.signal);
-          if (controller.signal.aborted || cancelled) return;
-          setProject(normalized);
+          try {
+            const localized = await prefetchImportAssets(normalized, controller.signal);
+            if (controller.signal.aborted || cancelled) return;
+            setProject(localized as any);
+          } catch (err: any) {
+            setError(err?.message || "Failed to download cached clips");
+            throw err;
+          }
         }
       } catch (err) {
         console.warn("[useQuickEdit6Import] Failed to load import", err);
+        setError((err as any)?.message || "Failed to load import");
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -230,7 +295,8 @@ export function useQuickEdit6Import(paramName: string = QE6_IMPORT_PARAM): {
     () => ({
       project,
       loading,
+      error,
     }),
-    [project, loading]
+    [project, loading, error]
   );
 }

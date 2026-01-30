@@ -12,13 +12,31 @@ export class HttpRenderer implements VideoRenderer {
     this.renderTypeInfo = renderType;
   }
 
+  private normalizeParams(params: RenderParams): RenderParams {
+    const clone: RenderParams = JSON.parse(JSON.stringify(params || {}));
+    const props: any = clone?.inputProps || {};
+    if (Array.isArray(props.overlays)) {
+      props.overlays = props.overlays.map((o: any) => {
+        const originalSrc = o?.meta?.originalSrc || o?.src;
+        return { ...o, src: originalSrc };
+      });
+    }
+    if (props?.audio && typeof props.audio === "object" && (props.audio as any).src) {
+      const audioSrc = (props.audio as any).meta?.originalSrc || (props.audio as any).src;
+      props.audio = { ...(props.audio as any), src: audioSrc };
+    }
+    clone.inputProps = props;
+    return clone;
+  }
+
   async renderVideo(params: RenderParams): Promise<RenderResponse> {
+    const normalized = this.normalizeParams(params);
     const response = await fetch(`${this.endpoint}/render`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params),
+      body: JSON.stringify(normalized),
     });
 
     if (!response.ok) {

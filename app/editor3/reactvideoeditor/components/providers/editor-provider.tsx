@@ -351,6 +351,32 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     setMediaReady(false);
     setMediaLoading(true);
     setMediaErrors([]);
+
+    const fetchWithRetry = async (
+      url: string,
+      attempts: number = 3,
+      baseDelayMs: number = 250
+    ) => {
+      let lastError: unknown = null;
+      for (let attempt = 0; attempt < attempts; attempt += 1) {
+        if (cancelled) return;
+        try {
+          const res = await fetch(url, { cache: "force-cache" });
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status} for ${url}`);
+          }
+          await res.arrayBuffer(); // force full download into cache
+          return;
+        } catch (err) {
+          lastError = err;
+          // Exponential-ish backoff: 250ms, 500ms, 750ms...
+          const delayMs = baseDelayMs * (attempt + 1);
+          await new Promise((r) => setTimeout(r, delayMs));
+        }
+      }
+      throw lastError;
+    };
+
     const prefetch = async () => {
       const errors: string[] = [];
       for (const url of mediaUrls) {
@@ -359,9 +385,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
           continue;
         }
         try {
-          const res = await fetch(url, { cache: "force-cache" });
-          if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-          await res.arrayBuffer(); // force full download into cache
+          await fetchWithRetry(url);
         } catch (err: any) {
           errors.push(err?.message || String(err));
         }
