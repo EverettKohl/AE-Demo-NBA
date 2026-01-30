@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import HlsClipPlayer from "@/app/search/components/HlsClipPlayer";
 import { DownloadProgressProvider } from "@/app/search/components/DownloadProgressProvider";
 import { CloudinaryClipEditor } from "@/app/search/components/CloudinaryClipEditor";
-import { getClipDownloadUrl, getClipUrl, normalizeCloudinaryPublicId } from "@/utils/cloudinary";
+import { getClipDownloadUrl, normalizeCloudinaryPublicId } from "@/utils/cloudinary";
 import { formatSeconds } from "@/app/search/utils/time";
 import { useEditorContext } from "../../../contexts/editor-context";
 import { useAddDownloadedClip } from "../../../hooks/use-add-downloaded-clip";
@@ -11,7 +11,7 @@ import { useVideoReplacement } from "../../../hooks/use-video-replacement";
 import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { useDownloadProgress } from "@/app/search/components/DownloadProgressProvider";
-import { AlertCircle, Clock, Search, Sparkles } from "lucide-react";
+import { AlertCircle, Clock, Play, Search, Sparkles } from "lucide-react";
 import { VideoDetails } from "./video-details";
 import { getClipDownloadManager } from "../../../../clipDownloadManager";
 
@@ -133,14 +133,6 @@ const getClipSources = (clip: SearchClip) => {
   return { hlsUrl: hls, mp4Url: mp4 };
 };
 
-const getHydrationKey = (clip: SearchClip) => clip.videoId || clip.cloudinaryVideoId || clip.id;
-
-const getPreviewSources = (clip: SearchClip) => {
-  // Prefer Twelve Labs-supplied preview, but fall back to action sources if missing.
-  const { hlsUrl, mp4Url } = getClipSources(clip);
-  return { hlsUrl, mp4Url };
-};
-
 const VideoOverlayPanelInner: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<SearchClip[]>([]);
@@ -150,7 +142,6 @@ const VideoOverlayPanelInner: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [selectedClipForEdit, setSelectedClipForEdit] = useState<{ clip: SearchClip; detail?: any } | null>(null);
-  const detailFetchRef = useRef<Set<string>>(new Set());
   const cloudName = useMemo(() => process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || null, []);
 
   const { isReplaceMode, startReplaceMode, cancelReplaceMode, replaceVideo } = useVideoReplacement();
@@ -179,15 +170,16 @@ const VideoOverlayPanelInner: React.FC = () => {
       [];
 
     return items.map((item: any, idx: number) => {
-      const vid = item.video_id || item.videoId || null;
-      const detail = item.videoDetail || item.video_detail || item.video || null;
       const start = Number(item.start ?? 0);
       const end = Number(item.end ?? start + 5);
+      const vid = item.videoId || item.video_id || null;
+      const detail = item.videoDetail || item.video_detail || item.video || undefined;
+
       return {
         id: item.id || `${vid || "clip"}-${start}-${end}-${idx}`,
         start,
         end,
-        thumbnail: item.thumbnail_url || item.thumbnailUrl || item.thumbnail || detail?.thumbnail_url || null,
+        videoId: vid,
         clipUrl:
           item.clipUrl ||
           item.clip_url ||
@@ -195,95 +187,28 @@ const VideoOverlayPanelInner: React.FC = () => {
           item.videoUrl ||
           item.playback_urls?.mp4 ||
           item.playback_urls?.video ||
-          detail?.video_url ||
-          detail?.url ||
-          detail?.source_url ||
           null,
-        hlsUrl:
-          item.hlsUrl ||
-          item.hls_url ||
-          item.playlist_url ||
-          item.playback_urls?.hls ||
-          detail?.hls?.video_url ||
-          detail?.hls?.playlist_url ||
-          null,
-        playback_urls: item.playback_urls,
-        videoId: vid,
+        hlsUrl: item.hlsUrl || item.hls_url || item.playlist_url || item.playback_urls?.hls || null,
+        thumbnail: item.thumbnail_url || item.thumbnailUrl || item.thumbnail || null,
+        videoDetail: detail,
         cloudinaryVideoId: item.cloudinaryVideoId || item.cloudinary_video_id || null,
-        videoDetail: detail || undefined,
-        title:
-          item.title ||
-          item.video_title ||
-          detail?.system_metadata?.video_title ||
-          detail?.system_metadata?.filename ||
-          vid ||
-          "Video Clip",
+        playback_urls: item.playback_urls,
+        title: item.title || item.video_title || detail?.system_metadata?.video_title || detail?.system_metadata?.filename || vid || "Video Clip",
       };
     });
   }, []);
 
-  const deriveSources = useCallback(
-    (clip: SearchClip, detail?: any): SearchClip => {
-      const videoDetail = detail || clip.videoDetail;
-      const hlsCandidate =
-        clip.hlsUrl ||
-        clip.playback_urls?.hls ||
-        videoDetail?.hls?.video_url ||
-        videoDetail?.hls?.playlist_url ||
-        null;
-
-      let clipUrlCandidate =
-        clip.clipUrl ||
-        clip.playback_urls?.mp4 ||
-        clip.playback_urls?.video ||
-        videoDetail?.video_url ||
-        videoDetail?.url ||
-        videoDetail?.source_url ||
-        null;
-
-      if (!clipUrlCandidate && cloudName && typeof clip.start === "number" && typeof clip.end === "number") {
-        const publicId = normalizeCloudinaryPublicId(
-          videoDetail?.system_metadata?.filename ||
-            videoDetail?.system_metadata?.public_id ||
-            clip.cloudinaryVideoId ||
-            clip.videoId ||
-            ""
-        );
-        if (publicId) {
-          try {
-            clipUrlCandidate = getClipUrl(publicId, clip.start, clip.end, { download: false, maxDuration: 180 });
-          } catch {
-            // ignore
-          }
-        }
-      }
-
-      const thumbCandidate =
-        clip.thumbnail ||
-        videoDetail?.thumbnail_url ||
-        videoDetail?.hls?.thumbnail_url ||
-        null;
-
-      return {
-        ...clip,
-        hlsUrl: hlsCandidate || null,
-        clipUrl: clipUrlCandidate || null,
-        thumbnail: thumbCandidate || null,
-        videoDetail: videoDetail || clip.videoDetail,
-      };
-    },
-    [cloudName]
-  );
-
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = searchQuery.trim();
-    if (!trimmed) return;
+    if (!trimmed) {
+      setError("Enter a search term.");
+      return;
+    }
 
     setIsLoading(true);
     setError(null);
     setResults([]);
-    detailFetchRef.current.clear();
     setPlayingId(null);
     try {
       const res = await fetch("/api/search", {
@@ -291,111 +216,32 @@ const VideoOverlayPanelInner: React.FC = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: trimmed, limit: 18 }),
       });
-      if (!res.ok) {
-        throw new Error("Search failed");
-      }
+      if (!res.ok) throw new Error("Search failed. Please try again.");
       const data = await res.json();
-      const normalized = normalizeResults(data).map((c) => deriveSources(c));
+      const normalized = normalizeResults(data);
       setResults(normalized);
+      if (!normalized.length) {
+        setError("No results found.");
+      }
     } catch (err: any) {
-      setError(err?.message || "Search failed");
+      setError(err instanceof Error ? err.message : "Search failed. Please try again.");
+      setResults([]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    const missing = results.filter((clip) => {
-      const key = getHydrationKey(clip);
-      if (!key || detailFetchRef.current.has(key)) return false;
-      const { hlsUrl, mp4Url } = getPreviewSources(clip);
-      return !clip.videoDetail || (!hlsUrl && !mp4Url);
-    });
-    if (!missing.length) return;
-
-    let cancelled = false;
-    (async () => {
-      const enriched = await Promise.all(
-        results.map(async (clip) => {
-          const key = getHydrationKey(clip);
-          const { hlsUrl, mp4Url } = getPreviewSources(clip);
-          if (!key || detailFetchRef.current.has(key) || (clip.videoDetail && (hlsUrl || mp4Url))) return clip;
-          detailFetchRef.current.add(key);
-          try {
-            const detailRes = await fetch(`/api/getVideo?videoId=${encodeURIComponent(key)}`);
-            if (!detailRes.ok) return clip;
-            const detail = await detailRes.json();
-            return deriveSources({ ...clip, videoDetail: detail }, detail);
-          } catch {
-            return clip;
-          }
-        })
-      );
-      if (!cancelled) setResults(enriched);
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [results, deriveSources]);
-
-  // Eagerly hydrate clips that still have no playable source after initial normalization
-  useEffect(() => {
-    const lackingSource = results.filter(
-      (c) => !c.hlsUrl && !c.clipUrl && (c.videoId || c.cloudinaryVideoId) && !detailFetchRef.current.has(c.videoId || "")
-    );
-    if (!lackingSource.length) return;
-
-    let cancelled = false;
-    (async () => {
-      const enriched = await Promise.all(
-        results.map(async (clip) => {
-          if (clip.hlsUrl || clip.clipUrl) return clip;
-          const vid = clip.videoId;
-          if (!vid || detailFetchRef.current.has(vid)) return clip;
-          detailFetchRef.current.add(vid);
-          try {
-            const res = await fetch(`/api/getVideo?videoId=${encodeURIComponent(vid)}`);
-            if (!res.ok) return clip;
-            const detail = await res.json();
-            return deriveSources({ ...clip, videoDetail: detail }, detail);
-          } catch {
-            return clip;
-          }
-        })
-      );
-      if (!cancelled) setResults(enriched);
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [results, deriveSources]);
-
-  const resolvePublicId = (clip: SearchClip) =>
-    normalizeCloudinaryPublicId(
-      clip.videoDetail?.system_metadata?.filename ||
-        clip.videoDetail?.system_metadata?.public_id ||
-        clip.cloudinaryVideoId ||
-        clip.videoId ||
-        ""
-    ) || null;
-
-  const hydrateDetailIfNeeded = async (clip: SearchClip) => {
-    if (clip.videoDetail?.system_metadata?.filename || clip.videoDetail?.cloudinaryVideoId || clip.cloudinaryVideoId) {
-      return clip;
-    }
-    const vid = clip.videoId || clip.cloudinaryVideoId;
-    if (!vid) return clip;
+  const fetchVideoDetail = useCallback(async (clip: SearchClip) => {
+    const vid = clip.videoId;
+    if (!vid) return null;
     try {
       const res = await fetch(`/api/getVideo?videoId=${encodeURIComponent(vid)}`);
-      if (!res.ok) return clip;
-      const detail = await res.json();
-      return { ...clip, videoDetail: detail };
+      if (!res.ok) return null;
+      return await res.json();
     } catch {
-      return clip;
+      return null;
     }
-  };
+  }, []);
 
   const handleAddClip = async (clip: SearchClip) => {
     const itemKey = clip.id;
@@ -412,89 +258,48 @@ const VideoOverlayPanelInner: React.FC = () => {
     startDownload(downloadId, filename);
     const mgr = getClipDownloadManager();
 
-    let blobUrl: string | null = null;
-    let usedDownloadKey: string | null = null;
     try {
-      const hydrated = await hydrateDetailIfNeeded(clip);
-      const publicId = resolvePublicId(hydrated);
+      let rawId =
+        clip.videoDetail?.system_metadata?.filename ||
+        clip.videoDetail?.cloudinaryVideoId ||
+        clip.cloudinaryVideoId ||
+        null;
+      let detail = clip.videoDetail;
+      if (!rawId) {
+        detail = await fetchVideoDetail(clip);
+        rawId = detail?.system_metadata?.filename || detail?.cloudinaryVideoId || clip.cloudinaryVideoId || null;
+      }
+
+      const publicId = rawId ? normalizeCloudinaryPublicId(rawId) : null;
       if (!publicId) {
         throw new Error("Cloudinary id not available for this clip.");
       }
 
-      const candidates: Array<string | null> = [];
-      try {
-        candidates.push(getClipDownloadUrl(publicId, startVal, endVal, { maxDuration: 180 }));
-      } catch {
-        /* ignore */
-      }
-
-      const uniqueCandidates = candidates.filter(Boolean) as string[];
-      let blob: Blob | null = null;
-      let chosenUrl: string | null = null;
-
-      for (let idx = 0; idx < uniqueCandidates.length; idx++) {
-        const url = uniqueCandidates[idx]!;
-        const candidateKey = `${downloadId}-${idx}`;
-        try {
-          const result = await mgr.download(candidateKey, url);
-          const res = await fetch(result.objectUrl);
-          if (!res.ok) {
-            throw new Error(`Failed to read downloaded clip (${res.status})`);
-          }
-          const contentType = res.headers.get("content-type") || "";
-          const blobCandidate = await res.blob();
-          const effectiveType = (blobCandidate.type || contentType || "").toLowerCase();
-          if (!effectiveType.startsWith("video/")) {
-            // Not a video; try next candidate
-            continue;
-          }
-          blob = blobCandidate;
-          chosenUrl = result.originalUrl;
-          usedDownloadKey = candidateKey;
-          break;
-        } catch (err: any) {
-          const msg = typeof err?.message === "string" ? err.message : "";
-          const statusMatch = msg.match(/(\d{3})/);
-          const status = statusMatch ? Number(statusMatch[1]) : null;
-          if (status === 423 || status === 404) {
-            continue;
-          }
-          throw err;
-        }
-      }
-
-      if (!blob || !chosenUrl) {
-        throw new Error("Clip not ready (Cloudinary 423/404) and no MP4 fallback available. Please retry in a moment.");
-      }
-
-      blobUrl = URL.createObjectURL(blob);
+      const url = getClipDownloadUrl(publicId, startVal, endVal, { maxDuration: 180 });
+      const { objectUrl } = await mgr.download(downloadId, url);
 
       await addDownloadedClip({
-        blobUrl,
+        blobUrl: objectUrl,
         durationSeconds: Math.max(0.1, endVal - startVal),
         startSeconds: startVal,
         endSeconds: endVal,
         cloudinaryPublicId: publicId || undefined,
         mainCloudinaryPublicId: publicId || undefined,
-        thumbnail: getClipThumbnail(clip) || undefined,
+        thumbnail: undefined,
         filename,
       });
 
       completeDownload(downloadId);
+      // Mirror QuickEdit import behavior: revoke temp download URL after ingest.
+      try {
+        URL.revokeObjectURL(objectUrl);
+      } catch {
+        /* ignore */
+      }
     } catch (err: any) {
       failDownload(downloadId, err instanceof Error ? err.message : String(err));
       setError(err?.message || "Failed to add clip to timeline.");
     } finally {
-      if (blobUrl) {
-        URL.revokeObjectURL(blobUrl);
-      }
-      if (usedDownloadKey) {
-        try {
-          getClipDownloadManager().revoke?.(usedDownloadKey);
-        } catch {
-          /* ignore */
-        }
-      }
       setIsDurationLoading(false);
       setLoadingItemKey(null);
     }
@@ -551,18 +356,16 @@ const VideoOverlayPanelInner: React.FC = () => {
 
   const playableResults = useMemo(
     () =>
-      results
-        .map((clip) => deriveSources(clip)) // ensure we re-apply any late detail hydration
-        .filter((clip) => {
-          const { hlsUrl, mp4Url } = getPreviewSources(clip);
-          return Boolean(hlsUrl || mp4Url);
-        }),
-    [results, deriveSources]
+      results.filter((clip) => {
+        const { hlsUrl, mp4Url } = getClipSources(clip);
+        return Boolean(hlsUrl || mp4Url);
+      }),
+    [results]
   );
 
   const renderCard = (clip: SearchClip, idx: number) => {
     const key = clip.id || `${clip.videoId || "clip"}-${idx}`;
-    const { hlsUrl: previewHls, mp4Url: previewMp4 } = getPreviewSources(clip);
+    const { hlsUrl: previewHls, mp4Url: previewMp4 } = getClipSources(clip);
     const { hlsUrl: actionHls, mp4Url: actionMp4 } = getClipSources(clip);
     const thumbnail = getClipThumbnail(clip);
     const startVal = Math.max(0, clip.start || 0);
@@ -616,7 +419,7 @@ const VideoOverlayPanelInner: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-3 gap-2">
           <Button
             variant="default"
             size="sm"
@@ -634,6 +437,15 @@ const VideoOverlayPanelInner: React.FC = () => {
             onClick={() => setSelectedClipForEdit({ clip, detail: clip.videoDetail })}
           >
             Edit
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full"
+            onClick={() => setPlayingId((curr) => (curr === key ? null : key))}
+          >
+            <Play className="mr-1.5 h-4 w-4" />
+            {playingId === key ? "Pause" : "Play"}
           </Button>
         </div>
       </div>

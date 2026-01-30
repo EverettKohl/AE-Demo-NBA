@@ -19,6 +19,7 @@ type CommonIngestOptions = {
   kind?: MediaKind;
   durationSeconds?: number;
   thumbnail?: string | null;
+  generateThumbnail?: boolean; // default true; set false to skip thumbnail work
 };
 
 const inferKind = (blob: Blob, hint?: MediaKind): MediaKind => {
@@ -43,8 +44,9 @@ const ensureDuration = async (blob: Blob, kind: MediaKind, hint?: number) => {
   return undefined;
 };
 
-const ensureThumbnail = async (blob: Blob, kind: MediaKind, hint?: string | null) => {
+const ensureThumbnail = async (blob: Blob, kind: MediaKind, hint?: string | null, shouldGenerate = true) => {
   if (typeof hint === "string") return hint;
+  if (!shouldGenerate) return undefined;
   if (kind === "video" || kind === "image") {
     try {
       const thumb = await generateThumbnail(new File([blob], "thumb", { type: blob.type }));
@@ -59,7 +61,7 @@ const ensureThumbnail = async (blob: Blob, kind: MediaKind, hint?: string | null
 const storeBlob = async (blob: Blob, opts: CommonIngestOptions = {}): Promise<IngestResult> => {
   const kind = inferKind(blob, opts.kind);
   const duration = await ensureDuration(blob, kind, opts.durationSeconds);
-  const thumbnail = await ensureThumbnail(blob, kind, opts.thumbnail);
+  const thumbnail = await ensureThumbnail(blob, kind, opts.thumbnail, opts.generateThumbnail ?? true);
   const id = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`;
   const userId = getUserId();
   const now = Date.now();

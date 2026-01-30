@@ -1,7 +1,19 @@
 "use client";
 
 import React from "react";
-import { FolderOpen, Music, Subtitles, Type, Settings, ArrowLeft, X, Sparkles, Search, Zap, Home } from "lucide-react";
+import {
+  FolderOpen,
+  Music,
+  Subtitles,
+  Type,
+  Settings,
+  ArrowLeft,
+  X,
+  Sparkles,
+  Search,
+  Zap,
+  Home,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Overlay, OverlayType } from "@editor/reactvideoeditor/types";
@@ -17,6 +29,7 @@ import { LocalMediaPanel } from "@editor/reactvideoeditor/components/overlay/loc
 import { StickersPanel } from "@editor/reactvideoeditor/components/overlay/stickers/stickers-panel";
 import { SettingsPanel } from "@editor/reactvideoeditor/components/settings/settings-panel";
 import { ClipsOverlayPanel } from "@editor/reactvideoeditor/components/overlay/clips/clips-overlay-panel";
+import { Search2OverlayPanel } from "@editor/reactvideoeditor/components/overlay/search/search2-overlay-panel";
 
 import {
   Sidebar,
@@ -93,6 +106,8 @@ const renderActivePanel = (panel?: OverlayType | null) => {
       return <SoundsOverlayPanel />;
     case OverlayType.SEARCH:
       return <ClipsOverlayPanel />;
+    case OverlayType.SEARCH2:
+      return <Search2OverlayPanel />;
     case OverlayType.VIDEO:
       return <VideoOverlayPanel />;
     case OverlayType.CAPTION:
@@ -114,6 +129,8 @@ const getPanelTitle = (panel?: OverlayType | null) => {
   switch (panel) {
     case OverlayType.VIDEO:
       return "Search";
+    case OverlayType.SEARCH2:
+      return "Search2";
     case OverlayType.TEXT:
       return "Text";
     case OverlayType.SEARCH:

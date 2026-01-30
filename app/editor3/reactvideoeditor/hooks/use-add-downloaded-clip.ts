@@ -60,7 +60,8 @@ export const useAddDownloadedClip = () => {
       const ingest = await ingestFromBlobUrl(blobUrl, {
         kind: "video",
         durationSeconds,
-        thumbnail,
+        thumbnail: undefined,
+        generateThumbnail: false,
         name: filename || "clip.mp4",
       });
 
@@ -78,7 +79,8 @@ export const useAddDownloadedClip = () => {
         type: OverlayType.VIDEO,
         content: thumbnail || ingest.blobUrl,
         src: ingest.blobUrl,
-        videoStartTime: startSeconds,
+        // Downloaded clips are already trimmed to the requested start/end; begin playback at 0.
+        videoStartTime: 0,
         mediaSrcDuration: durationSeconds,
         styles: {
           opacity: 1,

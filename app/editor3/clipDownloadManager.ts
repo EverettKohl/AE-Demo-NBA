@@ -21,6 +21,21 @@ class ClipDownloadManager {
   private totalBytes = 0;
   private capBytes: number;
 
+  /**
+   * Basic MP4/MOV file signature check. Some Cloudinary downloads come back as
+   * application/octet-stream; in that case we still want to accept them if the
+   * bytes look like a real MP4 and force the blob type to video/mp4.
+   */
+  private looksLikeMp4(buffer: ArrayBuffer) {
+    if (buffer.byteLength < 12) return false;
+    const bytes = new Uint8Array(buffer);
+    const brand = String.fromCharCode(bytes[4], bytes[5], bytes[6], bytes[7]); // usually "ftyp"
+    if (brand !== "ftyp") return false;
+    const major = String.fromCharCode(bytes[8], bytes[9], bytes[10], bytes[11]).toLowerCase();
+    const knownBrands = ["isom", "iso2", "mp41", "mp42", "dash", "msnv", "avc1", "m4v "];
+    return knownBrands.includes(major) || major.startsWith("mp4");
+  }
+
   constructor(capBytes: number = DEFAULT_CAP_BYTES) {
     this.capBytes = capBytes;
   }
@@ -83,11 +98,90 @@ class ClipDownloadManager {
       return { ...existing };
     }
 
-    const res = await fetch(url, { signal, cache: "force-cache" });
-    if (!res.ok) {
-      throw new Error(`Failed to download media (${res.status})`);
+    const sleep = (ms: number) =>
+      new Promise<void>((resolve) => {
+        const timer = setTimeout(resolve, ms);
+        if (signal) {
+          signal.addEventListener(
+            "abort",
+            () => {
+              clearTimeout(timer);
+              resolve();
+            },
+            { once: true }
+          );
+        }
+      });
+
+    const maxAttempts = 12;
+    let attempt = 0;
+    let lastStatus: number | null = null;
+    let res: Response | null = null;
+
+    while (attempt < maxAttempts) {
+      if (signal?.aborted) {
+        throw new Error("Download aborted");
+      }
+      attempt += 1;
+      try {
+        res = await fetch(url, { signal });
+        lastStatus = res.status;
+        if (res.ok) {
+          break;
+        }
+        if ((res.status === 423 || res.status === 404) && attempt < maxAttempts) {
+          const delay = Math.min(4000, 500 * Math.pow(2, attempt - 1));
+          // Optionally log the retry to aid debugging of Cloudinary warmup.
+          console.warn(`[ClipDownloadManager] Retry ${attempt}/${maxAttempts} after ${res.status} for ${url}`);
+          await sleep(delay);
+          continue;
+        }
+        throw new Error(`Failed to download media (${res.status})`);
+      } catch (err: any) {
+        // If fetch threw due to abort, surface immediately.
+        if (signal?.aborted) {
+          throw new Error("Download aborted");
+        }
+        // Network errors: retry with backoff up to maxAttempts.
+        if (attempt < maxAttempts) {
+          const delay = Math.min(4000, 500 * Math.pow(2, attempt - 1));
+          console.warn(`[ClipDownloadManager] Retry ${attempt}/${maxAttempts} after error for ${url}: ${err?.message || err}`);
+          await sleep(delay);
+          continue;
+        }
+        throw err;
+      }
     }
-    const blob = await res.blob();
+
+    if (!res || !res.ok) {
+      throw new Error(`Failed to download media (${lastStatus ?? "unknown"})`);
+    }
+
+    const headerContentType = res.headers.get("content-type") || "";
+    let blob = await res.blob();
+    let blobType = (blob.type || headerContentType || "").toLowerCase();
+
+    // If the response is mislabeled (e.g., application/octet-stream) but bytes
+    // look like MP4, coerce the blob type so downstream video playback succeeds.
+    if (!blobType.startsWith("video/")) {
+      try {
+        const buffer = await blob.arrayBuffer();
+        if (this.looksLikeMp4(buffer)) {
+          blob = new Blob([buffer], { type: "video/mp4" });
+          blobType = "video/mp4";
+        }
+      } catch {
+        /* ignore sniff errors; fall back to existing type */
+      }
+    }
+
+    const blobSize = blob.size;
+    console.info(
+      `[ClipDownloadManager] Success ${lastStatus} for ${url} (size=${blobSize}, type=${blobType || "unknown"})`
+    );
+    if (!blobSize || blobSize <= 0) {
+      throw new Error("Downloaded media is empty (0 bytes)");
+    }
     const incoming = blob.size;
     if (this.totalBytes + incoming > this.capBytes) {
       throw new Error("Storage limit reached (2GB cap)");

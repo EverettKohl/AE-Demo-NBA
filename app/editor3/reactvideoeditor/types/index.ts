@@ -5,6 +5,7 @@ export enum OverlayType {
   SHAPE = "shape",
   VIDEO = "video",
   SEARCH = "search",
+  SEARCH2 = "search2",
   SOUND = "sound",
   CAPTION = "caption",
   LOCAL_DIR = "local-dir",

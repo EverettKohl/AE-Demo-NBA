@@ -113,7 +113,8 @@ export const useThumbnailGenerator = ({
 
   // Generate thumbnails using the thumbnail cache
   useEffect(() => {
-    if (!videoSrc || intervalSec === 0) {
+    // Disable thumbnail generation for blob/object URLs to avoid heavy sprite churn
+    if (!videoSrc || intervalSec === 0 || videoSrc.startsWith("blob:")) {
       setSpriteBlob(null);
       setRectForTime(null);
       setIsLoading(false);
