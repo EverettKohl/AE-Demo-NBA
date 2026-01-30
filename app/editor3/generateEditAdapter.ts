@@ -2,6 +2,7 @@ import { OverlayType, type Overlay, type AspectRatio } from "@editor/reactvideoe
 import { frameToTime, timeToFrame } from "./reactvideoeditor/utils/time";
 import { TIMELINE_GRACE_SECONDS } from "./constants";
 import { getDimensionsForAspectRatio } from "./reactvideoeditor/utils/aspect-ratio-transform";
+import { publicSongTracks } from "./reactvideoeditor/adaptors/default-audio-adaptors";
 
 type GenerateEditSegment = {
   index?: number;
@@ -66,6 +67,15 @@ const clampVolume = (value: any, fallback = 1) => {
   const n = Number(value);
   if (!Number.isFinite(n)) return fallback;
   return Math.min(1, Math.max(0, n));
+};
+
+const resolveLocalSongUrl = (songSlug?: string | null): string | null => {
+  if (!songSlug) return null;
+  const match = publicSongTracks.find((track) => {
+    const base = track.id.replace(/\.[^/.]+$/, "");
+    return base.toLowerCase() === songSlug.toLowerCase();
+  });
+  return match?.file ?? null;
 };
 
 const toAbsoluteUrl = (src?: string | null, jobToken?: string | null) => {
@@ -303,12 +313,17 @@ export const buildGenerateEditRveProject = ({
   );
   const soundRow = highestVideoRow + 1;
 
+  const localSongFromSlug = resolveLocalSongUrl(plan?.songSlug);
   const song =
     songUrl ||
     plan?.songFormat?.source ||
+    localSongFromSlug ||
     (plan?.songSlug ? `/songs/${plan.songSlug}.mp3` : null) ||
-    "/LoveMeAudio.mp3";
-  const songLabel = (plan?.songFormat as any)?.displayName || plan?.songSlug || "Song";
+    "/songs/LoveMeAudio.mp3";
+  const songLabel =
+    (plan?.songFormat as any)?.displayName ||
+    plan?.songSlug ||
+    (localSongFromSlug ? "Public Song" : "Song");
   const pauseSegments = normalized.filter((seg) => seg.pauseMusic);
 
   if (song) {

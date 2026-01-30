@@ -13,6 +13,7 @@ import { Input } from "../../ui/input";
 import { useDownloadProgress } from "@/app/search/components/DownloadProgressProvider";
 import { AlertCircle, Clock, Download, Film, Play, Search, Sparkles } from "lucide-react";
 import { VideoDetails } from "./video-details";
+import { getClipDownloadManager } from "../../../../clipDownloadManager";
 
 type SearchClip = {
   id: string;
@@ -393,44 +394,56 @@ const VideoOverlayPanelInner: React.FC = () => {
     )}.mp4`;
     const downloadId = `${itemKey}-${Date.now()}`;
     startDownload(downloadId, filename);
+    const mgr = getClipDownloadManager();
 
     let blobUrl: string | null = null;
+    let usedDownloadKey: string | null = null;
     try {
       const { hlsUrl, mp4Url } = getClipSources(clip);
       const publicId = resolvePublicId(clip);
-      let preferredUrl: string | null = null;
+
+      const candidates: Array<string | null> = [];
       if (publicId) {
         try {
-          preferredUrl = getClipDownloadUrl(publicId, startVal, endVal, { maxDuration: 180 });
+          candidates.push(getClipDownloadUrl(publicId, startVal, endVal, { maxDuration: 180 }));
         } catch {
-          preferredUrl = null;
+          /* ignore */
         }
       }
+      if (mp4Url && !mp4Url.includes(".m3u8")) {
+        candidates.push(mp4Url);
+      }
 
-      const fallbackUrl = mp4Url || hlsUrl || null;
-
-      let chosenUrl: string | null = preferredUrl || fallbackUrl;
+      const uniqueCandidates = candidates.filter(Boolean) as string[];
       let blob: Blob | null = null;
+      let chosenUrl: string | null = null;
 
-      if (chosenUrl) {
-        const res = await fetch(chosenUrl);
-        if (res.ok) {
-          blob = await res.blob();
-        } else if ((res.status === 423 || res.status === 404) && fallbackUrl && fallbackUrl !== chosenUrl) {
-          // Cloudinary clip not ready; fall back to original source
-          const fallbackRes = await fetch(fallbackUrl);
-          if (!fallbackRes.ok) {
-            throw new Error(`Failed to download clip fallback (${fallbackRes.status})`);
+      for (let idx = 0; idx < uniqueCandidates.length; idx++) {
+        const url = uniqueCandidates[idx]!;
+        const candidateKey = `${downloadId}-${idx}`;
+        try {
+          const result = await mgr.download(candidateKey, url);
+          const res = await fetch(result.objectUrl);
+          if (!res.ok) {
+            throw new Error(`Failed to read downloaded clip (${res.status})`);
           }
-          blob = await fallbackRes.blob();
-          chosenUrl = fallbackUrl;
-        } else {
-          throw new Error(`Failed to download clip (${res.status})`);
+          blob = await res.blob();
+          chosenUrl = result.originalUrl;
+          usedDownloadKey = candidateKey;
+          break;
+        } catch (err: any) {
+          const msg = typeof err?.message === "string" ? err.message : "";
+          const statusMatch = msg.match(/(\d{3})/);
+          const status = statusMatch ? Number(statusMatch[1]) : null;
+          if (status === 423 || status === 404) {
+            continue;
+          }
+          throw err;
         }
       }
 
-      if (!blob) {
-        throw new Error("No playable source available for this clip.");
+      if (!blob || !chosenUrl) {
+        throw new Error("Clip not ready (Cloudinary 423/404) and no MP4 fallback available. Please retry in a moment.");
       }
 
       blobUrl = URL.createObjectURL(blob);
@@ -453,6 +466,13 @@ const VideoOverlayPanelInner: React.FC = () => {
     } finally {
       if (blobUrl) {
         URL.revokeObjectURL(blobUrl);
+      }
+      if (usedDownloadKey) {
+        try {
+          getClipDownloadManager().revoke?.(usedDownloadKey);
+        } catch {
+          /* ignore */
+        }
       }
       setIsDurationLoading(false);
       setLoadingItemKey(null);

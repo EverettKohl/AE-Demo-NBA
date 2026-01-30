@@ -1,9 +1,23 @@
 import { SoundOverlayAdaptor } from "../types/overlay-adaptors";
 import { StandardAudio } from "../types/media-adaptors";
 
-// Legacy public songs were removed from the editor; keep the list empty so no
-// old tracks surface in the UI.
-const PUBLIC_SONG_FILES: readonly string[] = [];
+// Static list of audio files that ship with the app (served from /public/songs).
+// To add more songs, drop an .mp3 into /public/songs and list the filename here.
+const PUBLIC_SONG_FILES: readonly string[] = [
+  "bingbingbing.mp3",
+  "cinemaedit.mp3",
+  "Double_Take.mp3",
+  "electric.mp3",
+  "Factory.mp3",
+  "FashionKilla.mp3",
+  "LoveMe.mp3",
+  "LoveMeAudio.mp3",
+  "pieceofheaven.mp3",
+  "slowmospanish.mp3",
+  "TouchTheSky.mp3",
+  "UpToSomething.mp3",
+  "Way_Down_We_Go.mp3",
+];
 
 const normaliseTitle = (file: string) =>
   file.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");

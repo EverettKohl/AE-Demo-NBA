@@ -10,6 +10,7 @@ import { UnifiedTabs } from "../shared/unified-tabs";
 import SoundCard, { AudioWithSource } from "./sound-card";
 import { getSrcDuration } from "../../../hooks/use-src-duration";
 import { ingestFromUrl } from "../../../../lib/media-ingest";
+import { publicSongTracks } from "../../../adaptors/default-audio-adaptors";
 
 
 
@@ -61,8 +62,12 @@ const SoundsOverlayPanel: React.FC = () => {
     }
   }, [selectedOverlayId, overlays]);
 
-  // Legacy static songs removed; keep empty so old tracks don't surface.
-  const STATIC_SONGS: AudioWithSource[] = [];
+  // Local static songs served from /public/songs.
+  const STATIC_SONGS: AudioWithSource[] = publicSongTracks.map((track) => ({
+    ...track,
+    _source: "public-songs",
+    _sourceDisplayName: "Public Songs",
+  }));
 
   /**
    * Load audio tracks from public/songs
