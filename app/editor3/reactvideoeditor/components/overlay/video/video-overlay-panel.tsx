@@ -140,7 +140,7 @@ const getPreviewSources = (clip: SearchClip) => {
   return { hlsUrl, mp4Url };
 };
 
-export const VideoOverlayPanel: React.FC = () => {
+const VideoOverlayPanelInner: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<SearchClip[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -153,19 +153,10 @@ export const VideoOverlayPanel: React.FC = () => {
   const cloudName = useMemo(() => process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || null, []);
 
   const { isReplaceMode, startReplaceMode, cancelReplaceMode, replaceVideo } = useVideoReplacement();
-  const {
-    overlays,
-    selectedOverlayId,
-    changeOverlay,
-    currentFrame,
-    setOverlays,
-    setSelectedOverlayId,
-  } = useEditorContext();
-
-  const { addAtPlayhead } = useTimelinePositioning();
-  const { getAspectRatioDimensions } = useAspectRatio();
+  const { overlays, selectedOverlayId, changeOverlay } = useEditorContext();
   const addDownloadedClip = useAddDownloadedClip();
   const [localOverlay, setLocalOverlay] = useState<Overlay | null>(null);
+  const { startDownload, completeDownload, failDownload } = useDownloadProgress();
 
   useEffect(() => {
     if (selectedOverlayId === null) {
@@ -380,74 +371,89 @@ export const VideoOverlayPanel: React.FC = () => {
     };
   }, [results, deriveSources]);
 
+  const resolvePublicId = (clip: SearchClip) =>
+    normalizeCloudinaryPublicId(
+      clip.videoDetail?.system_metadata?.filename ||
+        clip.videoDetail?.system_metadata?.public_id ||
+        clip.cloudinaryVideoId ||
+        clip.videoId ||
+        ""
+    ) || null;
+
   const handleAddClip = async (clip: SearchClip) => {
     const itemKey = clip.id;
     setIsDurationLoading(true);
     setLoadingItemKey(itemKey);
+    setError(null);
 
+    const startVal = Math.max(0, clip.start || 0);
+    const endVal = Math.max(startVal + 0.1, clip.end || startVal + 5);
+    const filename = `${clip.videoId || clip.cloudinaryVideoId || "clip"}_${Math.floor(startVal)}-${Math.floor(
+      endVal
+    )}.mp4`;
+    const downloadId = `${itemKey}-${Date.now()}`;
+    startDownload(downloadId, filename);
+
+    let blobUrl: string | null = null;
     try {
       const { hlsUrl, mp4Url } = getClipSources(clip);
-      const videoUrl = mp4Url || hlsUrl;
-      if (!videoUrl) {
-        setError("No playable source available for this clip.");
-        return;
+      const publicId = resolvePublicId(clip);
+      let preferredUrl: string | null = null;
+      if (publicId) {
+        try {
+          preferredUrl = getClipDownloadUrl(publicId, startVal, endVal, { maxDuration: 180 });
+        } catch {
+          preferredUrl = null;
+        }
       }
 
-      let durationInFrames = 200;
-      let mediaSrcDuration: number | undefined;
+      const fallbackUrl = mp4Url || hlsUrl || null;
 
-      try {
-        const result = await getSrcDuration(videoUrl);
-        durationInFrames = result.durationInFrames;
-        mediaSrcDuration = result.durationInSeconds;
-      } catch (err) {
-        console.warn("Failed to get video duration, using fallback:", err);
+      let chosenUrl: string | null = preferredUrl || fallbackUrl;
+      let blob: Blob | null = null;
+
+      if (chosenUrl) {
+        const res = await fetch(chosenUrl);
+        if (res.ok) {
+          blob = await res.blob();
+        } else if ((res.status === 423 || res.status === 404) && fallbackUrl && fallbackUrl !== chosenUrl) {
+          // Cloudinary clip not ready; fall back to original source
+          const fallbackRes = await fetch(fallbackUrl);
+          if (!fallbackRes.ok) {
+            throw new Error(`Failed to download clip fallback (${fallbackRes.status})`);
+          }
+          blob = await fallbackRes.blob();
+          chosenUrl = fallbackUrl;
+        } else {
+          throw new Error(`Failed to download clip (${res.status})`);
+        }
       }
 
-      const thumb = getClipThumbnail(clip) || "";
-      const canvasDimensions = getAspectRatioDimensions();
-      const assetDimensions = {
-        width: clip.videoDetail?.width || clip.videoDetail?.system_metadata?.width || canvasDimensions.width,
-        height: clip.videoDetail?.height || clip.videoDetail?.system_metadata?.height || canvasDimensions.height,
-      };
-      const { width, height } = calculateIntelligentAssetSize(assetDimensions, canvasDimensions);
+      if (!blob) {
+        throw new Error("No playable source available for this clip.");
+      }
 
-      const { from, row, updatedOverlays } = addAtPlayhead(currentFrame, overlays, "top");
+      blobUrl = URL.createObjectURL(blob);
 
-      const newOverlay = {
-        left: 0,
-        top: 0,
-        width,
-        height,
-        durationInFrames,
-        from,
-        rotation: 0,
-        row,
-        isDragging: false,
-        type: OverlayType.VIDEO,
-        content: thumb,
-        src: videoUrl,
-        videoStartTime: clip.start ?? 0,
-        mediaSrcDuration,
-        styles: {
-          opacity: 1,
-          zIndex: 100,
-          transform: "none",
-          objectFit: "contain",
-          animation: {
-            enter: "none",
-            exit: "none",
-          },
-        },
-      };
+      await addDownloadedClip({
+        blobUrl,
+        durationSeconds: Math.max(0.1, endVal - startVal),
+        startSeconds: startVal,
+        endSeconds: endVal,
+        cloudinaryPublicId: publicId || undefined,
+        mainCloudinaryPublicId: publicId || undefined,
+        thumbnail: getClipThumbnail(clip) || undefined,
+        filename,
+      });
 
-      const newId = updatedOverlays.length > 0 ? Math.max(...updatedOverlays.map((o) => o.id)) + 1 : 0;
-      const overlayWithId = { ...newOverlay, id: newId } as Overlay;
-      const finalOverlays = [...updatedOverlays, overlayWithId];
-
-      setOverlays(finalOverlays);
-      setSelectedOverlayId(newId);
+      completeDownload(downloadId);
+    } catch (err: any) {
+      failDownload(downloadId, err instanceof Error ? err.message : String(err));
+      setError(err?.message || "Failed to add clip to timeline.");
     } finally {
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
       setIsDurationLoading(false);
       setLoadingItemKey(null);
     }
@@ -600,77 +606,75 @@ export const VideoOverlayPanel: React.FC = () => {
   };
 
   return (
-    <DownloadProgressProvider>
-      <div className="flex h-full flex-col gap-3 p-2 overflow-hidden">
-        {isReplaceMode && (
-          <div className="shrink-0 flex items-center justify-between rounded-md border border-blue-500/30 bg-blue-500/10 px-3 py-2">
-            <div className="flex items-center gap-2 text-xs text-blue-100">
-              <Sparkles className="h-4 w-4" />
-              <span>Select a clip to replace the current video</span>
-            </div>
-            <Button size="sm" variant="ghost" onClick={handleCancelReplace}>
-              Cancel
-            </Button>
+    <div className="flex h-full flex-col gap-3 p-2 overflow-hidden">
+      {isReplaceMode && (
+        <div className="shrink-0 flex items-center justify-between rounded-md border border-blue-500/30 bg-blue-500/10 px-3 py-2">
+          <div className="flex items-center gap-2 text-xs text-blue-100">
+            <Sparkles className="h-4 w-4" />
+            <span>Select a clip to replace the current video</span>
           </div>
-        )}
-
-        {localOverlay && !isReplaceMode && (
-          <div className="shrink-0 rounded-md border border-border/60 bg-card/70 px-3 py-2 text-xs text-muted-foreground">
-            Editing selected video. Click “Change” to switch sources.
-            <Button size="sm" variant="ghost" className="ml-2" onClick={startReplaceMode}>
-              Change
-            </Button>
-            <div className="mt-2">
-              <VideoDetails
-                localOverlay={localOverlay as ClipOverlay}
-                setLocalOverlay={handleUpdateOverlay}
-                onChangeVideo={startReplaceMode}
-              />
-            </div>
-          </div>
-        )}
-
-        <form onSubmit={handleSearch} className="flex shrink-0 items-center gap-2">
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={isReplaceMode ? "Search for replacement video" : "Search videos"}
-            className="h-10 flex-1"
-          />
-          <Button type="submit" disabled={!searchQuery.trim() || isLoading} className="h-10">
-            <Search className="mr-1.5 h-4 w-4" />
-            Search
+          <Button size="sm" variant="ghost" onClick={handleCancelReplace}>
+            Cancel
           </Button>
-        </form>
+        </div>
+      )}
 
-        {error && (
-          <div className="flex items-center gap-2 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-            <AlertCircle className="h-4 w-4" />
-            <span>{error}</span>
+      {localOverlay && !isReplaceMode && (
+        <div className="shrink-0 rounded-md border border-border/60 bg-card/70 px-3 py-2 text-xs text-muted-foreground">
+          Editing selected video. Click “Change” to switch sources.
+          <Button size="sm" variant="ghost" className="ml-2" onClick={startReplaceMode}>
+            Change
+          </Button>
+          <div className="mt-2">
+            <VideoDetails
+              localOverlay={localOverlay as ClipOverlay}
+              setLocalOverlay={handleUpdateOverlay}
+              onChangeVideo={startReplaceMode}
+            />
           </div>
-        )}
+        </div>
+      )}
 
-        {isLoading && (
-          <div className="flex items-center gap-2 rounded-md border border-border/60 bg-card/60 px-3 py-3 text-sm text-muted-foreground">
-            <Search className="h-4 w-4 animate-pulse" />
-            Searching Twelve Labs…
-          </div>
-        )}
+      <form onSubmit={handleSearch} className="flex shrink-0 items-center gap-2">
+        <Input
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={isReplaceMode ? "Search for replacement video" : "Search videos"}
+          className="h-10 flex-1"
+        />
+        <Button type="submit" disabled={!searchQuery.trim() || isLoading} className="h-10">
+          <Search className="mr-1.5 h-4 w-4" />
+          Search
+        </Button>
+      </form>
 
-        {!isLoading && playableResults.length === 0 && (
-          <div className="rounded-md border border-dashed border-border/60 bg-card/40 px-3 py-6 text-center text-sm text-muted-foreground">
-            Start typing to search indexed clips. Results use the same flow as the main search page.
-          </div>
-        )}
+      {error && (
+        <div className="flex items-center gap-2 rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <AlertCircle className="h-4 w-4" />
+          <span>{error}</span>
+        </div>
+      )}
 
-        {!isLoading && playableResults.length > 0 && (
-          <div className="flex-1 overflow-y-auto scrollbar-hide">
-            <div className={isDurationLoading ? "space-y-3 opacity-90" : "space-y-3"}>
-              {playableResults.slice(0, 50).map(renderCard)}
-            </div>
+      {isLoading && (
+        <div className="flex items-center gap-2 rounded-md border border-border/60 bg-card/60 px-3 py-3 text-sm text-muted-foreground">
+          <Search className="h-4 w-4 animate-pulse" />
+          Searching Twelve Labs…
+        </div>
+      )}
+
+      {!isLoading && playableResults.length === 0 && (
+        <div className="rounded-md border border-dashed border-border/60 bg-card/40 px-3 py-6 text-center text-sm text-muted-foreground">
+          Start typing to search indexed clips. Results use the same flow as the main search page.
+        </div>
+      )}
+
+      {!isLoading && playableResults.length > 0 && (
+        <div className="flex-1 overflow-y-auto scrollbar-hide">
+          <div className={isDurationLoading ? "space-y-3 opacity-90" : "space-y-3"}>
+            {playableResults.slice(0, 50).map(renderCard)}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {selectedClipForEdit && (
         <CloudinaryClipEditor
@@ -716,6 +720,12 @@ export const VideoOverlayPanel: React.FC = () => {
           }}
         />
       )}
-    </DownloadProgressProvider>
+    </div>
   );
 };
+
+export const VideoOverlayPanel: React.FC = () => (
+  <DownloadProgressProvider>
+    <VideoOverlayPanelInner />
+  </DownloadProgressProvider>
+);
