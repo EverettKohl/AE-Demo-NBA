@@ -1155,7 +1155,8 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
           cover,
         });
       } else {
-        const cloudinaryId = segment.asset?.cloudinaryId;
+        const cloudinaryId =
+          segment.asset?.cloudinaryId || segment.asset?.videoId || segment.asset?.poolClipId || null;
         const clipStart = segment.asset?.start || 0;
         const targetFrames = cover.frameCount || segment.frameCount || 0;
         const desiredDurationSeconds = Math.max(
@@ -1163,26 +1164,66 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
           frameToSeconds(targetFrames || 0, fps)
         );
         const clipEnd = clipStart + desiredDurationSeconds + 0.1;
-        
-        if (cloudinaryId) {
-          const url = getClipUrl(cloudinaryId, clipStart, clipEnd, { download: true, maxDuration: 600, fps });
-          const tmpPath = path.join(tmpDir, `clip-${segment.index}.mp4`);
-          
-          const res = await fetch(url);
-          if (res.ok) {
-            const buffer = Buffer.from(await res.arrayBuffer());
-            await fs.writeFile(tmpPath, buffer);
-            inputClips.push({
-              path: tmpPath,
-              source: "downloaded",
-              duration: desiredDurationSeconds,
-              targetFrames,
-              label: `segment-${segment.index}`,
-              segment,
-              cover,
-            });
-            tmpFiles.push(tmpPath);
-          }
+        if (!cloudinaryId) {
+          console.warn(
+            `[renderInstantSongEdit] Segment ${segment.index} missing cloudinaryId and localPath; skipping`
+          );
+          continue;
+        }
+
+        let url = null;
+        try {
+          url = getClipUrl(cloudinaryId, clipStart, clipEnd, { download: true, maxDuration: 600, fps });
+        } catch (err) {
+          console.warn(
+            `[renderInstantSongEdit] Failed to build Cloudinary URL for segment ${segment.index} (${cloudinaryId}): ${
+              err?.message || err
+            }`
+          );
+          continue;
+        }
+
+        const tmpPath = path.join(tmpDir, `clip-${segment.index}.mp4`);
+        let res = null;
+        try {
+          res = await fetch(url);
+        } catch (err) {
+          console.warn(
+            `[renderInstantSongEdit] Fetch error for segment ${segment.index} (${cloudinaryId}): ${
+              err?.message || err
+            }`
+          );
+          continue;
+        }
+
+        if (!res?.ok) {
+          console.warn(
+            `[renderInstantSongEdit] Download failed for segment ${segment.index} (${cloudinaryId}) status ${
+              res?.status
+            }`
+          );
+          continue;
+        }
+
+        try {
+          const buffer = Buffer.from(await res.arrayBuffer());
+          await fs.writeFile(tmpPath, buffer);
+          inputClips.push({
+            path: tmpPath,
+            source: "downloaded",
+            duration: desiredDurationSeconds,
+            targetFrames,
+            label: `segment-${segment.index}`,
+            segment,
+            cover,
+          });
+          tmpFiles.push(tmpPath);
+        } catch (err) {
+          console.warn(
+            `[renderInstantSongEdit] Failed to materialize segment ${segment.index} (${cloudinaryId}): ${
+              err?.message || err
+            }`
+          );
         }
       }
     }
