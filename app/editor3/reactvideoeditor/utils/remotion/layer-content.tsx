@@ -20,6 +20,7 @@ export interface LayerContentProps {
   overlay: Overlay;
   baseUrl?: string;
   fontInfos?: Record<string, FontInfo>;
+  children?: React.ReactNode;
 }
 
 /**
@@ -55,6 +56,7 @@ export const LayerContent: React.FC<LayerContentProps> = ({
   overlay,
   baseUrl,
   fontInfos,
+  children,
 }) => {
   /**
    * Common styling applied to all layer types

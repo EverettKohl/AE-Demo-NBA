@@ -126,42 +126,81 @@ export const SelectTextOverlay: React.FC<SelectTextOverlayProps> = () => {
   return useMemo(
     () => (
       <div className="grid grid-cols-1 gap-3 p-2">
-        {Object.entries(textOverlayTemplates).map(([key, option]) => (
-          <div
-            key={key}
-            onClick={() => handleAddOverlay(option)}
-            draggable={true}
-            onDragStart={handleDragStart(option)}
-            onDragEnd={handleDragEnd}
-            className="group relative overflow-hidden border-2  bg-card rounded-md transition-all duration-200 hover:border-secondary hover:bg-accent/30 cursor-pointer"
-          >
-            {/* Preview Container */}
-            <div className="aspect-16/6 w-full flex items-center justify-center p-2 pb-12">
-              <div
-                className="text-base transform-gpu transition-transform duration-200 group-hover:scale-102 text-foreground"
-                style={{
-                  ...option.styles,
-                  fontSize: "1.25rem",
-                  padding: option.styles.padding || undefined,
-                  fontFamily: undefined,
-                  color: undefined,
-                }}
-              >
-                {option.content}
-              </div>
-            </div>
+        {Object.entries(textOverlayTemplates).map(([key, option]) => {
+          const { fontStretchScale, transform, effect, ...styleWithoutStretch } = option.styles;
+          const stretchScale = fontStretchScale ?? 1;
+          const combinedTransform =
+            [transform, stretchScale !== 1 ? `scaleY(${stretchScale})` : ""]
+              .filter(Boolean)
+              .join(" ")
+              .trim() || undefined;
 
-            {/* Label */}
-            <div className="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] px-3 py-1.5">
-              <div className="font-extralight text-foreground text-[11px]">
-                {option.name}
+          return (
+            <div
+              key={key}
+              onClick={() => handleAddOverlay(option)}
+              draggable={true}
+              onDragStart={handleDragStart(option)}
+              onDragEnd={handleDragEnd}
+              className="group relative overflow-hidden border-2  bg-card rounded-md transition-all duration-200 hover:border-secondary hover:bg-accent/30 cursor-pointer"
+            >
+              {/* Preview Container */}
+              <div className="aspect-16/6 w-full flex items-center justify-center p-2 pb-12">
+                {effect === "negative" ? (
+                  <div
+                    className="rounded-md"
+                    style={{
+                      background: styleWithoutStretch.background || styleWithoutStretch.backgroundColor,
+                      padding: styleWithoutStretch.padding || "12px 24px",
+                      borderRadius: styleWithoutStretch.borderRadius || "12px",
+                      boxShadow: styleWithoutStretch.boxShadow,
+                    }}
+                  >
+                    <span
+                      className="text-base transform-gpu transition-transform duration-200 group-hover:scale-102"
+                      style={{
+                        ...styleWithoutStretch,
+                        fontSize: "1.25rem",
+                        padding: undefined,
+                        background: "transparent",
+                        backgroundColor: "transparent",
+                        borderRadius: undefined,
+                        boxShadow: undefined,
+                        color: styleWithoutStretch.color || "#ffffff",
+                        mixBlendMode: styleWithoutStretch.mixBlendMode || "difference",
+                        transform: combinedTransform,
+                      }}
+                    >
+                      {option.content}
+                    </span>
+                  </div>
+                ) : (
+                  <div
+                    className="text-base transform-gpu transition-transform duration-200 group-hover:scale-102 text-foreground"
+                    style={{
+                      ...styleWithoutStretch,
+                      fontSize: "1.25rem",
+                      padding: styleWithoutStretch.padding || undefined,
+                      transform: combinedTransform,
+                    }}
+                  >
+                    {option.content}
+                  </div>
+                )}
               </div>
-              <div className="text-muted-foreground text-[9px] leading-tight">
-                {option.preview}
+
+              {/* Label */}
+              <div className="absolute bottom-0 left-0 right-0 backdrop-blur-[2px] px-3 py-1.5">
+                <div className="font-extralight text-foreground text-[11px]">
+                  {option.name}
+                </div>
+                <div className="text-muted-foreground text-[9px] leading-tight">
+                  {option.preview}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     ),
     [handleAddOverlay, handleDragStart, handleDragEnd]

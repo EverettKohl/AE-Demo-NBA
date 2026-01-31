@@ -159,6 +159,7 @@ export const TextStylePanel: React.FC<TextStylePanelProps> = ({
   handleStyleChange,
   onPositionChange,
 }) => {
+  const isNegative = localOverlay.styles.effect === "negative";
   const [fontSearch, setFontSearch] = useState("");
   const [availableWeights, setAvailableWeights] = useState<string[]>(["400"]); // Default to regular
   const { loadFontForPreview, makeFontPreviewName, isFontLoaded } = useFontPreviewLoader();
@@ -221,6 +222,7 @@ export const TextStylePanel: React.FC<TextStylePanelProps> = ({
   }, [localOverlay.styles.letterSpacing]);
 
   const showFontSizeReset = (localOverlay.styles.fontSizeScale ?? 1) !== 1;
+  const showFontStretchReset = (localOverlay.styles.fontStretchScale ?? 1) !== 1;
   const showLetterSpacingReset = currentLetterSpacingEm !== 0;
 
   return (
@@ -348,6 +350,38 @@ export const TextStylePanel: React.FC<TextStylePanelProps> = ({
           />
         </div>
 
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <label className="text-xs text-muted-foreground/50 py-1">
+              Font Stretch (Vertical)
+            </label>
+            <div className="flex items-center gap-2">
+              {showFontStretchReset && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() => handleStyleChange("fontStretchScale", undefined)}
+                      className="text-xs px-2 py-1.5 rounded-md transition-colors bg-secondary hover:bg-secondary/80 text-secondary-foreground"
+                    >
+                      <RotateCcw className="h-3 w-3" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">Reset font stretch</TooltipContent>
+                </Tooltip>
+              )}
+            </div>
+          </div>
+          <Slider
+            value={[localOverlay.styles.fontStretchScale || 1]}
+            onValueChange={(value) => handleStyleChange("fontStretchScale", value[0])}
+            min={0.5}
+            max={3}
+            step={0.05}
+            className="w-full"
+          />
+        </div>
+
         {/* Letter Spacing */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -421,88 +455,194 @@ export const TextStylePanel: React.FC<TextStylePanelProps> = ({
         </div>
       </div>
 
-      {/* Colors */}
-      <div className="space-y-2 rounded-md bg-sidebar p-2.5 border">
-        <h5 className="text-sm font-light leading-none text-foreground">Colors</h5>
+      {/* Colors / Negative options */}
+      {!isNegative && (
+        <div className="space-y-2 rounded-md bg-sidebar p-2.5 border">
+          <h5 className="text-sm font-light leading-none text-foreground">Colors</h5>
 
-        <div className="grid grid-cols-3 gap-2">
-          {!localOverlay.styles.WebkitBackgroundClip ? (
-            <>
-              <div className="space-y-2">
-                <label className="text-xs text-muted-foreground">
-                  Text Color
-                </label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <div
-                      className="h-8 w-8 rounded-md border cursor-pointer"
-                      style={{ backgroundColor: localOverlay.styles.color }}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="w-[330px]"
-                    side="right"
-                  >
-                    <ColorPicker
-                      value={localOverlay.styles.color}
-                      onChange={(color) => handleStyleChange("color", color)}
-                      // hideInputs
-                      hideHue
-                      hideControls
-                      hideColorTypeBtns
-                      hideAdvancedSliders
-                      hideColorGuide
-                      hideInputType
-                      height={200}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+          {!isNegative && (
+            <div className="grid grid-cols-3 gap-2">
+              {!localOverlay.styles.WebkitBackgroundClip ? (
+                <>
+                  <div className="space-y-2">
+                    <label className="text-xs text-muted-foreground">
+                      Text Color
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <div
+                          className="h-8 w-8 rounded-md border cursor-pointer"
+                          style={{ backgroundColor: localOverlay.styles.color }}
+                        />
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-[330px]"
+                        side="right"
+                      >
+                        <ColorPicker
+                          value={localOverlay.styles.color}
+                          onChange={(color) => handleStyleChange("color", color)}
+                          hideHue
+                          hideControls
+                          hideColorTypeBtns
+                          hideAdvancedSliders
+                          hideColorGuide
+                          hideInputType
+                          height={200}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
 
-              <div className="space-y-2">
-                <label className="text-xs text-muted-foreground">
-                  Highlight
-                </label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <div
-                      className="h-8 w-8 rounded-md border cursor-pointer"
-                      style={{
-                        backgroundColor: localOverlay.styles.backgroundColor,
-                      }}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="w-[330px]"
-                    side="right"
-                  >
-                    <ColorPicker
-                      value={localOverlay.styles.backgroundColor}
-                      onChange={(color) => {
-                        handleStyleChange("backgroundColor", color);
-                      }}
-                      hideInputs
-                      hideHue
-                      hideControls
-                      hideColorTypeBtns
-                      hideAdvancedSliders
-                      hideColorGuide
-                      hideInputType
-                      height={200}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-            </>
-          ) : (
-            <div className="col-span-3">
-              <p className="text-xs text-muted-foreground">
-                Color settings are not available for gradient text styles
-              </p>
+                  <div className="space-y-2">
+                    <label className="text-xs text-muted-foreground">
+                      Highlight
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <div
+                          className="h-8 w-8 rounded-md border cursor-pointer"
+                          style={{
+                            backgroundColor: localOverlay.styles.backgroundColor,
+                          }}
+                        />
+                      </PopoverTrigger>
+                      <PopoverContent
+                        className="w-[330px]"
+                        side="right"
+                      >
+                        <ColorPicker
+                          value={localOverlay.styles.backgroundColor}
+                          onChange={(color) => {
+                            handleStyleChange("backgroundColor", color);
+                          }}
+                          hideInputs
+                          hideHue
+                          hideControls
+                          hideColorTypeBtns
+                          hideAdvancedSliders
+                          hideColorGuide
+                          hideInputType
+                          height={200}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        className="text-[11px] px-2 py-1 rounded border bg-card hover:bg-accent"
+                        onClick={() => handleStyleChange("backgroundColor", "transparent")}
+                      >
+                        No Highlight
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 col-span-3">
+                    <label className="text-xs text-muted-foreground">
+                      Special Blend
+                    </label>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        className="text-xs px-2 py-1 rounded border bg-card hover:bg-accent"
+                        onClick={() => {
+                          handleStyleChange("effect", "negative");
+                          handleStyleChange("mixBlendMode", "difference");
+                          handleStyleChange("backgroundColor", localOverlay.styles.backgroundColor || "#ffffff");
+                      handleStyleChange("negativeTintColor", undefined);
+                        }}
+                      >
+                        Negative Invert
+                      </button>
+                      <button
+                        type="button"
+                        className="text-xs px-2 py-1 rounded border bg-card hover:bg-accent"
+                        onClick={() => {
+                          handleStyleChange("effect", undefined as any);
+                          handleStyleChange("mixBlendMode", undefined);
+                        }}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="col-span-3">
+                  <p className="text-xs text-muted-foreground">
+                    Color settings are not available for gradient text styles
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>
-      </div>
+      )}
+
+      {isNegative && (
+        <div className="space-y-2 rounded-md bg-sidebar p-2.5 border">
+          <h5 className="text-sm font-light leading-none text-foreground">Negative Tint</h5>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-2">
+              <label className="text-xs text-muted-foreground">Tint Color</label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div
+                    className="h-8 w-8 rounded-md border cursor-pointer"
+                    style={{ backgroundColor: (localOverlay.styles as any)?.negativeTintColor || "transparent" }}
+                  />
+                </PopoverTrigger>
+                <PopoverContent className="w-[330px]" side="right">
+                  <ColorPicker
+                    value={(localOverlay.styles as any)?.negativeTintColor || ""}
+                    onChange={(color) => handleStyleChange("negativeTintColor", color)}
+                    hideInputs
+                    hideHue
+                    hideControls
+                    hideColorTypeBtns
+                    hideAdvancedSliders
+                    hideColorGuide
+                    hideInputType
+                    height={200}
+                  />
+                </PopoverContent>
+              </Popover>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  className="text-[11px] px-2 py-1 rounded border bg-card hover:bg-accent"
+                  onClick={() => handleStyleChange("negativeTintColor", undefined)}
+                >
+                  No Tint
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs text-muted-foreground">Blend Mode</label>
+              <Select
+                value={(localOverlay.styles as any)?.mixBlendMode || "difference"}
+                onValueChange={(value) => handleStyleChange("mixBlendMode", value)}
+              >
+                <SelectTrigger className="w-full text-xs text-foreground">
+                  <SelectValue placeholder="Blend mode" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="difference" className="text-xs">Difference</SelectItem>
+                  <SelectItem value="screen" className="text-xs">Screen</SelectItem>
+                  <SelectItem value="lighten" className="text-xs">Lighten</SelectItem>
+                  <SelectItem value="darken" className="text-xs">Darken</SelectItem>
+                  <SelectItem value="multiply" className="text-xs">Multiply</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <p className="text-[11px] text-muted-foreground">
+            Tint affects only the negative mask; audio is muted on the masked video.
+          </p>
+        </div>
+      )}
     </div>
     </TooltipProvider>
   );

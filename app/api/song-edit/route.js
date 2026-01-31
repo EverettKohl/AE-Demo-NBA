@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
 import { NextResponse } from "next/server.js";
-import { 
-  createSongEditPlan, 
-  listSongFormats, 
-  findAlternativeSegmentInClip, 
+import {
+  createSongEditPlan,
+  listSongFormats,
+  findAlternativeSegmentInClip,
   getReplacementClip,
   CUT_DETECTION_CONFIG,
+  hasLocalInstantClips,
 } from "../../../lib/songEdit.js";
 import {
   TARGET_FPS,
@@ -19,7 +20,7 @@ import fs from "fs/promises";
 import fsSync from "fs";
 import path from "path";
 import os from "os";
-import { getClipUrl } from "../../../utils/cloudinary.js";
+import { getClipUrl, normalizeCloudinaryPublicId } from "../../../utils/cloudinary.js";
 import { findVideoDetail } from "../../../lib/twelveLabsVideo.js";
 import { loadMovieIndex } from "../../../lib/movieIndex.js";
 import { validateVideo, getVideoMetadata, detectCutsInClip } from "../../../utils/videoValidation.js";
@@ -1104,6 +1105,63 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
     covers.reduce((sum, c) => sum + (c.frameCount || 0), 0)
   );
   const expectedTimelineSeconds = frameToSeconds(expectedTimelineFrames, fps);
+  const useLocalClips = plan.useLocalClips ?? hasLocalInstantClips();
+
+  const buildLocalClipIndex = () => {
+    const baseDir = path.join(process.cwd(), "public", "instant-clips");
+    const index = new Map();
+    const stack = [baseDir];
+    while (stack.length) {
+      const dir = stack.pop();
+      let entries = [];
+      try {
+        entries = fsSync.readdirSync(dir, { withFileTypes: true });
+      } catch (err) {
+        continue;
+      }
+      for (const entry of entries) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          stack.push(fullPath);
+          continue;
+        }
+        if (!entry.isFile() || !entry.name.toLowerCase().endsWith(".mp4")) continue;
+        const match = entry.name.match(/^(.+)-(\d+)ms-(\d+)ms\.mp4$/);
+        const pubId = match ? normalizeCloudinaryPublicId(match[1]) : null;
+        if (!pubId) continue;
+        const startMs = match ? Number(match[2]) : null;
+        const endMs = match ? Number(match[3]) : null;
+        const list = index.get(pubId) || [];
+        list.push({ path: fullPath, startMs, endMs });
+        index.set(pubId, list);
+      }
+    }
+    return index;
+  };
+
+  const localClipIndex = useLocalClips ? buildLocalClipIndex() : null;
+  if (useLocalClips) {
+    plan.useLocalClips = true;
+  }
+
+  const findLocalClipPath = (segment) => {
+    if (!localClipIndex) return null;
+    const pubId = normalizeCloudinaryPublicId(segment.asset?.cloudinaryId || segment.asset?.videoId);
+    if (!pubId) return null;
+    const entries = localClipIndex.get(pubId);
+    if (!entries?.length) return null;
+    const startMs = Math.round((segment.asset?.start ?? 0) * 1000);
+    const endMs = Math.round(
+      (segment.asset?.end ?? (segment.asset?.start ?? 0) + (segment.durationSeconds || 0)) * 1000
+    );
+    const tolerance = 50;
+    const match = entries.find(
+      (e) =>
+        (e.startMs == null || Math.abs(e.startMs - startMs) <= tolerance) &&
+        (e.endMs == null || Math.abs(e.endMs - endMs) <= tolerance)
+    );
+    return (match || entries[0]).path;
+  };
 
   try {
     await fs.mkdir(tmpDir, { recursive: true });
@@ -1116,7 +1174,11 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
 
     const startTime = Date.now();
     console.log(`[renderInstantSongEdit] Starting INSTANT render: ${plan.totalClips} clips @ ${fps}fps`);
-    console.log(`[renderInstantSongEdit] Using local clips: ${plan.useLocalClips}, Cinema optimized: ${plan.hasOptimizedAssets}`);
+    console.log(
+      `[renderInstantSongEdit] Using local clips: ${plan.useLocalClips ?? useLocalClips}, Cinema optimized: ${
+        plan.hasOptimizedAssets
+      }`
+    );
 
     const inputClips = [];
     
@@ -1143,7 +1205,7 @@ const renderInstantSongEdit = async (plan, renderOptions = {}) => {
         throw new Error(`[renderInstantSongEdit] Missing segment for cover index ${cover.segmentIndex}`);
       }
 
-      const clipPath = segment.localPath;
+      const clipPath = segment.localPath || segment.asset?.localPath || findLocalClipPath(segment) || null;
       if (clipPath && fsSync.existsSync(clipPath)) {
         inputClips.push({
           path: clipPath,

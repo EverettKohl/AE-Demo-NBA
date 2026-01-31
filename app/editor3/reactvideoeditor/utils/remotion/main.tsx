@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { AbsoluteFill } from "remotion";
 import type { FontInfo } from "@remotion/google-fonts";
 
-import { Overlay } from "../../types";
+import { Overlay, OverlayType } from "../../types";
 import { SortedOutlines } from "../../components/selection/sorted-outlines";
 import { Layer } from "./layer";
 import { AlignmentGuides } from "../../components/selection/alignment-guides";
@@ -51,10 +51,15 @@ export type MainProps = {
 const outer: React.CSSProperties = {
   backgroundColor: "white",
 };
-const layerContainer: React.CSSProperties = {
+const layerContainer = (backgroundColor: string): React.CSSProperties => ({
+  position: "relative",
   overflow: "hidden",
   maxWidth: "3000px",
-};
+  width: "100%",
+  height: "100%",
+  isolation: "isolate",
+  backgroundColor,
+});
 
 /**
  * Main component that renders a canvas-like area with overlays and their outlines.
@@ -103,12 +108,21 @@ export const Main: React.FC<MainProps> = ({
       }}
       onPointerDown={onPointerDown}
     >
-      <AbsoluteFill style={layerContainer}>
-        {overlays.map((overlay) => {
+      <AbsoluteFill style={layerContainer(backgroundColor)}>
+        {overlays
+          .filter(
+            (overlay) =>
+              !(
+                overlay.type === OverlayType.TEXT &&
+                (overlay as any)?.styles?.effect === "negative"
+              )
+          )
+          .map((overlay) => {
           return (
             <Layer
               key={overlay.id}
               overlay={overlay}
+              allOverlays={overlays}
               {...(baseUrl && { baseUrl })}
               {...(fontInfos && { fontInfos })}
             />

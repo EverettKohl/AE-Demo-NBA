@@ -6,6 +6,7 @@ import {
   Type,
   Subtitles,
   ImageIcon,
+  Sparkles,
   FolderOpen,
   Layout,
   ChevronsLeft,
@@ -28,6 +29,7 @@ import { ImageOverlayPanel } from "../overlay/images/image-overlay-panel";
 import { LocalMediaPanel } from "../overlay/local-media/local-media-panel";
 import { SearchOverlayPanel } from "../overlay/search/search-overlay-panel";
 import { StickersPanel } from "../overlay/stickers/stickers-panel";
+import { CutoutOverlayPanel } from "../overlay/cutouts/cutout-overlay-panel";
 import { TemplateOverlayPanel } from "../overlay/templates/template-overlay-panel";
 import { SettingsPanel } from "../settings/settings-panel";
 
@@ -101,6 +103,8 @@ export const DefaultSidebar: React.FC<DefaultSidebarProps> = ({
         return "Caption";
       case OverlayType.IMAGE:
         return "Image";
+      case OverlayType.CUTOUT:
+        return "Cutouts";
       case OverlayType.LOCAL_DIR:
         return "Uploads";
       case OverlayType.STICKER:
@@ -158,6 +162,13 @@ export const DefaultSidebar: React.FC<DefaultSidebarProps> = ({
       type: OverlayType.IMAGE,
     },
     {
+      title: getPanelTitle(OverlayType.CUTOUT),
+      url: "#",
+      icon: Sparkles,
+      panel: OverlayType.CUTOUT,
+      type: OverlayType.CUTOUT,
+    },
+    {
       title: getPanelTitle(OverlayType.LOCAL_DIR),
       url: "#",
       icon: FolderOpen,
@@ -195,6 +206,8 @@ export const DefaultSidebar: React.FC<DefaultSidebarProps> = ({
         return <CaptionsOverlayPanel />;
       case OverlayType.IMAGE:
         return <ImageOverlayPanel />;
+      case OverlayType.CUTOUT:
+        return <CutoutOverlayPanel />;
       case OverlayType.STICKER:
         return <StickersPanel />;
       case OverlayType.LOCAL_DIR:

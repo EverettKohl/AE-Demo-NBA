@@ -5,6 +5,7 @@ import {
   Type,
   Subtitles,
   ImageIcon,
+  Sparkles,
   FolderOpen,
   Sticker,
   Plus,
@@ -31,6 +32,7 @@ import { CaptionsOverlayPanel } from "../overlay/captions/captions-overlay-panel
 import { ImageOverlayPanel } from "../overlay/images/image-overlay-panel";
 import { StickersPanel } from "../overlay/stickers/stickers-panel";
 import { LocalMediaPanel } from "../overlay/local-media/local-media-panel";
+import { CutoutOverlayPanel } from "../overlay/cutouts/cutout-overlay-panel";
 
 
 /**
@@ -100,6 +102,8 @@ export function MobileNavBar() {
         return "Media";
       case OverlayType.STICKER:
         return "Sticker";
+      case OverlayType.CUTOUT:
+        return "Cutout";
 
       default:
         return "Unknown";
@@ -143,6 +147,13 @@ export function MobileNavBar() {
       type: OverlayType.IMAGE,
     },
     {
+      title: getPanelTitle(OverlayType.CUTOUT),
+      url: "#",
+      icon: Sparkles,
+      panel: OverlayType.CUTOUT,
+      type: OverlayType.CUTOUT,
+    },
+    {
       title: getPanelTitle(OverlayType.STICKER),
       url: "#",
       icon: Sticker,
@@ -175,6 +186,8 @@ export function MobileNavBar() {
         return <CaptionsOverlayPanel />;
       case OverlayType.IMAGE:
         return <ImageOverlayPanel />;
+      case OverlayType.CUTOUT:
+        return <CutoutOverlayPanel />;
       case OverlayType.STICKER:
         return <StickersPanel />;
       case OverlayType.LOCAL_DIR:

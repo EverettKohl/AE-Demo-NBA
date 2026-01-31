@@ -1,3 +1,5 @@
+import type React from "react";
+
 // Define overlay types enum
 export enum OverlayType {
   TEXT = "text",
@@ -10,6 +12,7 @@ export enum OverlayType {
   CAPTION = "caption",
   LOCAL_DIR = "local-dir",
   STICKER = "sticker",
+  CUTOUT = "cutout",
   TEMPLATE = "TEMPLATE",
   SETTINGS = "settings",
 }
@@ -71,8 +74,12 @@ export type TextOverlay = BaseOverlay & {
     WebkitTextFillColor?: string;
     backdropFilter?: string;
     border?: string;
+    mixBlendMode?: React.CSSProperties["mixBlendMode"];
+    filter?: string;
+    effect?: "cutout" | "negative";
     animation?: AnimationConfig;
     fontSizeScale?: number; // Scale factor for font size (1.0 = 100%, 0.5 = 50%, 2.0 = 200%)
+    fontStretchScale?: number; // Vertical stretch factor (1.0 = normal)
   };
 };
 

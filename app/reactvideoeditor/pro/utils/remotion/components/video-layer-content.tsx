@@ -2,9 +2,10 @@ import {
   useCurrentFrame,
   delayRender,
   continueRender,
-  Html5Video
+  Html5Video,
+  Sequence,
 } from "remotion";
-import { ClipOverlay } from "../../../types";
+import { ClipOverlay, TextOverlay } from "../../../types";
 import { animationTemplates, getAnimationKey } from "../../../adaptors/default-animation-adaptors";
 import { toAbsoluteUrl } from "../../general/url-helper";
 import { useEffect, useRef, useCallback } from "react";
@@ -20,6 +21,18 @@ interface VideoLayerContentProps {
   overlay: ClipOverlay;
   /** The base URL for the video */
   baseUrl?: string;
+  /** Optional negative text overlays to render on top of the video */
+  negativeTexts?: {
+    overlay: TextOverlay;
+    from: number;
+    durationInFrames: number;
+  }[];
+  /** Optional cutout text overlays to render as masks */
+  cutoutTexts?: {
+    overlay: TextOverlay;
+    from: number;
+    durationInFrames: number;
+  }[];
 }
 
 /**
@@ -53,11 +66,54 @@ const useSafeEditorContext = () => {
 export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
   overlay,
   baseUrl,
+  negativeTexts = [],
+  cutoutTexts = [],
 }) => {
   const frame = useCurrentFrame();
   const { baseUrl: contextBaseUrl } = useSafeEditorContext();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const lastProcessedFrameRef = useRef<CanvasImageSource | null>(null);
+
+  /**
+   * Responsive font size calculation for text masks (cutout / negative).
+   * Keeps mask text scaling with box resizing, matching on-canvas text behavior.
+   */
+  const computeResponsiveFontSize = useCallback((text: any) => {
+    const fontSizeScale = text?.styles?.fontSizeScale || 1;
+
+    const baseFromStyle = (() => {
+      const raw = text?.styles?.fontSize;
+      if (typeof raw === "number") return raw;
+      if (typeof raw === "string") {
+        if (raw.endsWith("px")) return parseFloat(raw);
+        if (raw.endsWith("rem")) return parseFloat(raw) * 16;
+        const num = parseFloat(raw);
+        return Number.isFinite(num) ? num : 48;
+      }
+      return 48;
+    })();
+
+    const content = (text?.content || "").toString();
+    const lines = Math.max(1, content.split("\n").length);
+    const lineHeight = parseFloat(text?.styles?.lineHeight || "1.2") || 1.2;
+
+    const width = Math.max(20, text?.width || 0);
+    const height = Math.max(20, text?.height || 0);
+
+    const heightBased = height / (lines * lineHeight);
+    const avgCharWidthRatio = 0.5;
+    const maxLineLength = Math.max(4, content.split("\n").reduce((m, l) => Math.max(m, l.length), 0));
+    const widthBased = width / (maxLineLength * avgCharWidthRatio);
+
+    const derived = Math.min(heightBased, widthBased);
+    const candidate = Number.isFinite(derived) ? derived : baseFromStyle;
+
+    const maxSize = Math.min(height * 0.8, width * 0.3, 200);
+    const minSize = 8;
+
+    const finalSize = Math.max(minSize, Math.min(candidate * 0.95, maxSize));
+    return finalSize * fontSizeScale;
+  }, []);
 
   // Use prop baseUrl first, then context baseUrl
   const resolvedBaseUrl = baseUrl || contextBaseUrl;
@@ -264,10 +320,14 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
     ...(isExitPhase ? exitAnimation : enterAnimation),
   };
 
-  // Create a container style that includes padding and background color
+  const trackMuted = (overlay as any).trackMuted;
+  const effectiveVolume = (overlay.styles?.volume ?? 1) * (trackMuted ? 0 : 1);
+  const playbackRate = overlay.speed ?? 1;
+
   const containerStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
+    position: "relative",
     padding: overlay.styles.padding || "0px",
     backgroundColor: overlay.styles.paddingBackgroundColor || "transparent",
     display: "flex", // Use flexbox for centering
@@ -304,8 +364,8 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
               left: 0,
               opacity: 0,
             }}
-            volume={overlay.styles.volume ?? 1}
-            playbackRate={overlay.speed ?? 1}
+            volume={effectiveVolume}
+            playbackRate={playbackRate}
           />
           {/* Canvas that displays processed video with greenscreen removed */}
           <canvas
@@ -319,6 +379,171 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
               left: 0,
             }}
           />
+          {cutoutTexts.map(({ overlay: text, from, durationInFrames }) => {
+            const maskId = `cutout-mask-${overlay.id}-${text.id}`;
+            const startFromOffset = Math.max(0, Math.round(from * playbackRate));
+            const maskTrimBefore = startFromFrames + startFromOffset;
+
+            const fontSize = `${computeResponsiveFontSize(text)}px`;
+
+            const offsetX = (text.left || 0) - (overlay.left || 0);
+            const offsetY = (text.top || 0) - (overlay.top || 0);
+            const tintColor = (text.styles as any)?.negativeTintColor;
+            const blendMode = (text.styles as any)?.mixBlendMode;
+            const fontStretch = (text.styles as any)?.fontStretchScale || 1;
+            const align = (text.styles.textAlign || "center") as
+              | "left"
+              | "center"
+              | "right";
+            const xPos =
+              align === "left"
+                ? offsetX
+                : align === "right"
+                ? offsetX + text.width
+                : offsetX + text.width / 2;
+            const yPos = offsetY + text.height / 2;
+            const textAnchor = align === "left" ? "start" : align === "right" ? "end" : "middle";
+            const rotation = text.rotation || 0;
+            const fillColor = text.styles.cutoutFill || text.styles.backgroundColor || "#000000";
+
+            return (
+              <Sequence
+                key={maskId}
+                from={from}
+                durationInFrames={durationInFrames}
+              >
+                <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+                  <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
+                    <defs>
+                      <mask id={maskId} maskContentUnits="userSpaceOnUse">
+                        <rect width="100%" height="100%" fill="white" />
+                        <text
+                          x={xPos}
+                          y={yPos}
+                          textAnchor={textAnchor}
+                          dominantBaseline="middle"
+                          fill="black"
+                          fontFamily={text.styles.fontFamily}
+                          fontWeight={text.styles.fontWeight}
+                          fontSize={fontSize}
+                          letterSpacing={text.styles.letterSpacing}
+                          style={{ lineHeight: text.styles.lineHeight }}
+                          transform={
+                            [
+                              fontStretch !== 1
+                                ? `translate(${xPos}, ${yPos}) scale(1, ${fontStretch}) translate(${-xPos}, ${-yPos})`
+                                : "",
+                              `rotate(${rotation}, ${xPos}, ${yPos})`,
+                            ]
+                              .filter(Boolean)
+                              .join(" ")
+                          }
+                        >
+                          {text.content}
+                        </text>
+                      </mask>
+                    </defs>
+                    <rect
+                      width="100%"
+                      height="100%"
+                      fill={fillColor}
+                      mask={`url(#${maskId})`}
+                    />
+                  </svg>
+                </div>
+              </Sequence>
+            );
+          })}
+          {negativeTexts.map(({ overlay: text, from, durationInFrames }) => {
+            const maskId = `neg-mask-${overlay.id}-${text.id}`;
+            const startFromOffset = Math.max(0, Math.round(from * playbackRate));
+            const maskTrimBefore = startFromFrames + startFromOffset;
+
+            const fontSize = `${computeResponsiveFontSize(text)}px`;
+
+            const offsetX = (text.left || 0) - (overlay.left || 0);
+            const offsetY = (text.top || 0) - (overlay.top || 0);
+            const tintColor = (text.styles as any)?.negativeTintColor || undefined;
+            const blendMode = (text.styles as any)?.mixBlendMode;
+            const fontStretch = (text.styles as any)?.fontStretchScale || 1;
+            const align = (text.styles.textAlign || "center") as
+              | "left"
+              | "center"
+              | "right";
+            const xPos =
+              align === "left"
+                ? offsetX
+                : align === "right"
+                ? offsetX + text.width
+                : offsetX + text.width / 2;
+            const yPos = offsetY + text.height / 2;
+            const textAnchor = align === "left" ? "start" : align === "right" ? "end" : "middle";
+            const rotation = text.rotation || 0;
+
+            return (
+              <Sequence
+                key={maskId}
+                from={from}
+                durationInFrames={durationInFrames}
+              >
+                <div style={{ position: "absolute", inset: 0 }}>
+                  <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
+                    <defs>
+                      <mask id={maskId} maskContentUnits="userSpaceOnUse">
+                        <rect width="100%" height="100%" fill="black" />
+                        <text
+                          x={xPos}
+                          y={yPos}
+                          textAnchor={textAnchor}
+                          dominantBaseline="middle"
+                          fill="white"
+                          fontFamily={text.styles.fontFamily}
+                          fontWeight={text.styles.fontWeight}
+                          fontSize={fontSize}
+                          letterSpacing={text.styles.letterSpacing}
+                          style={{ lineHeight: text.styles.lineHeight }}
+                          transform={
+                            [
+                              fontStretch !== 1
+                                ? `translate(${xPos}, ${yPos}) scale(1, ${fontStretch}) translate(${-xPos}, ${-yPos})`
+                                : "",
+                              `rotate(${rotation}, ${xPos}, ${yPos})`,
+                            ]
+                              .filter(Boolean)
+                              .join(" ")
+                          }
+                        >
+                          {text.content}
+                        </text>
+                      </mask>
+                    </defs>
+                  </svg>
+                  <Html5Video
+                    src={videoSrc}
+                    trimBefore={maskTrimBefore}
+                    style={{
+                      ...videoStyle,
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      filter: "invert(1)",
+                      backgroundColor: tintColor,
+                      mixBlendMode: blendMode || (tintColor ? "screen" : undefined),
+                      mask: `url(#${maskId})`,
+                      WebkitMask: `url(#${maskId})`,
+                      pointerEvents: "none",
+                    }}
+                    // Masked/inverted copy is visual-only; keep audio on primary video
+                    muted
+                    volume={0}
+                    playbackRate={playbackRate}
+                  />
+                </div>
+              </Sequence>
+            );
+          })}
         </div>
       </div>
     );
@@ -331,9 +556,160 @@ export const VideoLayerContent: React.FC<VideoLayerContentProps> = ({
         src={videoSrc}
         trimBefore={startFromFrames}
         style={videoStyle}
-        volume={overlay.styles.volume ?? 1}
-        playbackRate={overlay.speed ?? 1}
+        volume={effectiveVolume}
+        playbackRate={playbackRate}
       />
+      {cutoutTexts.map(({ overlay: text, from, durationInFrames }) => {
+        const maskId = `cutout-mask-${overlay.id}-${text.id}`;
+        const startFromOffset = Math.max(0, Math.round(from * playbackRate));
+        const maskTrimBefore = startFromFrames + startFromOffset;
+
+        const fontSize = `${computeResponsiveFontSize(text)}px`;
+
+        const offsetX = (text.left || 0) - (overlay.left || 0);
+        const offsetY = (text.top || 0) - (overlay.top || 0);
+        const tintColor = (text.styles as any)?.negativeTintColor;
+        const blendMode = (text.styles as any)?.mixBlendMode;
+        const align = (text.styles.textAlign || "center") as
+          | "left"
+          | "center"
+          | "right";
+        const xPos =
+          align === "left"
+            ? offsetX
+            : align === "right"
+            ? offsetX + text.width
+            : offsetX + text.width / 2;
+        const yPos = offsetY + text.height / 2;
+        const textAnchor = align === "left" ? "start" : align === "right" ? "end" : "middle";
+        const rotation = text.rotation || 0;
+        const fillColor = text.styles.cutoutFill || text.styles.backgroundColor || "#000000";
+
+        return (
+          <Sequence key={maskId} from={from} durationInFrames={durationInFrames}>
+            <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+              <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
+                <defs>
+                  <mask id={maskId} maskContentUnits="userSpaceOnUse">
+                    <rect width="100%" height="100%" fill="white" />
+                    <text
+                      x={xPos}
+                      y={yPos}
+                      textAnchor={textAnchor}
+                      dominantBaseline="middle"
+                      fill="black"
+                      fontFamily={text.styles.fontFamily}
+                      fontWeight={text.styles.fontWeight}
+                      fontSize={fontSize}
+                      letterSpacing={text.styles.letterSpacing}
+                      style={{ lineHeight: text.styles.lineHeight }}
+                      transform={`rotate(${rotation}, ${xPos}, ${yPos})`}
+                    >
+                      {text.content}
+                    </text>
+                  </mask>
+                </defs>
+                <rect
+                  width="100%"
+                  height="100%"
+                  fill={fillColor}
+                  mask={`url(#${maskId})`}
+                />
+              </svg>
+            </div>
+          </Sequence>
+        );
+      })}
+      {negativeTexts.map(({ overlay: text, from, durationInFrames }) => {
+        const maskId = `neg-mask-${overlay.id}-${text.id}`;
+        const startFromOffset = Math.max(0, Math.round(from * playbackRate));
+        const maskTrimBefore = startFromFrames + startFromOffset;
+
+        const fontSize = `${computeResponsiveFontSize(text)}px`;
+
+        const offsetX = (text.left || 0) - (overlay.left || 0);
+        const offsetY = (text.top || 0) - (overlay.top || 0);
+        const fontStretch = (text.styles as any)?.fontStretchScale || 1;
+        const tintColor = (text.styles as any)?.negativeTintColor || undefined;
+        const blendMode = (text.styles as any)?.mixBlendMode;
+        const align = (text.styles.textAlign || "center") as
+          | "left"
+          | "center"
+          | "right";
+        const xPos =
+          align === "left"
+            ? offsetX
+            : align === "right"
+            ? offsetX + text.width
+            : offsetX + text.width / 2;
+        const yPos = offsetY + text.height / 2;
+        const textAnchor = align === "left" ? "start" : align === "right" ? "end" : "middle";
+        const rotation = text.rotation || 0;
+
+        return (
+          <Sequence
+            key={maskId}
+            from={from}
+            durationInFrames={durationInFrames}
+          >
+            <div style={{ position: "absolute", inset: 0 }}>
+              <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
+                <defs>
+                  <mask id={maskId} maskContentUnits="userSpaceOnUse">
+                    <rect width="100%" height="100%" fill="black" />
+                    <text
+                      x={xPos}
+                      y={yPos}
+                      textAnchor={textAnchor}
+                      dominantBaseline="middle"
+                      fill="white"
+                      fontFamily={text.styles.fontFamily}
+                      fontWeight={text.styles.fontWeight}
+                      fontSize={fontSize}
+                      letterSpacing={text.styles.letterSpacing}
+                      style={{ lineHeight: text.styles.lineHeight }}
+                      transform={
+                        [
+                          fontStretch !== 1
+                            ? `translate(${xPos}, ${yPos}) scale(1, ${fontStretch}) translate(${-xPos}, ${-yPos})`
+                            : "",
+                          `rotate(${rotation}, ${xPos}, ${yPos})`,
+                        ]
+                          .filter(Boolean)
+                          .join(" ")
+                      }
+                    >
+                      {text.content}
+                    </text>
+                  </mask>
+                </defs>
+              </svg>
+              <Html5Video
+                src={videoSrc}
+                trimBefore={maskTrimBefore}
+                style={{
+                  ...videoStyle,
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  filter: "invert(1)",
+                  backgroundColor: tintColor,
+                  mixBlendMode: blendMode || (tintColor ? "screen" : undefined),
+                  mask: `url(#${maskId})`,
+                  WebkitMask: `url(#${maskId})`,
+                  pointerEvents: "none",
+                }}
+                // Masked/inverted copy is visual-only; keep audio on primary video
+                muted
+                volume={0}
+                playbackRate={playbackRate}
+              />
+            </div>
+          </Sequence>
+        );
+      })}
     </div>
   );
 }; 

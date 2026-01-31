@@ -29,6 +29,7 @@ import { StickersPanel } from "@editor/reactvideoeditor/components/overlay/stick
 import { SettingsPanel } from "@editor/reactvideoeditor/components/settings/settings-panel";
 import { ClipsOverlayPanel } from "@editor/reactvideoeditor/components/overlay/clips/clips-overlay-panel";
 import { Search2OverlayPanel } from "@editor/reactvideoeditor/components/overlay/search/search2-overlay-panel";
+import { CutoutOverlayPanel } from "@editor/reactvideoeditor/components/overlay/cutouts/cutout-overlay-panel";
 
 import {
   Sidebar,
@@ -63,6 +64,7 @@ const navigation: NavGroup[] = [
     label: "Media",
     items: [
       { title: "Search", panel: OverlayType.VIDEO, icon: Search },
+      { title: "Cutouts", panel: OverlayType.CUTOUT, icon: Sparkles },
       // TODO(version2-post-launch): Re-enable Clips entry.
       // { title: "Clips", panel: OverlayType.SEARCH, icon: Clapperboard },
       // TODO(version2-post-launch): Re-enable Images entry.
@@ -94,6 +96,7 @@ const RAIL_TOOLTIP_LABELS = new Set([
   "Audio",
   "Captions",
   "Text",
+  "Cutouts",
   "Settings",
 ]);
 
@@ -113,6 +116,8 @@ const renderActivePanel = (panel?: OverlayType | null) => {
       return <CaptionsOverlayPanel />;
     case OverlayType.IMAGE:
       return <ImageOverlayPanel />;
+    case OverlayType.CUTOUT:
+      return <CutoutOverlayPanel />;
     case OverlayType.STICKER:
       return <StickersPanel />;
     case OverlayType.LOCAL_DIR:
@@ -140,6 +145,8 @@ const getPanelTitle = (panel?: OverlayType | null) => {
       return "Captions";
     case OverlayType.IMAGE:
       return "Images";
+    case OverlayType.CUTOUT:
+      return "Cutouts";
     case OverlayType.STICKER:
       return "Stickers";
     case OverlayType.LOCAL_DIR:

@@ -172,6 +172,11 @@ export const TextLayerContent: React.FC<TextLayerContentProps> = ({
     return finalSize * fontSizeScale;
   }, [overlay.width, overlay.height, overlay.content, overlay.styles.padding, overlay.styles.border, overlay.styles.lineHeight, overlay.styles.fontSizeScale]);
 
+  const effect = overlay.styles.effect;
+  const isCutout = effect === "cutout";
+  const isNegative = effect === "negative";
+  const maskId = useMemo(() => `cutout-mask-${overlay.id}`, [overlay.id]);
+
   const containerStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
@@ -189,11 +194,36 @@ export const TextLayerContent: React.FC<TextLayerContentProps> = ({
     position: "relative",
     userSelect: "none", // Prevent text selection during overlay interactions
     WebkitUserSelect: "none", // Safari support
+    isolation: isNegative ? "isolate" : undefined,
     ...(isExitPhase ? exitAnimation : enterAnimation),
   };
 
   // eslint-disable-next-line no-unused-vars
-  const { fontSize: _templateFontSize, ...restStyles } = overlay.styles;
+  const {
+    fontSize: _templateFontSize,
+    fontStretchScale = 1,
+    transform: baseTransform,
+    transformOrigin,
+    effect: _effect,
+    ...restStyles
+  } = overlay.styles as any;
+
+  const activeAnimation = isExitPhase ? exitAnimation : enterAnimation;
+  const animationTransform = (activeAnimation as any)?.transform;
+  const animationWithoutTransform = { ...(activeAnimation as any) };
+  if (animationWithoutTransform && "transform" in animationWithoutTransform) {
+    delete (animationWithoutTransform as any).transform;
+  }
+
+  const transformParts = [
+    baseTransform,
+    animationTransform,
+    fontStretchScale !== 1 ? `scaleY(${fontStretchScale})` : "",
+  ].filter((part) => part && part !== "none");
+
+  const combinedTransform = transformParts.length
+    ? transformParts.join(" ").trim()
+    : undefined;
 
   const textStyle: React.CSSProperties = {
     ...restStyles,
@@ -207,12 +237,14 @@ export const TextLayerContent: React.FC<TextLayerContentProps> = ({
     lineHeight: overlay.styles.lineHeight || "1.2",
     // Only add default padding if template doesn't have padding
     padding: overlay.styles.padding || "0.1em",
-    overflow: "hidden",
+    overflow: fontStretchScale !== 1 ? "visible" : "hidden",
     textOverflow: "ellipsis",
     boxSizing: "border-box",
     userSelect: "none", // Prevent text selection during overlay interactions
     WebkitUserSelect: "none", // Safari support
-    ...(isExitPhase ? exitAnimation : enterAnimation),
+    ...animationWithoutTransform,
+    transform: combinedTransform,
+    transformOrigin: transformOrigin || "center",
   };
 
   // Procedural behaviors keyed off animation.enter for text-only effects
@@ -229,6 +261,43 @@ export const TextLayerContent: React.FC<TextLayerContentProps> = ({
     );
     renderedContent = content.slice(0, visibleCount);
   } 
+
+  // Negative effect: prefer blend mode, fallback to invert filter
+  if (isCutout) {
+    // Cutout rendering is handled in video-layer content to align with video-space
+    // coordinates and avoid double-rendering here.
+    return null;
+  }
+
+  if (isNegative) {
+    return (
+      <div
+        style={{
+          ...containerStyle,
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none",
+        }}
+      >
+        <div
+          style={{
+            ...textStyle,
+            color: "#ffffff",
+            backgroundColor: "transparent",
+            mixBlendMode: overlay.styles.mixBlendMode || "difference",
+            textShadow:
+              overlay.styles.textShadow ||
+              "0 0 1px rgba(255,255,255,0.7), 0 0 2px rgba(255,255,255,0.9)",
+          }}
+        >
+          {renderedContent}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={containerStyle}>

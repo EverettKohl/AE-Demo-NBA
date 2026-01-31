@@ -29,6 +29,7 @@ export interface TextOverlayTemplate {
     backdropFilter?: string;
     border?: string;
     fontSizeScale?: number;
+    fontStretchScale?: number;
   };
 }
 
@@ -220,6 +221,52 @@ export const textOverlayTemplates: Record<string, any> = {
       backdropFilter: "blur(10px)",
       border: "1px solid rgba(255, 255, 255, 0.2)",
       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+    },
+  },
+
+  // Cutout and negative styles from quick edit formats
+  cutoutMask: {
+    name: "Cutout Mask",
+    content: "CUTOUT",
+    preview: "Punch-out mask",
+    styles: {
+      fontSize: "3.2rem",
+      fontWeight: "800",
+      color: "#FFFFFF",
+      fontFamily: "Montserrat, sans-serif",
+      fontStyle: "normal",
+      textDecoration: "none",
+      lineHeight: "1",
+      textAlign: "center",
+      letterSpacing: "0.02em",
+      textShadow: "0 0 14px rgba(0,0,0,0.8)",
+      backgroundColor: "rgba(0,0,0,1)",
+      effect: "cutout",
+    },
+  },
+
+  negativeInvert: {
+    name: "Negative Invert",
+    content: "NEGATIVE",
+    preview: "Inverted fill",
+    styles: {
+      fontSize: "3.2rem",
+      fontWeight: "800",
+      color: "#FFFFFF",
+      fontFamily: "Montserrat, sans-serif",
+      fontStyle: "normal",
+      textDecoration: "none",
+      lineHeight: "1",
+      textAlign: "center",
+      letterSpacing: "0.02em",
+      textShadow: "0 0 14px rgba(255,255,255,0.65)",
+      background:
+        "linear-gradient(45deg, #FF3B30 0%, #FF9500 11%, #FFD60A 22%, #34C759 33%, #30D158 44%, #64D2FF 55%, #0A84FF 66%, #5E5CE6 77%, #BF5AF2 88%, #FF2D55 100%)",
+      padding: "14px 28px",
+      borderRadius: "18px",
+      boxShadow: "0 10px 28px rgba(0,0,0,0.35)",
+      mixBlendMode: "difference",
+      effect: "negative",
     },
   },
 };
