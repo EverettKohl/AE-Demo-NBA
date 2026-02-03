@@ -1,0 +1,2918 @@
+{
+  "meta": {
+    "projectId": "FormatEditorProject",
+    "savedAt": "2026-02-02T16:02:55.297Z",
+    "fps": 30,
+    "renderType": "ffmpeg",
+    "source": "format-editor",
+    "importKey": null
+  },
+  "timeline": {
+    "overlays": [
+      {
+        "id": 1227,
+        "type": "segment-rapid",
+        "variant": "rapid",
+        "label": "Rapid Segment",
+        "backgroundColor": "",
+        "from": 1725,
+        "durationInFrames": 135,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 724,
+        "rotation": 0,
+        "row": 0,
+        "isDragging": false,
+        "intervalSeconds": 0.1,
+        "styles": {
+          "objectFit": "cover"
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1228,
+        "type": "segment-rapid",
+        "variant": "rapid",
+        "label": "Rapid Segment",
+        "backgroundColor": "",
+        "from": 1995,
+        "durationInFrames": 111,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 726,
+        "rotation": 0,
+        "row": 0,
+        "isDragging": false,
+        "intervalSeconds": 0.1,
+        "styles": {
+          "objectFit": "cover"
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1229,
+        "type": "segment-rapid",
+        "variant": "rapid",
+        "label": "Rapid Segment",
+        "backgroundColor": "",
+        "from": 2235,
+        "durationInFrames": 93,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 726,
+        "rotation": 0,
+        "row": 0,
+        "isDragging": false,
+        "intervalSeconds": 0.1,
+        "styles": {
+          "objectFit": "cover"
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1230,
+        "type": "segment-rapid",
+        "variant": "rapid",
+        "label": "Rapid Segment",
+        "backgroundColor": "",
+        "from": 2448,
+        "durationInFrames": 51,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 726,
+        "rotation": 0,
+        "row": 0,
+        "isDragging": false,
+        "intervalSeconds": 0.1,
+        "styles": {
+          "objectFit": "cover"
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1,
+        "type": "segment-video",
+        "row": 1,
+        "from": 30,
+        "durationInFrames": 137.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(49, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 2,
+        "type": "segment-video",
+        "row": 1,
+        "from": 167.01,
+        "durationInFrames": 33.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(50, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 3,
+        "type": "segment-video",
+        "row": 1,
+        "from": 201,
+        "durationInFrames": 33.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(51, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 4,
+        "type": "segment-video",
+        "row": 1,
+        "from": 234.99,
+        "durationInFrames": 38.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(52, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 5,
+        "type": "segment-video",
+        "row": 1,
+        "from": 273,
+        "durationInFrames": 36,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(53, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 6,
+        "type": "segment-video",
+        "row": 1,
+        "from": 309,
+        "durationInFrames": 36,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(54, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 7,
+        "type": "segment-video",
+        "row": 1,
+        "from": 345,
+        "durationInFrames": 35.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(55, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 8,
+        "type": "segment-video",
+        "row": 1,
+        "from": 380.01,
+        "durationInFrames": 33.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(56, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 9,
+        "type": "segment-video",
+        "row": 1,
+        "from": 414,
+        "durationInFrames": 32.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(57, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 10,
+        "type": "segment-video",
+        "row": 1,
+        "from": 446.01,
+        "durationInFrames": 33,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(127, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 11,
+        "type": "segment-video",
+        "row": 1,
+        "from": 479.01,
+        "durationInFrames": 34.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(128, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 12,
+        "type": "segment-video",
+        "row": 1,
+        "from": 513.99,
+        "durationInFrames": 32.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(129, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 13,
+        "type": "segment-video",
+        "row": 1,
+        "from": 546,
+        "durationInFrames": 29.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(130, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 14,
+        "type": "segment-video",
+        "row": 1,
+        "from": 575.01,
+        "durationInFrames": 31.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(131, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 15,
+        "type": "segment-video",
+        "row": 1,
+        "from": 606.99,
+        "durationInFrames": 29.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(132, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 16,
+        "type": "segment-video",
+        "row": 1,
+        "from": 636,
+        "durationInFrames": 29.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(133, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 17,
+        "type": "segment-video",
+        "row": 1,
+        "from": 665.01,
+        "durationInFrames": 27.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(134, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 18,
+        "type": "segment-video",
+        "row": 1,
+        "from": 693,
+        "durationInFrames": 30,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(135, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 19,
+        "type": "segment-video",
+        "row": 1,
+        "from": 723,
+        "durationInFrames": 29.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(136, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 20,
+        "type": "segment-video",
+        "row": 1,
+        "from": 752.01,
+        "durationInFrames": 24.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(158, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 21,
+        "type": "segment-video",
+        "row": 1,
+        "from": 777,
+        "durationInFrames": 26.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(159, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 22,
+        "type": "segment-video",
+        "row": 1,
+        "from": 803.01,
+        "durationInFrames": 28.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(160, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 23,
+        "type": "segment-video",
+        "row": 1,
+        "from": 831.99,
+        "durationInFrames": 27,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(161, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 24,
+        "type": "segment-video",
+        "row": 1,
+        "from": 858.99,
+        "durationInFrames": 27,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(162, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 25,
+        "type": "segment-video",
+        "row": 1,
+        "from": 885.99,
+        "durationInFrames": 26.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(163, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 26,
+        "type": "segment-video",
+        "row": 1,
+        "from": 912,
+        "durationInFrames": 24.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(164, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 27,
+        "type": "segment-video",
+        "row": 1,
+        "from": 936.99,
+        "durationInFrames": 25.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(165, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 28,
+        "type": "segment-video",
+        "row": 1,
+        "from": 962.01,
+        "durationInFrames": 25.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(166, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 29,
+        "type": "segment-video",
+        "row": 1,
+        "from": 987.99,
+        "durationInFrames": 22.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(167, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 30,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1010.01,
+        "durationInFrames": 24,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(189, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 31,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1034.01,
+        "durationInFrames": 24,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(190, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 32,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1058.01,
+        "durationInFrames": 22.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(191, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 33,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1080.99,
+        "durationInFrames": 22.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(192, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 34,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1103.01,
+        "durationInFrames": 24,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(193, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 35,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1127.01,
+        "durationInFrames": 22.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(194, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 36,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1149.99,
+        "durationInFrames": 22.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(195, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 37,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1172.01,
+        "durationInFrames": 21.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(196, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 38,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1194,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(197, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 39,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1215,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(198, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 40,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1236,
+        "durationInFrames": 21.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(220, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 41,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1257.99,
+        "durationInFrames": 22.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(221, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 42,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1280.01,
+        "durationInFrames": 18.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(222, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 43,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1299,
+        "durationInFrames": 20.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(223, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 44,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1319.01,
+        "durationInFrames": 19.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(224, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 45,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1338.99,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(225, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 46,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1359.99,
+        "durationInFrames": 20.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(226, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 47,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1380,
+        "durationInFrames": 18.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(227, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 48,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1398.99,
+        "durationInFrames": 20.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(228, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 49,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1419,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(229, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 50,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1440,
+        "durationInFrames": 15,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(251, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 51,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1455,
+        "durationInFrames": 20.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(252, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 52,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1475.01,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(253, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 53,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1496.01,
+        "durationInFrames": 16.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(254, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 54,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1512.99,
+        "durationInFrames": 18,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(255, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 55,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1530.99,
+        "durationInFrames": 17.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(256, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 56,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1548,
+        "durationInFrames": 18,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(257, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 57,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1566,
+        "durationInFrames": 18,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(258, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 58,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1584,
+        "durationInFrames": 17.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(259, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 59,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1601.01,
+        "durationInFrames": 18,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(260, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 60,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1619.01,
+        "durationInFrames": 15.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(282, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 61,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1635,
+        "durationInFrames": 15.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(283, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 62,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1650.99,
+        "durationInFrames": 17.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(284, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 63,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1668,
+        "durationInFrames": 17.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(285, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 64,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1685.01,
+        "durationInFrames": 16.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(286, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 65,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1701.99,
+        "durationInFrames": 13.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(287, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 66,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1716,
+        "durationInFrames": 9,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(288, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 112,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1860,
+        "durationInFrames": 65.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(58, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 113,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1925.01,
+        "durationInFrames": 60.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(59, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 114,
+        "type": "segment-video",
+        "row": 1,
+        "from": 1986,
+        "durationInFrames": 9.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(60, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 152,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2105.01,
+        "durationInFrames": 57.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(182, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 153,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2163,
+        "durationInFrames": 54.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(183, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 154,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2217.99,
+        "durationInFrames": 17.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(184, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 186,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2328,
+        "durationInFrames": 54.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(279, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 187,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2382.99,
+        "durationInFrames": 48,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(280, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 188,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2430.99,
+        "durationInFrames": 20.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(281, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 204,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2499,
+        "durationInFrames": 12,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(270, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 205,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2511,
+        "durationInFrames": 20.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(271, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 206,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2531.01,
+        "durationInFrames": 60,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(272, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 207,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2591.01,
+        "durationInFrames": 42.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(273, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 208,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2634,
+        "durationInFrames": 23.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(274, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 209,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2657.01,
+        "durationInFrames": 21.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(275, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 210,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2679,
+        "durationInFrames": 23.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(297, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 211,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2702.01,
+        "durationInFrames": 21.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(298, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 212,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2724,
+        "durationInFrames": 23.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(299, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 213,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2747.01,
+        "durationInFrames": 22.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(300, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 214,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2769.99,
+        "durationInFrames": 24,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(301, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 215,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2793.99,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(302, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 216,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2814.99,
+        "durationInFrames": 22.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(303, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 217,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2837.01,
+        "durationInFrames": 24,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(304, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 218,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2861.01,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(305, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 219,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2882.01,
+        "durationInFrames": 21.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(306, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 220,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2904,
+        "durationInFrames": 21,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(328, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 221,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2925,
+        "durationInFrames": 23.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(329, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 222,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2948.01,
+        "durationInFrames": 24.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(330, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 223,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2973,
+        "durationInFrames": 18,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(331, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 224,
+        "type": "segment-video",
+        "row": 1,
+        "from": 2991,
+        "durationInFrames": 11.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(332, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 225,
+        "type": "segment-video",
+        "row": 1,
+        "from": 3002.01,
+        "durationInFrames": 25.98,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(333, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 226,
+        "type": "segment-video",
+        "row": 1,
+        "from": 3027.99,
+        "durationInFrames": 192,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(334, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 1226,
+        "type": "sound",
+        "row": 2,
+        "from": 30,
+        "durationInFrames": 3189.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 100,
+        "rotation": 0,
+        "isDragging": false,
+        "content": "cinemaedit",
+        "src": "/songs/cinemaedit.mp3",
+        "startFromSound": 0,
+        "videoDurationInFrames": 3190,
+        "mediaSrcDuration": 106.324172,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 10,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1
+        },
+        "meta": {
+          "originalSrc": "/songs/cinemaedit.mp3",
+          "downloadBytes": 4256005,
+          "localMediaId": "d00dff65-98e2-4e53-afd0-e44063706b56",
+          "__rawType": "sound"
+        },
+        "videoStartTime": 0,
+        "trackMuted": false
+      }
+    ],
+    "aspectRatio": "16:9",
+    "backgroundColor": "white",
+    "durationInFrames": 3219.99,
+    "playbackRate": 1,
+    "currentFrame": 2561,
+    "selectedOverlayId": 1230,
+    "selectedOverlayIds": [
+      1230
+    ],
+    "trackHeight": 96,
+    "timelineItemHeight": 80,
+    "zoomConstraints": {
+      "min": 0.2,
+      "max": 10,
+      "step": 0.1,
+      "default": 1
+    },
+    "snappingConfig": {
+      "thresholdFrames": 1,
+      "enableVerticalSnapping": true
+    },
+    "initialRows": 5,
+    "maxRows": 8,
+    "enablePushOnDrag": false,
+    "waveformLayers": {
+      "volume": true,
+      "bass": false,
+      "mids": false,
+      "treble": false,
+      "spectralFlux": false,
+      "onsets": false
+    },
+    "showAlignmentGuides": true,
+    "disableMobileLayout": false,
+    "disableVideoKeyframes": false,
+    "videoWidth": 1280,
+    "videoHeight": 720
+  },
+  "captions": null,
+  "captionsVisible": true
+}

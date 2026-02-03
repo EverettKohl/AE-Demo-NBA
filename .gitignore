@@ -57,6 +57,8 @@
 !/data/cv/kill-bill-clip-detections.json
 /data/cv/*.before-person.json
 /data/cv/*.yolov8.json
+!/data/format-editor3/
+!/data/format-editor3/*.json
 
 # debug
 npm-debug.log*

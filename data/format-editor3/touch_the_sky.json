@@ -1,0 +1,1861 @@
+{
+  "meta": {
+    "projectId": "FormatEditorProject",
+    "savedAt": "2026-02-03T03:20:31.119Z",
+    "fps": 30,
+    "renderType": "ffmpeg",
+    "source": "format-editor",
+    "importKey": null
+  },
+  "timeline": {
+    "overlays": [
+      {
+        "id": 1062,
+        "type": "cutout",
+        "variant": "video",
+        "shape": "circle",
+        "src": "",
+        "durationInFrames": 21,
+        "from": 219,
+        "rotation": 0,
+        "row": 0,
+        "isDragging": false,
+        "left": -233,
+        "top": -1,
+        "width": 1725,
+        "height": 723,
+        "patternColor": "rgba(255,255,255,0.12)",
+        "backgroundColor": "#0b1221",
+        "styles": {
+          "clipPath": "circle(18% at 50% 50%)",
+          "objectFit": "cover",
+          "patternSize": 72
+        },
+        "meta": {
+          "originalFileName": null
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1058,
+        "type": "cutout",
+        "variant": "image",
+        "shape": "circle",
+        "src": "",
+        "durationInFrames": 15,
+        "from": 159,
+        "rotation": 0,
+        "row": 1,
+        "isDragging": false,
+        "left": 326,
+        "top": 229,
+        "width": 630,
+        "height": 264,
+        "patternColor": "rgba(255,255,255,0.12)",
+        "backgroundColor": "#0b1221",
+        "styles": {
+          "clipPath": "circle(18% at 50% 50%)",
+          "objectFit": "cover",
+          "patternSize": 72
+        },
+        "meta": {
+          "originalFileName": null
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1063,
+        "type": "cutout",
+        "variant": "image",
+        "shape": "circle",
+        "src": "",
+        "durationInFrames": 15,
+        "from": 174,
+        "rotation": 0,
+        "row": 1,
+        "isDragging": false,
+        "left": 259,
+        "top": 194,
+        "width": 763,
+        "height": 320,
+        "patternColor": "rgba(255,255,255,0.12)",
+        "backgroundColor": "#0b1221",
+        "styles": {
+          "clipPath": "circle(18% at 50% 50%)",
+          "objectFit": "cover",
+          "patternSize": 72
+        },
+        "meta": {
+          "originalFileName": null
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1064,
+        "type": "cutout",
+        "variant": "image",
+        "shape": "circle",
+        "src": "",
+        "durationInFrames": 15,
+        "from": 189,
+        "rotation": 0,
+        "row": 1,
+        "isDragging": false,
+        "left": 169,
+        "top": 164,
+        "width": 942,
+        "height": 395,
+        "patternColor": "rgba(255,255,255,0.12)",
+        "backgroundColor": "#0b1221",
+        "styles": {
+          "clipPath": "circle(18% at 50% 50%)",
+          "objectFit": "cover",
+          "patternSize": 72
+        },
+        "meta": {
+          "originalFileName": null
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1065,
+        "type": "cutout",
+        "variant": "image",
+        "shape": "circle",
+        "src": "",
+        "durationInFrames": 15,
+        "from": 204,
+        "rotation": 0,
+        "row": 1,
+        "isDragging": false,
+        "left": -233,
+        "top": 1,
+        "width": 1720,
+        "height": 721,
+        "patternColor": "rgba(255,255,255,0.12)",
+        "backgroundColor": "#0b1221",
+        "styles": {
+          "clipPath": "circle(18% at 50% 50%)",
+          "objectFit": "cover",
+          "patternSize": 72
+        },
+        "meta": {
+          "originalFileName": null
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1025,
+        "type": "text",
+        "from": 33,
+        "durationInFrames": 6,
+        "content": "I",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "3.2rem",
+          "fontWeight": "900",
+          "color": "#FFFFFF",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0.02em",
+          "textAlign": "center",
+          "textShadow": "0 0 14px rgba(0,0,0,0.8)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStyle": "normal",
+          "textDecoration": "none",
+          "lineHeight": "1",
+          "backgroundColor": "rgba(0,0,0,1)",
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1026,
+        "type": "text",
+        "from": 39,
+        "durationInFrames": 6,
+        "content": "THINK",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1027,
+        "type": "text",
+        "from": 45,
+        "durationInFrames": 6,
+        "content": "I",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1028,
+        "type": "text",
+        "from": 51,
+        "durationInFrames": 6,
+        "content": "DIED",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1029,
+        "type": "text",
+        "from": 57,
+        "durationInFrames": 6,
+        "content": "IN",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1030,
+        "type": "text",
+        "from": 63,
+        "durationInFrames": 6,
+        "content": "AN",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1031,
+        "type": "text",
+        "from": 69,
+        "durationInFrames": 12,
+        "content": "ACCIDENT",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1032,
+        "type": "text",
+        "from": 81,
+        "durationInFrames": 9,
+        "content": "'CUZ",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1033,
+        "type": "text",
+        "from": 90,
+        "durationInFrames": 6,
+        "content": "THIS",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1034,
+        "type": "text",
+        "from": 96,
+        "durationInFrames": 9,
+        "content": "MUST",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1035,
+        "type": "text",
+        "from": 105,
+        "durationInFrames": 9,
+        "content": "BE",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1036,
+        "type": "text",
+        "from": 114,
+        "durationInFrames": 15,
+        "content": "HEAVEN",
+        "row": 2,
+        "left": 122,
+        "top": 209,
+        "width": 1077,
+        "height": 312,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "900",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "textShadow": "0 0 12px rgba(0,0,0,0.55)",
+          "effect": "cutout",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStretchScale": 1.75
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1037,
+        "type": "text",
+        "from": 240,
+        "durationInFrames": 9,
+        "content": "I",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1038,
+        "type": "text",
+        "from": 249,
+        "durationInFrames": 12,
+        "content": "GOTTA",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1039,
+        "type": "text",
+        "from": 261,
+        "durationInFrames": 30,
+        "content": "TESTIFY",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1040,
+        "type": "text",
+        "from": 291,
+        "durationInFrames": 9,
+        "content": "COME",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1041,
+        "type": "text",
+        "from": 300,
+        "durationInFrames": 3,
+        "content": "UP",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1042,
+        "type": "text",
+        "from": 303,
+        "durationInFrames": 6,
+        "content": "IN",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1043,
+        "type": "text",
+        "from": 309,
+        "durationInFrames": 3,
+        "content": "THE",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1044,
+        "type": "text",
+        "from": 312,
+        "durationInFrames": 9,
+        "content": "SPOT",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1045,
+        "type": "text",
+        "from": 321,
+        "durationInFrames": 6,
+        "content": "LOOKING",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1046,
+        "type": "text",
+        "from": 327,
+        "durationInFrames": 12,
+        "content": "EXTRA",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1047,
+        "type": "text",
+        "from": 339,
+        "durationInFrames": 45,
+        "content": "FLY",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1048,
+        "type": "text",
+        "from": 384,
+        "durationInFrames": 9,
+        "content": "FOR",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1049,
+        "type": "text",
+        "from": 393,
+        "durationInFrames": 6,
+        "content": "THE",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1050,
+        "type": "text",
+        "from": 399,
+        "durationInFrames": 3,
+        "content": "DAY",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1051,
+        "type": "text",
+        "from": 402,
+        "durationInFrames": 9,
+        "content": "I",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1052,
+        "type": "text",
+        "from": 411,
+        "durationInFrames": 21,
+        "content": "DIE",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1053,
+        "type": "text",
+        "from": 432,
+        "durationInFrames": 12,
+        "content": "I'MMA",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1055,
+        "type": "text",
+        "from": 444,
+        "durationInFrames": 9,
+        "content": "TOUCH",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "3.2rem",
+          "fontWeight": "800",
+          "color": "#FFFFFF",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0.02em",
+          "textAlign": "center",
+          "textShadow": "0 0 14px rgba(0,0,0,0.8)",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStyle": "normal",
+          "textDecoration": "none",
+          "lineHeight": "1",
+          "backgroundColor": "rgba(0,0,0,1)",
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1056,
+        "type": "text",
+        "from": 453,
+        "durationInFrames": 6,
+        "content": "THE",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "3.2rem",
+          "fontWeight": "800",
+          "color": "#FFFFFF",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0.02em",
+          "textAlign": "center",
+          "textShadow": "0 0 14px rgba(0,0,0,0.8)",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontStyle": "normal",
+          "textDecoration": "none",
+          "lineHeight": "1",
+          "backgroundColor": "rgba(0,0,0,1)",
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 1057,
+        "type": "text",
+        "from": 459,
+        "durationInFrames": 27,
+        "content": "SKY.",
+        "row": 2,
+        "left": 49,
+        "top": 199,
+        "width": 1183,
+        "height": 322,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "fontSize": "38.4px",
+          "fontWeight": "800",
+          "color": "#ffffff",
+          "fontFamily": "Montserrat, sans-serif",
+          "letterSpacing": "0px",
+          "textAlign": "center",
+          "effect": "negative",
+          "animation": {
+            "enter": "word"
+          },
+          "fontSizeScale": 1.2
+        },
+        "meta": {
+          "lyricsSlug": "TouchTheSky",
+          "lyricsWord": true
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 8,
+        "type": "segment-video",
+        "row": 3,
+        "from": 234,
+        "durationInFrames": 9.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(56, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 9,
+        "type": "segment-video",
+        "row": 3,
+        "from": 243,
+        "durationInFrames": 18,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(57, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 1067,
+        "type": "segment-video",
+        "row": 3,
+        "from": 261,
+        "durationInFrames": 30,
+        "left": 236,
+        "top": 73,
+        "width": 391,
+        "height": 270,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(127, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 12,
+        "type": "segment-video",
+        "row": 3,
+        "from": 291,
+        "durationInFrames": 12,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(129, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 13,
+        "type": "segment-video",
+        "row": 3,
+        "from": 303,
+        "durationInFrames": 18.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(130, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 14,
+        "type": "segment-video",
+        "row": 3,
+        "from": 321.99,
+        "durationInFrames": 15.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(131, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 15,
+        "type": "segment-video",
+        "row": 3,
+        "from": 336.99,
+        "durationInFrames": 16.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(132, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 16,
+        "type": "segment-video",
+        "row": 3,
+        "from": 353.01,
+        "durationInFrames": 18,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(133, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 17,
+        "type": "segment-video",
+        "row": 3,
+        "from": 371.01,
+        "durationInFrames": 6.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(134, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 18,
+        "type": "segment-video",
+        "row": 3,
+        "from": 378,
+        "durationInFrames": 12,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(135, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 19,
+        "type": "segment-video",
+        "row": 3,
+        "from": 390,
+        "durationInFrames": 15.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(136, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 20,
+        "type": "segment-video",
+        "row": 3,
+        "from": 405.99,
+        "durationInFrames": 16.02,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(158, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 21,
+        "type": "segment-video",
+        "row": 3,
+        "from": 422.01,
+        "durationInFrames": 15.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(159, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 22,
+        "type": "segment-video",
+        "row": 3,
+        "from": 438,
+        "durationInFrames": 18.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(160, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 23,
+        "type": "segment-video",
+        "row": 3,
+        "from": 456.99,
+        "durationInFrames": 17.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(161, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 24,
+        "type": "segment-video",
+        "row": 3,
+        "from": 474,
+        "durationInFrames": 12,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(162, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 10,
+        "type": "segment-video",
+        "row": 4,
+        "from": 270,
+        "durationInFrames": 21,
+        "left": 660,
+        "top": 73,
+        "width": 391,
+        "height": 270,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(127, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 1066,
+        "type": "segment-video",
+        "row": 5,
+        "from": 279,
+        "durationInFrames": 12,
+        "left": 239,
+        "top": 362,
+        "width": 391,
+        "height": 270,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(127, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 1068,
+        "type": "segment-video",
+        "row": 6,
+        "from": 285,
+        "durationInFrames": 6,
+        "left": 660,
+        "top": 362,
+        "width": 391,
+        "height": 270,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(127, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 1,
+        "type": "segment-video",
+        "row": 7,
+        "from": 30,
+        "durationInFrames": 98.01,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 0,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(49, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 11,
+        "type": "segment-video",
+        "row": 7,
+        "from": 261,
+        "durationInFrames": 33,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(128, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 1024,
+        "type": "sound",
+        "row": 8,
+        "from": 30,
+        "durationInFrames": 456,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 100,
+        "rotation": 0,
+        "isDragging": false,
+        "content": "touchthesky",
+        "src": "/songs/TouchTheSky.mp3",
+        "startFromSound": 0,
+        "videoDurationInFrames": 456,
+        "mediaSrcDuration": 15.196,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 10,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1
+        },
+        "meta": {
+          "originalSrc": "/songs/TouchTheSky.mp3",
+          "downloadBytes": 495102,
+          "localMediaId": "4b7fb3de-4b4e-488c-9f69-14ce6f5f3805",
+          "__rawType": "sound"
+        },
+        "videoStartTime": 0,
+        "trackMuted": false
+      }
+    ],
+    "aspectRatio": "16:9",
+    "backgroundColor": "rgb(1, 1, 1)",
+    "durationInFrames": 486,
+    "playbackRate": 1,
+    "currentFrame": 432,
+    "selectedOverlayId": null,
+    "selectedOverlayIds": [],
+    "trackHeight": 1536,
+    "timelineItemHeight": 1280,
+    "zoomConstraints": {
+      "min": 0.2,
+      "max": 10,
+      "step": 0.1,
+      "default": 1
+    },
+    "snappingConfig": {
+      "thresholdFrames": 1,
+      "enableVerticalSnapping": true
+    },
+    "initialRows": 5,
+    "maxRows": 8,
+    "enablePushOnDrag": false,
+    "waveformLayers": {
+      "volume": true,
+      "bass": false,
+      "mids": false,
+      "treble": false,
+      "spectralFlux": false,
+      "onsets": false
+    },
+    "showAlignmentGuides": true,
+    "disableMobileLayout": false,
+    "disableVideoKeyframes": false,
+    "videoWidth": 1280,
+    "videoHeight": 720
+  },
+  "captions": null,
+  "captionsVisible": true
+}

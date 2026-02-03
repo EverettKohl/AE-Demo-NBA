@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "projectId": "FormatEditorProject",
+    "savedAt": "2026-02-02T16:13:52.468Z",
+    "fps": 30,
+    "renderType": "ffmpeg",
+    "source": "format-editor",
+    "importKey": null
+  },
+  "timeline": {
+    "overlays": [
+      {
+        "id": 1163,
+        "type": "segment-rapid",
+        "variant": "rapid",
+        "label": "Rapid Segment",
+        "backgroundColor": "",
+        "from": 30,
+        "durationInFrames": 483,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 723,
+        "rotation": 0,
+        "row": 0,
+        "isDragging": false,
+        "intervalSeconds": 0.1,
+        "styles": {
+          "objectFit": "cover"
+        },
+        "trackMuted": true
+      },
+      {
+        "id": 162,
+        "type": "segment-video",
+        "row": 1,
+        "from": 513,
+        "durationInFrames": 48,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 720,
+        "rotation": 0,
+        "isDragging": false,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 1,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1,
+          "backgroundColor": "hsl(213, 55%, 62%)"
+        },
+        "trackMuted": true,
+        "variant": "video",
+        "label": "Segment Video"
+      },
+      {
+        "id": 1162,
+        "type": "sound",
+        "row": 2,
+        "from": 30,
+        "durationInFrames": 531.99,
+        "left": 0,
+        "top": 0,
+        "width": 1280,
+        "height": 100,
+        "rotation": 0,
+        "isDragging": false,
+        "content": "electric",
+        "src": "/songs/electric.mp3",
+        "startFromSound": 0,
+        "videoDurationInFrames": 532,
+        "mediaSrcDuration": 17.718231,
+        "styles": {
+          "objectFit": "cover",
+          "objectPosition": "center center",
+          "volume": 1,
+          "zIndex": 10,
+          "animation": {
+            "enter": "none",
+            "exit": "none"
+          },
+          "opacity": 1
+        },
+        "meta": {
+          "originalSrc": "/songs/electric.mp3",
+          "downloadBytes": 552216,
+          "localMediaId": "f636e6cb-6244-42e7-ac94-4e04c214783b",
+          "__rawType": "sound"
+        },
+        "videoStartTime": 0,
+        "trackMuted": false
+      }
+    ],
+    "aspectRatio": "16:9",
+    "backgroundColor": "white",
+    "durationInFrames": 561.99,
+    "playbackRate": 1,
+    "currentFrame": 0,
+    "selectedOverlayId": null,
+    "selectedOverlayIds": [],
+    "trackHeight": 192,
+    "timelineItemHeight": 160,
+    "zoomConstraints": {
+      "min": 0.2,
+      "max": 10,
+      "step": 0.1,
+      "default": 1
+    },
+    "snappingConfig": {
+      "thresholdFrames": 1,
+      "enableVerticalSnapping": true
+    },
+    "initialRows": 5,
+    "maxRows": 8,
+    "enablePushOnDrag": false,
+    "waveformLayers": {
+      "volume": true,
+      "bass": false,
+      "mids": false,
+      "treble": false,
+      "spectralFlux": false,
+      "onsets": false
+    },
+    "showAlignmentGuides": true,
+    "disableMobileLayout": false,
+    "disableVideoKeyframes": false,
+    "videoWidth": 1280,
+    "videoHeight": 720
+  },
+  "captions": null,
+  "captionsVisible": true
+}
