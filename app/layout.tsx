@@ -6,7 +6,7 @@ import { PostHogProvider } from "./reactvideoeditor/pro/components/providers/pos
 
 export const metadata: Metadata = {
   title: "Attention Engine Demo",
-  description: "Demo experience for the Attention Engine platform.",
+  description: "Attention Engine Demo",
   icons: {
     icon: "/AELogoicon.png",
     shortcut: "/AELogoicon.png",
