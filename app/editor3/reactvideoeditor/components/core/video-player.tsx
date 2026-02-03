@@ -143,10 +143,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   // Subtle grey grid background behind the preview
   const gridBackgroundStyle = useMemo(
     () => ({
-      backgroundColor: "var(--player-grid-bg, #f5f5f6)",
+      // Default to solid black so the player never falls back to white in production.
+      backgroundColor: "var(--player-grid-bg, #000000)",
       backgroundImage: `
-        linear-gradient(0deg, var(--player-grid-line, rgba(0, 0, 0, 0.06)) 1px, transparent 1px),
-        linear-gradient(90deg, var(--player-grid-line, rgba(0, 0, 0, 0.06)) 1px, transparent 1px)
+        linear-gradient(0deg, var(--player-grid-line, rgba(255, 255, 255, 0.08)) 1px, transparent 1px),
+        linear-gradient(90deg, var(--player-grid-line, rgba(255, 255, 255, 0.08)) 1px, transparent 1px)
       `,
       backgroundSize: "24px 24px",
       backgroundPosition: "center",

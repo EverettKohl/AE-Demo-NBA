@@ -4,15 +4,15 @@ import type { Metadata } from "next";
 import "../editor3/editor-globals.css";
 import styles from "../editor3/editor2-layout.module.css";
 
-const FAVICON = "/AELogoicon.png";
+const FAVICON = "/favicon.ico";
 
 export const metadata: Metadata = {
   title: "Attention Engine Demo — Editor",
   description: "Attention Engine Demo",
   icons: {
-    icon: [{ url: FAVICON, type: "image/png", sizes: "any" }],
-    shortcut: [{ url: FAVICON, type: "image/png" }],
-    apple: [{ url: FAVICON, type: "image/png" }],
+    icon: [{ url: FAVICON, type: "image/x-icon" }],
+    shortcut: [{ url: FAVICON, type: "image/x-icon" }],
+    apple: [{ url: FAVICON, type: "image/x-icon" }],
   },
 };
 
