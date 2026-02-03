@@ -1,7 +1,7 @@
 {
   "meta": {
     "projectId": "FormatEditorProject",
-    "savedAt": "2026-02-03T03:20:31.119Z",
+    "savedAt": "2026-02-03T21:46:17.947Z",
     "fps": 30,
     "renderType": "ffmpeg",
     "source": "format-editor",
@@ -147,8 +147,8 @@
       {
         "id": 1025,
         "type": "text",
-        "from": 33,
-        "durationInFrames": 6,
+        "from": 30,
+        "durationInFrames": 9,
         "content": "I",
         "row": 2,
         "left": 122,
@@ -1731,7 +1731,7 @@
         "type": "segment-video",
         "row": 7,
         "from": 30,
-        "durationInFrames": 98.01,
+        "durationInFrames": 99,
         "left": 0,
         "top": 0,
         "width": 1280,
@@ -1824,11 +1824,13 @@
     "backgroundColor": "rgb(1, 1, 1)",
     "durationInFrames": 486,
     "playbackRate": 1,
-    "currentFrame": 432,
-    "selectedOverlayId": null,
-    "selectedOverlayIds": [],
-    "trackHeight": 1536,
-    "timelineItemHeight": 1280,
+    "currentFrame": 0,
+    "selectedOverlayId": 1,
+    "selectedOverlayIds": [
+      1
+    ],
+    "trackHeight": 3072,
+    "timelineItemHeight": 2560,
     "zoomConstraints": {
       "min": 0.2,
       "max": 10,

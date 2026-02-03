@@ -324,8 +324,13 @@ export function GenerateEditOverlay({ open, onClose }: Props) {
               onClick={runGenerateEdit}
               disabled={!selected || status === "loading" || !formats.length}
               className={cn(
-                "w-full bg-emerald-600 text-white hover:bg-emerald-500 disabled:opacity-70 disabled:cursor-not-allowed",
-                status === "complete" && "bg-emerald-500 hover:bg-emerald-400"
+                "w-full rounded-lg bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 px-4 py-2 text-sm font-semibold text-white",
+                "border border-emerald-400/40 shadow-[0_10px_30px_-12px_rgba(16,185,129,0.65)] transition-all duration-200 ease-out",
+                "hover:-translate-y-[1px] hover:from-emerald-500 hover:to-emerald-400 hover:shadow-[0_12px_38px_-12px_rgba(16,185,129,0.85)]",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
+                "disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0",
+                status === "complete" && "from-emerald-400 via-emerald-300 to-emerald-400",
+                status === "loading" && "animate-pulse"
               )}
             >
               {status === "loading" ? "Loading" : status === "complete" ? "Complete" : "Create Edit"}
