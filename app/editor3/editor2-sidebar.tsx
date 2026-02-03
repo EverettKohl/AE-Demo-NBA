@@ -89,7 +89,6 @@ const navigation: NavGroup[] = [
 ];
 
 const RAIL_TOOLTIP_LABELS = new Set([
-  "Home",
   "Generate Edit",
   "Instant Demo",
   "Search",
@@ -216,44 +215,6 @@ export const Editor2Sidebar: React.FC = () => {
           <SidebarGroup className={styles.sidebarGroup}>
             <div className={styles.sidebarGroupLabel}>AI</div>
             <SidebarMenu className={styles.sidebarMenu}>
-              <SidebarMenuItem>
-                <SidebarMenuButton
-                  onClick={() => router.push("/")}
-                  data-label="Home"
-                  className={cn(styles.navPill)}
-                  title="Home"
-                  aria-label="Home"
-                  onMouseEnter={(e) => {
-                    if (!RAIL_TOOLTIP_LABELS.has("Home")) return;
-                    setTooltip({
-                      label: "Home",
-                      x: e.clientX,
-                      y: e.clientY,
-                      visible: true,
-                      region: "rail",
-                    });
-                  }}
-                  onMouseMove={(e) => {
-                    if (!RAIL_TOOLTIP_LABELS.has("Home")) return;
-                    setTooltip((t) => ({
-                      ...t,
-                      x: e.clientX,
-                      y: e.clientY,
-                      region: "rail",
-                    }));
-                  }}
-                  onMouseLeave={() =>
-                    setTooltip((t) => ({
-                      ...t,
-                      visible: false,
-                      region: null,
-                    }))
-                  }
-                >
-                  <Home />
-                  <span className={styles.navLabel}>Home</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
                   onClick={() => {
