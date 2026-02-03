@@ -51,7 +51,12 @@
 !/data/song-formats-v4/*.json
 !/data/songFormatsStatic.js
 !/data/instantClipPool.json
+!/data/instantClipPool2.json
 !/data/alpha-test.json
+!/data/cv
+!/data/cv/kill-bill-clip-detections.json
+/data/cv/*.before-person.json
+/data/cv/*.yolov8.json
 
 # debug
 npm-debug.log*
