@@ -46,7 +46,7 @@ const curatedClips: ClipItem[] = (() => {
     height: 1080,
     duration: 12,
     thumbnail: buildThumbnailFromVideoUrl(
-      "https://res.cloudinary.com/fanedit/video/upload/v1769119748/Kill_Bill_Vol1_Part2_30FPS_CUTOUTtest_mcxzly.mov"
+      "https://res.cloudinary.com/attention-engine/video/upload/v1769119748/Kill_Bill_Vol1_Part2_30FPS_CUTOUTtest_mcxzly.mov"
     ),
     // Order matters: put VP9/alpha first for Chromium; HEVC second for Safari.
     videoFiles: [
@@ -54,13 +54,13 @@ const curatedClips: ClipItem[] = (() => {
         quality: "hd",
         // VP9 with transparency for Chrome/Edge; uses Cloudinary transform
         format: 'video/webm; codecs="vp9"',
-        url: "https://res.cloudinary.com/fanedit/video/upload/f_webm,vc_vp9,fl_preserve_transparency,q_auto:best/Kill_Bill_Vol1_Part2_30FPS_CUTOUTtest_mcxzly.webm",
+        url: "https://res.cloudinary.com/attention-engine/video/upload/v1769119748/f_webm,vc_vp9,fl_preserve_transparency,q_auto:best/Kill_Bill_Vol1_Part2_30FPS_CUTOUTtest_mcxzly.webm",
       },
       {
         quality: "hd",
         // HEVC with alpha for Safari
         format: 'video/mp4; codecs="hvc1"',
-        url: "https://res.cloudinary.com/fanedit/video/upload/v1769119748/Kill_Bill_Vol1_Part2_30FPS_CUTOUTtest_mcxzly.mov",
+        url: "https://res.cloudinary.com/attention-engine/video/upload/v1769119748/Kill_Bill_Vol1_Part2_30FPS_CUTOUTtest_mcxzly.mov",
       },
     ],
     _source: CLIP_SOURCE_ID,

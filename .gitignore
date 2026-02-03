@@ -47,6 +47,8 @@
 !/data/preCachedClips2.js
 !/data/song-formats/
 !/data/song-formats/*.json
+!/data/song-formats-v4/
+!/data/song-formats-v4/*.json
 !/data/songFormatsStatic.js
 !/data/instantClipPool.json
 !/data/alpha-test.json

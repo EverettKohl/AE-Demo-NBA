@@ -9,6 +9,7 @@ export enum OverlayType {
   SEARCH = "search",
   SEARCH2 = "search2",
   SOUND = "sound",
+  WAVEFORM = "waveform",
   CAPTION = "caption",
   LOCAL_DIR = "local-dir",
   STICKER = "sticker",
@@ -80,6 +81,7 @@ export type TextOverlay = BaseOverlay & {
     animation?: AnimationConfig;
     fontSizeScale?: number; // Scale factor for font size (1.0 = 100%, 0.5 = 50%, 2.0 = 200%)
     fontStretchScale?: number; // Vertical stretch factor (1.0 = normal)
+    negativeTintColor?: string;
   };
 };
 

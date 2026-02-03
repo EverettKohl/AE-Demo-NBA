@@ -224,6 +224,8 @@ export const TextStylePanel: React.FC<TextStylePanelProps> = ({
   const showFontSizeReset = (localOverlay.styles.fontSizeScale ?? 1) !== 1;
   const showFontStretchReset = (localOverlay.styles.fontStretchScale ?? 1) !== 1;
   const showLetterSpacingReset = currentLetterSpacingEm !== 0;
+  const negativeTintColor = (localOverlay.styles as any)?.negativeTintColor;
+  const hasNegativeTint = Boolean(negativeTintColor && negativeTintColor !== "transparent");
 
   return (
     <TooltipProvider>
@@ -589,8 +591,16 @@ export const TextStylePanel: React.FC<TextStylePanelProps> = ({
               <Popover>
                 <PopoverTrigger asChild>
                   <div
-                    className="h-8 w-8 rounded-md border cursor-pointer"
-                    style={{ backgroundColor: (localOverlay.styles as any)?.negativeTintColor || "transparent" }}
+                    className="relative h-8 w-8 rounded-md border cursor-pointer overflow-hidden"
+                    style={{
+                      backgroundColor: hasNegativeTint ? negativeTintColor : "#ffffff",
+                      backgroundImage: hasNegativeTint
+                        ? undefined
+                        : "linear-gradient(45deg, transparent calc(50% - 1px), #ef4444 calc(50% - 1px), #ef4444 calc(50% + 1px), transparent calc(50% + 1px))",
+                      backgroundSize: "140% 140%",
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                    }}
                   />
                 </PopoverTrigger>
                 <PopoverContent className="w-[330px]" side="right">

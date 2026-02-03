@@ -16,6 +16,7 @@ import { transformOverlaysForAspectRatio, shouldTransformOverlays, getDimensions
 import { toAbsoluteUrl } from "../../utils/general/url-helper";
 import { frameToTime } from "../../utils/time";
 import { rehydrateMediaById } from "../../../lib/media-ingest";
+import { DEFAULT_BACKGROUND_COLOR } from "../../../constants";
 
 interface EditorProviderProps {
   children: React.ReactNode;
@@ -163,7 +164,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
   
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showAlignmentGuides, setShowAlignmentGuides] = useState(true);
-  const [backgroundColor, setBackgroundColor] = useState(defaultBackgroundColor || "white");
+  const [backgroundColor, setBackgroundColor] = useState(defaultBackgroundColor || DEFAULT_BACKGROUND_COLOR);
   const [trackHeight, setTrackHeight] = useState(TIMELINE_CONSTANTS.TRACK_HEIGHT);
   const [timelineItemHeight, setTimelineItemHeight] = useState(TIMELINE_CONSTANTS.TRACK_ITEM_HEIGHT);
   const { durationInFrames, durationInSeconds } = useCompositionDuration(overlays, fps);

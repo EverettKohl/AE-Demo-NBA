@@ -1,9 +1,5 @@
-import dynamic from "next/dynamic";
+import { redirect } from "next/navigation";
 
-const ReactVideoEditorClient = dynamic(() => import("./react-video-editor-client").then((m) => m.ReactVideoEditorClient), {
-  ssr: false,
-});
-
-export default function EditorPage() {
-  return <ReactVideoEditorClient />;
+export default function Editor3RedirectPage() {
+  redirect("/editor");
 }

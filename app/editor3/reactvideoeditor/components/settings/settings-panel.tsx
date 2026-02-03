@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { Switch } from "../ui/switch";
 import { Separator } from "../ui/separator";
 import { SaveHistory } from "./save-history";
+import { DEFAULT_BACKGROUND_COLOR } from "../../../constants";
 
 /**
  * Settings Panel Component
@@ -24,7 +25,7 @@ import { SaveHistory } from "./save-history";
  */
 export const SettingsPanel: React.FC = () => {
   const { 
-    backgroundColor = "white", 
+    backgroundColor = DEFAULT_BACKGROUND_COLOR, 
     setBackgroundColor,
     showAlignmentGuides,
     setShowAlignmentGuides,
@@ -91,12 +92,12 @@ export const SettingsPanel: React.FC = () => {
                 type="text"
                 value={backgroundColor}
                 onChange={(e) => setBackgroundColor?.(e.target.value)}
-                placeholder="white"
+                placeholder={DEFAULT_BACKGROUND_COLOR}
                 className="flex-1 bg-background border rounded-md text-xs p-2 hover:border transition-colors text-primary"
               />
-              {backgroundColor !== "white" && (
+              {backgroundColor !== DEFAULT_BACKGROUND_COLOR && (
                 <Button
-                  onClick={() => setBackgroundColor?.("white")}
+                  onClick={() => setBackgroundColor?.(DEFAULT_BACKGROUND_COLOR)}
                   variant="ghost"
                   size="sm"
                 >

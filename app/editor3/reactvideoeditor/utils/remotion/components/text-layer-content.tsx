@@ -175,6 +175,10 @@ export const TextLayerContent: React.FC<TextLayerContentProps> = ({
   const effect = overlay.styles.effect;
   const isCutout = effect === "cutout";
   const isNegative = effect === "negative";
+  const negativeTintColor = (overlay.styles as any)?.negativeTintColor;
+  const tintOpacity =
+    typeof overlay.styles.opacity === "number" ? overlay.styles.opacity : 1;
+  const hasVisibleTint = Boolean(negativeTintColor) && tintOpacity > 0;
   const maskId = useMemo(() => `cutout-mask-${overlay.id}`, [overlay.id]);
 
   const containerStyle: React.CSSProperties = {
@@ -285,9 +289,13 @@ export const TextLayerContent: React.FC<TextLayerContentProps> = ({
         <div
           style={{
             ...textStyle,
-            color: "#ffffff",
+            color: hasVisibleTint ? negativeTintColor : "#ffffff",
             backgroundColor: "transparent",
-            mixBlendMode: overlay.styles.mixBlendMode || "difference",
+            opacity: hasVisibleTint ? tintOpacity : undefined,
+            // If tint visible, render solid color with opacity; otherwise fall back to blend.
+            mixBlendMode: hasVisibleTint
+              ? "normal"
+              : overlay.styles.mixBlendMode || "difference",
             textShadow:
               overlay.styles.textShadow ||
               "0 0 1px rgba(255,255,255,0.7), 0 0 2px rgba(255,255,255,0.9)",

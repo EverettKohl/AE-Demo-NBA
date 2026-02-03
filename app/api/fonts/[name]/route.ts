@@ -16,7 +16,8 @@ export async function GET(
   { params }: { params: { name: string } }
 ) {
   try {
-    const fontFamily = params.name;
+    const fontParam = decodeURIComponent(params.name || "").trim();
+    const fontFamily = fontParam.split(",")[0]?.trim() || fontParam;
     
     // Find the font in the database
     const fontInfo = GOOGLE_FONTS_DATABASE.find(

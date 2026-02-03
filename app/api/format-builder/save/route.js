@@ -99,6 +99,82 @@ export async function POST(request) {
         return { ...entry, clipSlot };
       });
 
+    // Deterministic color per cutout definition for patterned clip rendering
+    const colorFromId = (id = "") => {
+      let hash = 0;
+      for (let i = 0; i < id.length; i += 1) {
+        hash = (hash << 5) - hash + id.charCodeAt(i);
+        hash |= 0;
+      }
+      const hue = Math.abs(hash) % 360;
+      return `hsl(${hue}, 65%, 55%)`;
+    };
+
+    const allowedShapes = new Set([
+      "circle",
+      "rounded-rect",
+      "square",
+      "triangle",
+      "star",
+      "hexagon",
+    ]);
+
+    const normalizeCutoutDefinition = (def = {}, index = 0) => {
+      const id = def.id || `cutout-def-${index}-${Date.now()}`;
+      const shapeType = allowedShapes.has(def.shapeType)
+        ? def.shapeType
+        : "circle";
+      const safeName =
+        typeof def.name === "string" && def.name.trim()
+          ? def.name.trim()
+          : `${shapeType[0].toUpperCase()}${shapeType.slice(1)} ${index + 1}`;
+      return {
+        id,
+        name: safeName,
+        shapeType,
+        shapeParams: def.shapeParams || {},
+        color: colorFromId(id),
+      };
+    };
+
+    const normalizeCutoutInstance = (inst = {}, idx = 0, fpsForConversion = fps) => {
+      const id = inst.id || `cutout-inst-${idx}-${Date.now()}`;
+      const startFrame = Number.isFinite(inst.startFrame)
+        ? Math.max(0, Math.round(inst.startFrame))
+        : Number.isFinite(inst.startSeconds)
+        ? Math.max(0, Math.round(secondsToFrame(inst.startSeconds, fpsForConversion)))
+        : 0;
+      const durationInFrames = Number.isFinite(inst.durationInFrames)
+        ? Math.max(1, Math.round(inst.durationInFrames))
+        : Number.isFinite(inst.durationSeconds)
+        ? Math.max(1, Math.round(secondsToFrame(inst.durationSeconds, fpsForConversion)))
+        : Math.max(1, Math.round(fpsForConversion * 2)); // default ~2s
+      return {
+        id,
+        cutoutDefinitionId: inst.cutoutDefinitionId,
+        startFrame,
+        durationInFrames,
+        position: inst.position || { x: 0.5, y: 0.5 },
+      };
+    };
+
+    const normalizeCutoutClipInstance = (clip = {}, idx = 0, fpsForConversion = fps) => {
+      const id = clip.id || `cutout-clip-${idx}-${Date.now()}`;
+      const startFrame = Number.isFinite(clip.startFrame)
+        ? Math.max(0, Math.round(clip.startFrame))
+        : 0;
+      const durationInFrames = Number.isFinite(clip.durationInFrames)
+        ? Math.max(1, Math.round(clip.durationInFrames))
+        : Math.max(1, Math.round(fpsForConversion * 2));
+      return {
+        id,
+        cutoutDefinitionId: clip.cutoutDefinitionId,
+        linkedCutoutInstanceId: clip.linkedCutoutInstanceId || null,
+        startFrame,
+        durationInFrames,
+      };
+    };
+
     const processLayer = (layerInput = {}, isForeground = false) => {
       const incomingBeatFrames = Array.isArray(layerInput.beatGridFrames)
         ? layerInput.beatGridFrames.map((f) => Math.round(f))
@@ -181,6 +257,15 @@ export async function POST(request) {
     });
 
     const cutoutEnabled = Boolean(format.cutoutEnabled);
+    const cutoutDefinitions = Array.isArray(format.cutoutDefinitions)
+      ? format.cutoutDefinitions.map((d, idx) => normalizeCutoutDefinition(d, idx))
+      : [];
+    const cutoutInstances = Array.isArray(format.cutoutInstances)
+      ? format.cutoutInstances.map((c, idx) => normalizeCutoutInstance(c, idx))
+      : [];
+    const cutoutClipInstances = Array.isArray(format.cutoutClipInstances)
+      ? format.cutoutClipInstances.map((c, idx) => normalizeCutoutClipInstance(c, idx))
+      : [];
     const foregroundLayer = processLayer(
       {
         beatGrid: format.foreground?.beatGrid,
@@ -227,6 +312,9 @@ export async function POST(request) {
       introBeat,
       captions: format.captions || null,
       clipSegments: backgroundLayer.clipSegments,
+      cutoutDefinitions,
+      cutoutInstances,
+      cutoutClipInstances,
       foreground: {
         ...format.foreground,
         beatGrid: foregroundLayer.beatGrid,

@@ -55,10 +55,10 @@ export default function EditorHome() {
           Kill Bill Search
         </Link>
         <Link
-          href="/editor3"
+          href="/editor"
           className="rounded-md bg-black/70 px-3 py-2 text-sm font-medium text-white shadow-sm backdrop-blur hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white/60"
         >
-          Open Editor 3
+          Open Editor
         </Link>
       </div>
       <MobileWarningModal show={SHOW_MOBILE_WARNING} />

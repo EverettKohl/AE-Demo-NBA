@@ -10,7 +10,7 @@ interface UseTimelineResizeOptions {
 /**
  * Constants for timeline height calculations
  */
-const HEIGHT_CONSTANTS = {
+export const TIMELINE_HEIGHT_CONSTANTS = {
   /** Reserved space for editor header and minimum video player */
   RESERVED_VIEWPORT_SPACE: 260,
   /** Compact minimum height: keep markers + handle visible */
@@ -43,9 +43,9 @@ export const useTimelineResize = ({ overlays }: UseTimelineResizeOptions) => {
   const preferredHeight = React.useMemo(() => {
     const requiredHeight = TIMELINE_CONSTANTS.MARKERS_HEIGHT +
       (trackCount * TIMELINE_CONSTANTS.TRACK_HEIGHT) +
-      HEIGHT_CONSTANTS.TIMELINE_PADDING;
+      TIMELINE_HEIGHT_CONSTANTS.TIMELINE_PADDING;
 
-    return Math.max(HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, requiredHeight);
+    return Math.max(TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, requiredHeight);
   }, [trackCount]);
 
   // Track previous track count to detect when new tracks are added
@@ -60,13 +60,13 @@ export const useTimelineResize = ({ overlays }: UseTimelineResizeOptions) => {
    */
   const maxAvailableHeight = React.useMemo(() => {
     if (typeof window === 'undefined') {
-      return HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT;
+      return TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT;
     }
 
     const viewportHeight = window.innerHeight;
-    const usableHeight = viewportHeight - HEIGHT_CONSTANTS.RESERVED_VIEWPORT_SPACE;
+    const usableHeight = viewportHeight - TIMELINE_HEIGHT_CONSTANTS.RESERVED_VIEWPORT_SPACE;
 
-    return Math.max(HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, usableHeight);
+    return Math.max(TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, usableHeight);
   }, []);
 
   /**
@@ -77,23 +77,23 @@ export const useTimelineResize = ({ overlays }: UseTimelineResizeOptions) => {
    */
   const calculateInitialHeight = React.useCallback(() => {
     if (typeof window === 'undefined') {
-      return HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT; // SSR fallback
+      return TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT; // SSR fallback
     }
     
     // Use full available height: viewport height minus reserved space for header and video player
     const viewportHeight = window.innerHeight;
-    const fullHeight = viewportHeight - HEIGHT_CONSTANTS.RESERVED_VIEWPORT_SPACE;
+    const fullHeight = viewportHeight - TIMELINE_HEIGHT_CONSTANTS.RESERVED_VIEWPORT_SPACE;
     
     // Ensure we never go below minimum height
-    return Math.max(HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, fullHeight);
+    return Math.max(TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, fullHeight);
   }, []);
 
   /**
    * Vertical resize functionality for timeline with dynamic max height
    */
   const { bottomHeight, isResizing, handleMouseDown, handleTouchStart, setHeight } = useVerticalResize({
-    initialHeight: Math.max(HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, Math.min(preferredHeight, calculateInitialHeight())),
-    minHeight: HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT,
+    initialHeight: Math.max(TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT, Math.min(preferredHeight, calculateInitialHeight())),
+    minHeight: TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT,
     maxHeight: maxAvailableHeight,
     storageKey: 'editor-timeline-height',
   });
@@ -104,8 +104,8 @@ export const useTimelineResize = ({ overlays }: UseTimelineResizeOptions) => {
    * - Clamp down to the current maximum (viewport changes).
    */
   React.useEffect(() => {
-    if (bottomHeight < HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT) {
-      setHeight(HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT);
+    if (bottomHeight < TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT) {
+      setHeight(TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT);
       return;
     }
 
@@ -157,6 +157,7 @@ export const useTimelineResize = ({ overlays }: UseTimelineResizeOptions) => {
     isResizing,
     handleMouseDown,
     handleTouchStart,
+    setHeight,
     trackCount,
     dynamicMaxHeight: maxAvailableHeight,
   };

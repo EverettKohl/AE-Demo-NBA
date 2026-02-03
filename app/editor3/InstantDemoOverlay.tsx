@@ -7,6 +7,7 @@ import { useEditorContext } from "@editor/reactvideoeditor/contexts/editor-conte
 import { cn } from "@editor/reactvideoeditor/utils/general/utils";
 import { Button } from "@editor/reactvideoeditor/components/ui/button";
 import { useSeekDragAnimation } from "./hooks/useSeekDragAnimation";
+import { requestTimelineCollapseToRows } from "@editor/reactvideoeditor/utils/timeline-layout";
 
 type Props = {
   open: boolean;
@@ -275,6 +276,7 @@ export function InstantDemoOverlay({ open, onClose }: Props) {
         );
         autoCloseTimerRef.current = window.setTimeout(() => {
           seekTo(0);
+          requestTimelineCollapseToRows(2);
           play();
           handleClose();
         }, 1000);

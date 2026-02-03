@@ -8,6 +8,7 @@ import { cn } from "@editor/reactvideoeditor/utils/general/utils";
 import { Button } from "@editor/reactvideoeditor/components/ui/button";
 import { useSeekDragAnimation } from "./hooks/useSeekDragAnimation";
 import { prefetchImportAssets } from "./useQuickEdit6Import";
+import { requestTimelineCollapseToRows } from "@editor/reactvideoeditor/utils/timeline-layout";
 
 type Props = {
   open: boolean;
@@ -254,6 +255,7 @@ export function GenerateEditOverlay({ open, onClose }: Props) {
         setProgressText("Generate Edit complete. You can close this panel.");
         autoCloseTimerRef.current = window.setTimeout(() => {
           seekTo(0);
+          requestTimelineCollapseToRows(2);
           play();
           handleClose();
         }, 1000);

@@ -231,20 +231,32 @@ export const ImageLayerContent: React.FC<ImageLayerContentProps> = ({
     transition: "background-color 0.4s ease-out, border-radius 0.4s ease-out, border 0.4s ease-out, box-shadow 0.4s ease-out",
   };
 
-  // Determine the image source URL
-  let imageSrc = overlay.src;
+  // Determine the image source URL with null safety
+  let imageSrc = (overlay as any)?.src as string | undefined;
+  if (!imageSrc && typeof (overlay as any)?.content === "string") {
+    imageSrc = (overlay as any).content;
+  }
 
-  // If it's an API route, use toAbsoluteUrl to ensure proper domain
-  if (overlay.src.startsWith("/api/")) {
-    imageSrc = toAbsoluteUrl(overlay.src, resolvedBaseUrl);
+  if (imageSrc) {
+    // If it's an API route, use toAbsoluteUrl to ensure proper domain
+    if (imageSrc.startsWith("/api/")) {
+      imageSrc = toAbsoluteUrl(imageSrc, resolvedBaseUrl);
+    }
+    // If it's a relative URL and baseUrl is provided, use baseUrl
+    else if (imageSrc.startsWith("/") && resolvedBaseUrl) {
+      imageSrc = `${resolvedBaseUrl}${imageSrc}`;
+    }
+    // Otherwise use the toAbsoluteUrl helper for relative URLs
+    else if (imageSrc.startsWith("/")) {
+      imageSrc = toAbsoluteUrl(imageSrc, resolvedBaseUrl);
+    }
+  } else {
+    imageSrc = "";
   }
-  // If it's a relative URL and baseUrl is provided, use baseUrl
-  else if (overlay.src.startsWith("/") && resolvedBaseUrl) {
-    imageSrc = `${resolvedBaseUrl}${overlay.src}`;
-  }
-  // Otherwise use the toAbsoluteUrl helper for relative URLs
-  else if (overlay.src.startsWith("/")) {
-    imageSrc = toAbsoluteUrl(overlay.src, resolvedBaseUrl);
+
+  if (!imageSrc) {
+    // Nothing to render; avoid loading errors
+    return null as any;
   }
 
   // Process image with greenscreen removal when enabled

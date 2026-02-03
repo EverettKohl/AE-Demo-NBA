@@ -78,6 +78,11 @@ The project is organized with version-specific components and pages:
 - `/app/versions`: Contains version-specific pages.
 - `/components/editor`: Contains version-specific editor components.
 
+## Format Editor (clone of Editor 3)
+
+- `/app/format-editor` is a copy of the `/app/editor3` shell with its own sidebar/hooks/adaptors/CSS so future changes stay isolated; it still uses the shared `app/editor3/reactvideoeditor` components.
+- APIs for this route live at `/api/format-editor-format-builder/*` and persist data under `data/format-editor-formats-v4`. The original Editor 3 APIs remain at `/api/editor3-format-builder/*` with `data/song-formats-v4`.
+
 ### Version Files and Folders
 
 Each version of the React Video Editor is contained in its own folder under `/components/editor`. For example, version 1.0.0 is located at `/components/editor/version-1.0.0/ReactVideoEditor.tsx`.

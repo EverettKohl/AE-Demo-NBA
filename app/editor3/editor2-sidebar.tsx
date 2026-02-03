@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   X,
   Sparkles,
+  Scissors,
   Search,
   Home,
 } from "lucide-react";
@@ -46,7 +47,7 @@ import { Button } from "@editor/reactvideoeditor/components/ui/button";
 import { cn } from "@editor/reactvideoeditor/utils/general/utils";
 import styles from "./editor2-layout.module.css";
 import { InstantDemoOverlay } from "./InstantDemoOverlay";
-import { GenerateEditOverlay } from "./GenerateEditOverlay";
+import { GenerateEdit2Overlay } from "./GenerateEdit2Overlay";
 
 type NavItem = {
   title: string;
@@ -64,7 +65,7 @@ const navigation: NavGroup[] = [
     label: "Media",
     items: [
       { title: "Search", panel: OverlayType.VIDEO, icon: Search },
-      { title: "Cutouts", panel: OverlayType.CUTOUT, icon: Sparkles },
+      { title: "Cutouts", panel: OverlayType.CUTOUT, icon: Scissors },
       // TODO(version2-post-launch): Re-enable Clips entry.
       // { title: "Clips", panel: OverlayType.SEARCH, icon: Clapperboard },
       // TODO(version2-post-launch): Re-enable Images entry.
@@ -177,7 +178,7 @@ export const Editor2Sidebar: React.FC = () => {
     region: null,
   });
 
-  const [geOverlayOpen, setGeOverlayOpen] = React.useState(true);
+  const [ge2OverlayOpen, setGe2OverlayOpen] = React.useState(true);
   const [instantOpen, setInstantOpen] = React.useState(false);
 
   const selectedOverlay =
@@ -187,10 +188,19 @@ export const Editor2Sidebar: React.FC = () => {
   const handleNavigate = (panel: OverlayType) => {
     // Close long-running overlays when switching panels
     setInstantOpen(false);
-    setGeOverlayOpen(false);
+    setGe2OverlayOpen(false);
     setActivePanel(panel);
     setIsOpen(true);
   };
+
+  React.useEffect(() => {
+    const handler = () => {
+      setInstantOpen(false);
+      setGe2OverlayOpen(true);
+    };
+    window.addEventListener("auto-generate-edit2", handler);
+    return () => window.removeEventListener("auto-generate-edit2", handler);
+  }, []);
 
   return (
     <Sidebar
@@ -248,11 +258,11 @@ export const Editor2Sidebar: React.FC = () => {
                 <SidebarMenuButton
                   onClick={() => {
                     setInstantOpen(false);
-                    setGeOverlayOpen(true);
+                    setGe2OverlayOpen(true);
                   }}
                   data-label="Generate Edit"
-                  className={cn(styles.navPill, geOverlayOpen && styles.navPillActive)}
-                  data-active={geOverlayOpen}
+                  className={cn(styles.navPill, ge2OverlayOpen && styles.navPillActive)}
+                  data-active={ge2OverlayOpen}
                   title="Generate Edit"
                   aria-label="Generate Edit"
                   onMouseEnter={(e) => {
@@ -282,7 +292,7 @@ export const Editor2Sidebar: React.FC = () => {
                     }))
                   }
                 >
-                <Sparkles />
+                  <Sparkles />
                   <span className={styles.navLabel}>Gen Edit</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -433,7 +443,7 @@ export const Editor2Sidebar: React.FC = () => {
         </div>
       )}
 
-      <GenerateEditOverlay open={geOverlayOpen} onClose={() => setGeOverlayOpen(false)} />
+      <GenerateEdit2Overlay open={ge2OverlayOpen} onClose={() => setGe2OverlayOpen(false)} />
       <InstantDemoOverlay open={instantOpen} onClose={() => setInstantOpen(false)} />
     </Sidebar>
   );

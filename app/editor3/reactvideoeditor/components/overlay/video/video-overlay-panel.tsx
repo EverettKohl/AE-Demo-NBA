@@ -419,7 +419,7 @@ const VideoOverlayPanelInner: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <Button
             variant="default"
             size="sm"
@@ -428,15 +428,6 @@ const VideoOverlayPanelInner: React.FC = () => {
             disabled={isDurationLoading && loadingItemKey === key}
           >
             {isReplaceMode ? "Replace" : "Add"}
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
-            className="w-full"
-            disabled={!cloudName && !publicId && !actionMp4 && !actionHls}
-            onClick={() => setSelectedClipForEdit({ clip, detail: clip.videoDetail })}
-          >
-            Edit
           </Button>
           <Button
             variant="outline"

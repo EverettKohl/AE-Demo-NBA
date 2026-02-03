@@ -1,16 +1,18 @@
 import React from 'react';
 import Timeline from '../../advanced-timeline/timeline';
 import { TimelineTrack, TimelineRef } from '../../advanced-timeline/types';
+import { TIMELINE_CONSTANTS } from '../../advanced-timeline/constants';
 
 import { useEditorContext } from '../../../contexts/editor-context';
 import { useEditorSidebar } from '../../../contexts/sidebar-context';
 
 import { useTimelineTransforms } from './hooks/use-timeline-transforms';
 import { useTimelineHandlers } from './hooks/use-timeline-handlers';
-import { useTimelineResize } from './hooks/use-timeline-resize';
+import { useTimelineResize, TIMELINE_HEIGHT_CONSTANTS } from './hooks/use-timeline-resize';
 import { TimelineResizeHandle } from './components';
 import { Overlay, TextOverlay, CaptionOverlay, OverlayType } from '../../../types';
 import { frameToTime } from '../../../utils/time';
+import { TIMELINE_COLLAPSE_EVENT } from '../../../utils/timeline-layout';
 
 interface TimelineSectionProps {
   className?: string;
@@ -256,7 +258,15 @@ export const TimelineSection: React.FC<TimelineSectionProps> = () => {
   }, [playerRef, durationInFrames]);
 
   // Timeline resize functionality
-  const { bottomHeight, isResizing, handleMouseDown, handleTouchStart } = useTimelineResize({
+  const {
+    bottomHeight,
+    isResizing,
+    handleMouseDown,
+    handleTouchStart,
+    setHeight: setTimelineHeight,
+    trackCount,
+    dynamicMaxHeight,
+  } = useTimelineResize({
     overlays,
   });
 
@@ -264,6 +274,34 @@ export const TimelineSection: React.FC<TimelineSectionProps> = () => {
   const handleCollapseChange = React.useCallback((collapsed: boolean) => {
     setIsTimelineCollapsed(collapsed);
   }, []);
+
+  // Automatically collapse the timeline to show only the top rows (default two)
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleCollapseEvent = (event: Event) => {
+      const { rows } = (event as CustomEvent<{ rows?: number }>).detail || {};
+      const targetRows = Math.max(1, Math.min(rows ?? 2, trackCount));
+      const targetHeight =
+        TIMELINE_CONSTANTS.MARKERS_HEIGHT +
+        TIMELINE_CONSTANTS.TRACK_HEIGHT * targetRows +
+        TIMELINE_HEIGHT_CONSTANTS.TIMELINE_PADDING;
+
+      const clampedHeight = Math.max(
+        TIMELINE_HEIGHT_CONSTANTS.MIN_TIMELINE_HEIGHT,
+        Math.min(dynamicMaxHeight, targetHeight)
+      );
+
+      setIsTimelineCollapsed(false);
+      setTimelineHeight(clampedHeight);
+      timelineRef.current?.scroll.scrollToTop();
+    };
+
+    window.addEventListener(TIMELINE_COLLAPSE_EVENT, handleCollapseEvent as EventListener);
+    return () => {
+      window.removeEventListener(TIMELINE_COLLAPSE_EVENT, handleCollapseEvent as EventListener);
+    };
+  }, [dynamicMaxHeight, setTimelineHeight, trackCount, setIsTimelineCollapsed]);
 
   // Calculate effective height based on collapse state
   const HEADER_HEIGHT = 57; // Height of timeline header

@@ -91,6 +91,8 @@ export const CutoutOverlayPanel: React.FC = () => {
             const map = clip.meta!.cutoutImageMap!;
             const frameSeconds = getFrameSeconds(clip);
             const clipEndSeconds = getClipEndSeconds(clip);
+            const version = map.version || map.v || map.ver || undefined;
+            const versionPrefix = version ? `/v${version}` : "";
 
             return {
               id: clip.id,
@@ -103,7 +105,7 @@ export const CutoutOverlayPanel: React.FC = () => {
               start: clip.start ?? frameSeconds,
               end: clip.end ?? clipEndSeconds,
               thumbnail: cloudName
-                ? `https://res.cloudinary.com/${cloudName}/image/upload/${map.processedAssetId}.png`
+                ? `https://res.cloudinary.com/${cloudName}/image/upload${versionPrefix}/${map.processedAssetId}.png`
                 : "",
             };
           });

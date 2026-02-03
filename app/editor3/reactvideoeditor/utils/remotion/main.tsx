@@ -7,6 +7,7 @@ import { SortedOutlines } from "../../components/selection/sorted-outlines";
 import { Layer } from "./layer";
 import { AlignmentGuides } from "../../components/selection/alignment-guides";
 import { useAlignmentGuides } from "../../hooks/use-alignment-guides";
+import { DEFAULT_BACKGROUND_COLOR } from "../../../constants";
 
 
 /**
@@ -49,7 +50,7 @@ export type MainProps = {
 };
 
 const outer: React.CSSProperties = {
-  backgroundColor: "white",
+  backgroundColor: DEFAULT_BACKGROUND_COLOR,
 };
 const layerContainer = (backgroundColor: string): React.CSSProperties => ({
   position: "relative",
@@ -77,7 +78,7 @@ export const Main: React.FC<MainProps> = ({
   height,
   baseUrl,
   showAlignmentGuides = true,
-  backgroundColor = "white",
+  backgroundColor = DEFAULT_BACKGROUND_COLOR,
   fontInfos,
 }) => {
   // Initialize alignment guides hook with responsive snap threshold
