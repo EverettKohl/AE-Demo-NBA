@@ -3,6 +3,10 @@ import fs from "fs";
 import path from "path";
 import { normalizeIntroBeat } from "@/lib/songEditScheduler";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const parseFormatFile = (rawContent = "") => {
   const trimmed = String(rawContent || "").trim();
   if (!trimmed) return {};

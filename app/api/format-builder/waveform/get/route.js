@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 /**
  * GET /api/format-builder/waveform/get?slug=song-slug
  * Loads saved waveform data for a song
