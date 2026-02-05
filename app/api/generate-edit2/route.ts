@@ -39,6 +39,7 @@ type CutoutPoolClip = {
 
 const FORMAT_DIR = path.join(process.cwd(), "data", "format-editor3");
 const CUTOUT_POOL_PATH = path.join(process.cwd(), "data", "instantClipPool2.json");
+const GENERATE2_POOL_PATH = path.join(process.cwd(), "data", "AllClips2.json");
 const FALLBACK_FPS = 30;
 const PRIORITY_FORMAT_SLUGS = ["touch_the_sky"];
 const BUCKET_SEQUENCE = [
@@ -95,6 +96,25 @@ const loadCutoutPool = async (): Promise<{ clips: CutoutPoolClip[] }> => {
   return { clips };
 };
 
+let generate2PoolCache: ClipPool | null = null;
+const loadGenerate2ClipPool = async (): Promise<ClipPool | null> => {
+  if (generate2PoolCache) return generate2PoolCache;
+
+  try {
+    const raw = await fs.readFile(GENERATE2_POOL_PATH, "utf8");
+    generate2PoolCache = JSON.parse(raw);
+    return generate2PoolCache;
+  } catch (error: any) {
+    console.warn(
+      `[generate-edit2] Falling back to instantClipPool.json because AllClips2.json could not be loaded: ${error?.message}`
+    );
+  }
+
+  const fallbackPool = (await loadInstantClipPool()) as ClipPool | null;
+  generate2PoolCache = fallbackPool;
+  return fallbackPool;
+};
+
 const getDurationSeconds = (clip: any) => {
   if (!clip) return 0;
   if (typeof clip.duration === "number") return clip.duration;
@@ -128,6 +148,7 @@ const buildClipSelector = (pool: ClipPool, chronologicalOrder: boolean, intentTa
     const tags: string[] = Array.isArray((clip as any).tags) ? (clip as any).tags : [];
     const metaTags: string[] = Array.isArray((clip as any)?.meta?.tags) ? (clip as any).meta.tags : [];
     const normalized = [...tags, ...metaTags].map((t) => `${t}`.toLowerCase());
+    if (!normalized.length) return true; // Dataset lacks tags; ignore intent filter
     return normalized.includes(intentTag.toLowerCase());
   };
 
@@ -411,7 +432,10 @@ const buildGenerateEdit2Project = async ({
   const cacheBust = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const fps = toNumber(format?.meta?.fps, FALLBACK_FPS) || FALLBACK_FPS;
   const overlaysRaw = Array.isArray(format?.timeline?.overlays) ? format.timeline.overlays : [];
-  const pool = (await loadInstantClipPool()) as ClipPool;
+  const pool = (await loadGenerate2ClipPool()) as ClipPool | null;
+  if (!pool) {
+    throw new Error("Clip pool unavailable. Populate data/AllClips2.json or instantClipPool.json first.");
+  }
   const cutoutPool = await loadCutoutPool();
   const globalUsedClips = new Set<number>();
   const pickClip = buildClipSelector(pool, chronologicalOrder, null, globalUsedClips);
