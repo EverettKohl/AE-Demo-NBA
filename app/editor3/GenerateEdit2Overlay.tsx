@@ -16,6 +16,41 @@ type Props = {
 };
 
 type FormatOption = { slug: string; name: string };
+type ContentSource = "nba" | "killbill";
+type NbaPlayer =
+  | "all"
+  | "anthony_edwards"
+  | "damian_lillard"
+  | "derrick_rose"
+  | "ja_morant"
+  | "jalen_brunson"
+  | "james_harden"
+  | "jimmy_butler"
+  | "kobe_bryant"
+  | "kyrie_irving"
+  | "lebron_james"
+  | "paul_georgee"
+  | "shai_gilgeous_alexander"
+  | "steph_curry"
+  | "trae_young";
+
+const NBA_PLAYER_OPTIONS: { value: NbaPlayer; label: string }[] = [
+  { value: "all", label: "All Players" },
+  { value: "anthony_edwards", label: "Anthony Edwards" },
+  { value: "damian_lillard", label: "Damian Lillard" },
+  { value: "derrick_rose", label: "Derrick Rose" },
+  { value: "ja_morant", label: "Ja Morant" },
+  { value: "jalen_brunson", label: "Jalen Brunson" },
+  { value: "james_harden", label: "James Harden" },
+  { value: "jimmy_butler", label: "Jimmy Butler" },
+  { value: "kobe_bryant", label: "Kobe Bryant" },
+  { value: "kyrie_irving", label: "Kyrie Irving" },
+  { value: "lebron_james", label: "LeBron James" },
+  { value: "paul_georgee", label: "Paul George" },
+  { value: "shai_gilgeous_alexander", label: "Shai Gilgeous-Alexander" },
+  { value: "steph_curry", label: "Steph Curry" },
+  { value: "trae_young", label: "Trae Young" },
+];
 
 const FALLBACK_FPS = 30;
 
@@ -75,13 +110,21 @@ const normalizeOverlay = (overlay: any, idx: number): Overlay => {
 
 export function GenerateEdit2Overlay({ open, onClose }: Props) {
   const { setOverlays, setSelectedOverlayId, getAspectRatioDimensions, seekTo, play } = useEditorContext();
-  const { playSeekDragAnimation, overlayElement: seekOverlay, isAnimating: isSeekAnimating } = useSeekDragAnimation();
+  const {
+    playSeekDragAnimation,
+    overlayElement: seekOverlay,
+    isAnimating: isSeekAnimating,
+    setPlaceholderSource,
+    setPlaceholderPlayerTag,
+  } = useSeekDragAnimation("nba");
   const [portalEl, setPortalEl] = React.useState<HTMLElement | null>(null);
   const [formats, setFormats] = React.useState<FormatOption[]>([]);
   const [selected, setSelected] = React.useState<string>("");
+  const [contentSource, setContentSource] = React.useState<ContentSource>("nba");
+  const [nbaPlayer, setNbaPlayer] = React.useState<NbaPlayer>("all");
   const [status, setStatus] = React.useState<"idle" | "loading" | "complete" | "error">("idle");
   const [error, setError] = React.useState<string | null>(null);
-  const [progressText, setProgressText] = React.useState<string>("Pick a format to run.");
+  const [progressText, setProgressText] = React.useState<string>("Pick content and a format to run.");
   const [autoClick, setAutoClick] = React.useState(false);
   const [showCursor, setShowCursor] = React.useState(false);
   const [cursorPos, setCursorPos] = React.useState<{ left: string; top: string }>({ left: "12%", top: "12%" });
@@ -179,10 +222,23 @@ export function GenerateEdit2Overlay({ open, onClose }: Props) {
   }, [autoClick, formats, open, status, selected]); 
 
   React.useEffect(() => {
+    const isNba = contentSource === "nba";
+    setPlaceholderSource(isNba ? "nba" : "killbill");
+    setPlaceholderPlayerTag(isNba && nbaPlayer !== "all" ? nbaPlayer : null);
+  }, [contentSource, nbaPlayer, setPlaceholderPlayerTag, setPlaceholderSource]);
+
+  React.useEffect(() => {
     return () => {
       if (cursorTimerRef.current) window.clearTimeout(cursorTimerRef.current);
     };
   }, []);
+
+  // Reset player filter when switching away from NBA
+  React.useEffect(() => {
+    if (contentSource !== "nba") {
+      setNbaPlayer("all");
+    }
+  }, [contentSource]);
 
   const resetState = () => {
     if (autoCloseTimerRef.current !== null) {
@@ -193,7 +249,7 @@ export function GenerateEdit2Overlay({ open, onClose }: Props) {
     abortRef.current = null;
     setStatus("idle");
     setError(null);
-    setProgressText("Pick a format to run.");
+    setProgressText("Pick content and a format to run.");
   };
 
   const handleClose = () => {
@@ -222,6 +278,8 @@ export function GenerateEdit2Overlay({ open, onClose }: Props) {
           formatSlug: selected,
           chronologicalOrder: false,
           materialize: true,
+          contentSource,
+          playerTag: contentSource === "nba" && nbaPlayer !== "all" ? nbaPlayer : null,
         }),
         signal: controller.signal,
       });
@@ -346,6 +404,35 @@ export function GenerateEdit2Overlay({ open, onClose }: Props) {
         <div className="flex flex-1 min-h-0 items-center justify-center bg-black px-3 py-2" data-seek-scan-container>
           <div className={cn("w-full max-w-xl space-y-4 transition-opacity duration-75", isSeekAnimating && "opacity-0 pointer-events-none")}>
             <div className="rounded-lg border border-white/10 bg-white/5 p-4 space-y-2">
+              <label className="text-xs uppercase tracking-[0.2em] text-white/60">Pick Content</label>
+              <select
+                value={contentSource}
+                onChange={(e) => setContentSource(e.target.value as ContentSource)}
+                disabled={status === "loading"}
+                className="w-full rounded-md border border-white/15 bg-[#0f172a] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              >
+                <option value="nba">NBA Edits</option>
+                <option value="killbill">Kill Bill Edits</option>
+              </select>
+
+              {contentSource === "nba" && (
+                <div className="space-y-1">
+                  <label className="text-xs uppercase tracking-[0.2em] text-white/60">Pick Player</label>
+                  <select
+                    value={nbaPlayer}
+                    onChange={(e) => setNbaPlayer(e.target.value as NbaPlayer)}
+                    disabled={status === "loading"}
+                    className="w-full rounded-md border border-white/15 bg-[#0f172a] px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                  >
+                    {NBA_PLAYER_OPTIONS.map((p) => (
+                      <option key={p.value} value={p.value}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               <label className="text-xs uppercase tracking-[0.2em] text-white/60">Pick A Format</label>
               <select
                 value={selected}

@@ -3,7 +3,7 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import { TIMELINE_CONSTANTS } from "@editor/reactvideoeditor/components/advanced-timeline/constants";
-import { SEEK_ANIMATION_PLACEHOLDERS, preloadSeekAnimationPlaceholders } from "../animation/placeholders";
+import { PlaceholderSource, getSeekAnimationPlaceholders, preloadSeekAnimationPlaceholders } from "../animation/placeholders";
 import styles from "../editor2-animation.module.css";
 
 type RectLike = { x: number; y: number; width: number; height: number };
@@ -28,15 +28,6 @@ type VisualState = {
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const pickFrames = (count: number) => {
-  const frames: string[] = [];
-  for (let i = 0; i < count; i++) {
-    const idx = Math.floor(Math.random() * SEEK_ANIMATION_PLACEHOLDERS.length);
-    frames.push(SEEK_ANIMATION_PLACEHOLDERS[idx]);
-  }
-  return frames;
-};
 
 const getPlayerScanRect = (): RectLike | null => {
   if (typeof document === "undefined") return null;
@@ -117,14 +108,18 @@ const SeekDragOverlay: React.FC<{ visual: VisualState | null }> = ({ visual }) =
   );
 };
 
-export const useSeekDragAnimation = () => {
+export const useSeekDragAnimation = (initialSource: PlaceholderSource = "killbill") => {
   const [visual, setVisual] = React.useState<VisualState | null>(null);
   const [isAnimating, setIsAnimating] = React.useState(false);
+  const [placeholderSource, setPlaceholderSource] = React.useState<PlaceholderSource>(initialSource);
+  const [placeholderPlayerTag, setPlaceholderPlayerTag] = React.useState<string | null>(null);
+  const placeholdersRef = React.useRef<string[]>(getSeekAnimationPlaceholders(initialSource, null));
   const queueRef = React.useRef(Promise.resolve());
 
   React.useEffect(() => {
-    preloadSeekAnimationPlaceholders();
-  }, []);
+    placeholdersRef.current = getSeekAnimationPlaceholders(placeholderSource, placeholderPlayerTag);
+    preloadSeekAnimationPlaceholders(placeholderSource, placeholderPlayerTag);
+  }, [placeholderSource, placeholderPlayerTag]);
 
   const playSeekDragAnimation = React.useCallback(
     (request: SeekDragRequest) => {
@@ -140,7 +135,11 @@ export const useSeekDragAnimation = () => {
           return;
         }
 
-        const seekFrames = pickFrames(8);
+        const availableFrames = placeholdersRef.current;
+        const seekFrames = Array.from({ length: 8 }, () => {
+          const idx = Math.floor(Math.random() * availableFrames.length);
+          return availableFrames[idx];
+        });
         const scanDuration = 60;
         const lockDuration = 15;
         const dragDuration = 35;
@@ -232,5 +231,13 @@ export const useSeekDragAnimation = () => {
 
   const overlayElement = visual ? <SeekDragOverlay visual={visual} /> : null;
 
-  return { playSeekDragAnimation, overlayElement, isAnimating };
+  return {
+    playSeekDragAnimation,
+    overlayElement,
+    isAnimating,
+    placeholderSource,
+    setPlaceholderSource,
+    placeholderPlayerTag,
+    setPlaceholderPlayerTag,
+  };
 };

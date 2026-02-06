@@ -238,10 +238,10 @@ export default function ImmersiveIntro({ isOverlay = false, onDismiss }: Immersi
       >
         <div className="relative text-center px-6 py-20 sm:py-22 md:py-24">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.12] bg-gradient-to-br from-zinc-200 via-slate-300 to-zinc-100 bg-clip-text text-transparent drop-shadow-[0_25px_35px_rgba(0,0,0,0.45)] animate-titleGlow">
-            The Attention Engine Demo
+            FanEdit.com
           </h1>
           <p className="mt-6 text-sm sm:text-base text-zinc-400 uppercase tracking-[0.3em] leading-relaxed animate-slowFade">
-            Crafted for filmmakers and launch teams
+            AI fan edits for filmmakers and launch teams
           </p>
         </div>
       </div>
@@ -257,7 +257,7 @@ export default function ImmersiveIntro({ isOverlay = false, onDismiss }: Immersi
 
         <div className="flex-1 w-full max-w-6xl mx-auto px-4 lg:px-6 py-0 sm:py-1 lg:py-2 flex flex-col items-center gap-1">
           <div className="text-center space-y-1">
-            <p className="text-[11px] font-semibold tracking-[0.32em] text-zinc-500 uppercase">The Attention Engine</p>
+            <p className="text-[11px] font-semibold tracking-[0.32em] text-zinc-500 uppercase">FanEdit.com</p>
             <p className="text-sm text-zinc-300 m-0">
               Dialog + computer vision + campaign playbooks fused to auto-build social-ready clips from your film.
             </p>
@@ -286,7 +286,7 @@ export default function ImmersiveIntro({ isOverlay = false, onDismiss }: Immersi
               <div className="flex items-center justify-between gap-2 mb-1 text-[11px] sm:text-xs">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.22em] text-zinc-500">Scene intelligence</p>
-                  <p className="text-sm font-semibold text-white">Understands every line and frame, then cuts viral edits for you.</p>
+                  <p className="text-sm font-semibold text-white">FanEdit.com understands every line and frame, then cuts viral edits for you.</p>
                 </div>
                 <div className="flex items-center gap-1">
                   <button
@@ -405,7 +405,7 @@ export default function ImmersiveIntro({ isOverlay = false, onDismiss }: Immersi
 
                 <div className="mt-0 flex flex-col items-center gap-1 text-center">
                   <p className="text-sm text-zinc-200 m-0">
-                    Test the world's best AI fan edit creation tool.
+                    Experience FanEdit.com — the AI fan edit creation tool.
                   </p>
                   <div className="mt-1 flex flex-col sm:flex-row items-center gap-2.5">
                     <button

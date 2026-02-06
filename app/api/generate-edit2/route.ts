@@ -39,7 +39,8 @@ type CutoutPoolClip = {
 
 const FORMAT_DIR = path.join(process.cwd(), "data", "format-editor3");
 const CUTOUT_POOL_PATH = path.join(process.cwd(), "data", "instantClipPool2.json");
-const GENERATE2_POOL_PATH = path.join(process.cwd(), "data", "AllClips2.json");
+const GENERATE2_POOL_NBA_PATH = path.join(process.cwd(), "data", "AllClips2.json");
+const GENERATE2_POOL_KILLBILL_PATH = path.join(process.cwd(), "data", "instantClipPool.json");
 const FALLBACK_FPS = 30;
 const PRIORITY_FORMAT_SLUGS = ["touch_the_sky"];
 const BUCKET_SEQUENCE = [
@@ -96,22 +97,31 @@ const loadCutoutPool = async (): Promise<{ clips: CutoutPoolClip[] }> => {
   return { clips };
 };
 
-let generate2PoolCache: ClipPool | null = null;
-const loadGenerate2ClipPool = async (): Promise<ClipPool | null> => {
-  if (generate2PoolCache) return generate2PoolCache;
+const generatePoolCache: Record<string, ClipPool | null> = {};
+const loadGenerateClipPool = async (contentSource: "nba" | "killbill" = "nba"): Promise<ClipPool | null> => {
+  const cacheKey = contentSource;
+  if (generatePoolCache[cacheKey]) return generatePoolCache[cacheKey];
+
+  const pathForSource = contentSource === "killbill" ? GENERATE2_POOL_KILLBILL_PATH : GENERATE2_POOL_NBA_PATH;
 
   try {
-    const raw = await fs.readFile(GENERATE2_POOL_PATH, "utf8");
-    generate2PoolCache = JSON.parse(raw);
-    return generate2PoolCache;
+    const raw = await fs.readFile(pathForSource, "utf8");
+    const parsed = JSON.parse(raw);
+    generatePoolCache[cacheKey] = parsed;
+    return parsed;
   } catch (error: any) {
+    if (contentSource === "killbill") {
+      console.warn(`[generate-edit2] Failed to load instantClipPool.json for Kill Bill edits: ${error?.message}`);
+      generatePoolCache[cacheKey] = null;
+      return null;
+    }
     console.warn(
       `[generate-edit2] Falling back to instantClipPool.json because AllClips2.json could not be loaded: ${error?.message}`
     );
   }
 
   const fallbackPool = (await loadInstantClipPool()) as ClipPool | null;
-  generate2PoolCache = fallbackPool;
+  generatePoolCache[cacheKey] = fallbackPool;
   return fallbackPool;
 };
 
@@ -135,21 +145,38 @@ const resolveBucket = (durationSec: number, pool: ClipPool) => {
   return BUCKET_SEQUENCE[BUCKET_SEQUENCE.length - 1];
 };
 
-const buildClipSelector = (pool: ClipPool, chronologicalOrder: boolean, intentTag?: string | null, sharedUsed?: Set<string | number>) => {
+const buildClipSelector = (
+  pool: ClipPool,
+  chronologicalOrder: boolean,
+  intentTag?: string | null,
+  sharedUsed?: Set<string | number>,
+  playerTag?: string | null
+) => {
   const clips = Array.isArray(pool?.clips) ? pool.clips : [];
   const clipDurations = clips.map(getDurationSeconds);
   const used = sharedUsed ?? new Set<number>();
   const orderedIndices = clips.map((_, idx) => idx);
   let chronoPtr = 0;
 
+  const normalizeTag = (t: string) => `${t}`.toLowerCase();
+
   const hasIntent = (idx: number) => {
     if (!intentTag) return true;
     const clip = clips[idx] || {};
     const tags: string[] = Array.isArray((clip as any).tags) ? (clip as any).tags : [];
     const metaTags: string[] = Array.isArray((clip as any)?.meta?.tags) ? (clip as any).meta.tags : [];
-    const normalized = [...tags, ...metaTags].map((t) => `${t}`.toLowerCase());
+    const normalized = [...tags, ...metaTags].map(normalizeTag);
     if (!normalized.length) return true; // Dataset lacks tags; ignore intent filter
     return normalized.includes(intentTag.toLowerCase());
+  };
+
+  const hasPlayer = (idx: number) => {
+    if (!playerTag) return true;
+    const clip = clips[idx] || {};
+    const tags: string[] = Array.isArray((clip as any).tags) ? (clip as any).tags : [];
+    const metaTags: string[] = Array.isArray((clip as any)?.meta?.tags) ? (clip as any).meta.tags : [];
+    const normalized = [...tags, ...metaTags].map(normalizeTag);
+    return normalized.includes(playerTag.toLowerCase());
   };
 
   const findCandidates = (durationSec: number) => {
@@ -162,6 +189,7 @@ const buildClipSelector = (pool: ClipPool, chronologicalOrder: boolean, intentTa
       if (used.has(idx)) return;
       if ((clipDurations[idx] ?? 0) < durationSec) return;
       if (!hasIntent(idx)) return;
+      if (!hasPlayer(idx)) return;
       candidates.push(idx);
     };
     for (const b of bucketsToTry) {
@@ -424,21 +452,30 @@ const buildGenerateEdit2Project = async ({
   format,
   formatSlug,
   chronologicalOrder,
+  contentSource,
+  playerTag,
 }: {
   format: FormatFile;
   formatSlug: string;
   chronologicalOrder: boolean;
+  contentSource: "nba" | "killbill";
+  playerTag?: string | null;
 }) => {
   const cacheBust = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const fps = toNumber(format?.meta?.fps, FALLBACK_FPS) || FALLBACK_FPS;
   const overlaysRaw = Array.isArray(format?.timeline?.overlays) ? format.timeline.overlays : [];
-  const pool = (await loadGenerate2ClipPool()) as ClipPool | null;
+  const pool = (await loadGenerateClipPool(contentSource)) as ClipPool | null;
   if (!pool) {
-    throw new Error("Clip pool unavailable. Populate data/AllClips2.json or instantClipPool.json first.");
+    throw new Error(
+      contentSource === "killbill"
+        ? "Clip pool unavailable. Populate data/instantClipPool.json first."
+        : "Clip pool unavailable. Populate data/AllClips2.json or instantClipPool.json first."
+    );
   }
   const cutoutPool = await loadCutoutPool();
   const globalUsedClips = new Set<number>();
-  const pickClip = buildClipSelector(pool, chronologicalOrder, null, globalUsedClips);
+  const normalizedPlayerTag = playerTag ? playerTag.toLowerCase() : null;
+  const pickClip = buildClipSelector(pool, chronologicalOrder, null, globalUsedClips, normalizedPlayerTag);
   const leadSeconds = 1;
   const leadFrames = Math.max(0, Math.round(leadSeconds * fps));
   let nextId = 1;
@@ -456,7 +493,7 @@ const buildGenerateEdit2Project = async ({
       const durationFrames = Math.max(1, toNumber(ov.durationInFrames, 1));
       const requiredSec = durationFrames / fps;
       const intentTag = (ov.intent ?? (ov.meta as any)?.intent ?? "").toString().toLowerCase() || null;
-      const pickClipWithIntent = buildClipSelector(pool, chronologicalOrder, intentTag, globalUsedClips);
+      const pickClipWithIntent = buildClipSelector(pool, chronologicalOrder, intentTag, globalUsedClips, normalizedPlayerTag);
       const clip = pickClipWithIntent(requiredSec) || pickClip(requiredSec);
       if (!clip) {
         throw new Error(`No clip available for segment-video at from=${ov.from ?? 0}, duration=${requiredSec}s`);
@@ -772,6 +809,10 @@ export async function POST(req: Request) {
     const body = await req.json();
     const slug = body?.formatSlug || body?.songSlug || body?.slug;
     const chronologicalOrder = Boolean(body?.chronologicalOrder);
+    const contentSource: "nba" | "killbill" =
+      body?.contentSource === "killbill" ? "killbill" : "nba";
+    const playerTagRaw = typeof body?.playerTag === "string" ? body.playerTag : null;
+    const playerTag = playerTagRaw ? playerTagRaw.toLowerCase() : null;
     if (!slug) {
       return NextResponse.json({ error: "formatSlug is required" }, { status: 400 });
     }
@@ -780,6 +821,8 @@ export async function POST(req: Request) {
       format,
       formatSlug: slug,
       chronologicalOrder,
+      contentSource,
+      playerTag,
     });
     return NextResponse.json({ rveProject, jobId: null });
   } catch (err: any) {
